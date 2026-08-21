@@ -162,10 +162,6 @@ export function AgentsBoard() {
             })}
           </div>
 
-          <p className="mt-4 text-center font-mono text-[11px] text-ink-soft/70">
-            * Illustrative demo performance — the roster comes from Agents.xlsx.
-            Past results do not guarantee future performance.
-          </p>
           <div className="mt-6 text-center">
             <Button to="/leaderboard" className="group">
               View Full Leaderboard
