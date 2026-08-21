@@ -1,76 +1,112 @@
+import { useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
-import { agents, type RiskLevel } from '../../content/agents'
+import {
+  marketBadge,
+  riskBadge,
+  traderRisk,
+  traderSeries,
+  traderStats,
+  traders,
+} from '../../content/traders'
 import { Button } from '../ui/Button'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeader } from '../ui/SectionHeader'
 import { Sparkline } from '../ui/Sparkline'
 
-const RISK_BADGE: Record<RiskLevel, string> = {
-  Low: 'bg-success/10 text-success border-success/20',
-  Medium: 'bg-warning/10 text-warning border-warning/20',
-  High: 'bg-danger/10 text-danger border-danger/20',
+const GRID = 'grid-cols-[56px_1.3fr_100px_130px_160px_70px_120px_90px_90px]'
+
+const initials = (id: string) => id.split('-')[0].slice(0, 2).toUpperCase()
+
+/** Follow → sign-up funnel (same as the Leaderboard page) */
+function FollowButton() {
+  return (
+    <Link
+      to="/get-started"
+      className="inline-flex items-center gap-1 rounded-md px-3 py-1.5 font-mono text-[10px] font-bold gradient-brand text-[#04212b] transition-all duration-200 hover:brightness-110"
+    >
+      Follow
+    </Link>
+  )
 }
 
-const CONFIDENCE = [87, 84, 89, 82, 86, 78, 74]
-
 export function AgentsBoard() {
+  // First 7 rows of the leaderboard — same default order (Return ↓)
+  const top = useMemo(
+    () =>
+      [...traders]
+        .sort((a, b) => traderStats(b).totalReturn - traderStats(a).totalReturn)
+        .slice(0, 7),
+    [],
+  )
+
   return (
     <section id="agents" className="bg-navy pb-16 pt-20 lg:pb-20 lg:pt-24">
       <div className="mx-auto max-w-container px-4 md:px-6">
         <Reveal>
           <SectionHeader
             title="Compare Agents by Performance, Transparency and Risk"
-            description="Every analysis engine runs with a published risk profile and clear data labels — so you know exactly what you're working with."
+            description="The top 7 agents right now — full rankings on the leaderboard, with every agent's data source and risk profile shown."
           />
         </Reveal>
 
-        {/* Desktop table */}
         <Reveal>
-          <div className="hidden overflow-hidden rounded-xl border border-border bg-deep shadow-card lg:block">
-            <div className="grid grid-cols-[64px_1.2fr_100px_120px_110px_120px] items-center gap-1 border-b border-border bg-medium-navy/50 px-5 py-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-ink-soft">
-              <span>Agent</span>
+          {/* Same table as the Leaderboard page — first 7 rows */}
+          <div className="hidden overflow-hidden rounded-2xl border border-border bg-navy shadow-card lg:block">
+            <div
+              className={`grid ${GRID} items-center gap-2 border-b border-border bg-medium-navy/60 px-5 py-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-ink-soft`}
+            >
+              <span>Rank</span>
+              <span>Trader</span>
+              <span>Trend</span>
+              <span>Market</span>
               <span>Strategy</span>
               <span>Risk</span>
-              <span className="text-right">Total Return*</span>
-              <span className="text-right">Confidence</span>
-              <span className="text-right">Track</span>
+              <span>Model</span>
+              <span className="text-right">Return</span>
+              <span className="text-right">Action</span>
             </div>
-            {agents.slice(0, 7).map((agent, i) => {
-              const positive = agent.totalReturn >= 0
+            {top.map((t, i) => {
+              const s = traderStats(t)
+              const positive = s.totalReturn >= 0
+              const riskLevel = traderRisk(t)
               return (
                 <div
-                  key={agent.id}
-                  className="grid grid-cols-[64px_1.2fr_100px_120px_110px_120px] items-center gap-1 border-b border-border px-5 py-3 transition-colors last:border-0 hover:bg-medium-navy/50"
+                  key={t.id}
+                  className={`grid ${GRID} items-center gap-2 border-b border-border px-5 py-3 transition-colors last:border-0 hover:bg-medium-navy/40`}
                 >
-                  <span className="flex h-7 w-7 items-center justify-center rounded-md bg-accent/15 font-mono text-xs font-bold text-accent">
-                    {agent.id}
+                  <span className="flex items-center gap-1.5">
+                    <span className="font-mono text-xs font-bold text-ink-soft">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="flex h-6 w-7 items-center justify-center rounded-md bg-accent/15 font-mono text-[9px] font-bold text-accent">
+                      {initials(t.id)}
+                    </span>
                   </span>
-                  <div className="min-w-0">
-                    <p className="truncate font-mono text-sm font-medium leading-tight text-ink">
-                      {agent.name}
-                    </p>
-                    <p className="truncate font-mono text-[10px] leading-tight text-ink-soft">
-                      {agent.strategy}
-                    </p>
-                  </div>
+                  <p className="truncate font-mono text-sm font-bold text-ink">{t.id}</p>
+                  <Sparkline series={traderSeries(t)} positive={positive} width={90} height={24} />
                   <span
-                    className={`inline-flex w-fit rounded-full border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.1em] ${RISK_BADGE[agent.risk]}`}
+                    className={`w-fit rounded-full border px-2 py-0.5 text-[10px] font-bold ${marketBadge[t.market]}`}
                   >
-                    {agent.risk}
+                    {t.market}
                   </span>
+                  <p className="truncate text-xs text-muted-dark">{t.shortStrategy}</p>
                   <span
+                    className={`w-fit rounded-full border px-2 py-0.5 text-[10px] font-bold ${riskBadge[riskLevel]}`}
+                  >
+                    {riskLevel}
+                  </span>
+                  <p className="truncate font-mono text-[11px] text-ink-soft">{t.model}</p>
+                  <p
                     className={`text-right font-mono text-sm font-bold ${
                       positive ? 'text-success' : 'text-danger'
                     }`}
                   >
-                    {agent.totalReturn > 0 ? '+' : ''}
-                    {agent.totalReturn.toFixed(1)}%
-                  </span>
-                  <span className="text-right font-mono text-sm font-bold text-ink-soft">
-                    {CONFIDENCE[i]}%
-                  </span>
+                    {positive ? '+' : ''}
+                    {s.totalReturn.toFixed(2)}%
+                  </p>
                   <span className="flex justify-end">
-                    <Sparkline series={agent.series} positive={positive} width={100} height={26} />
+                    <FollowButton />
                   </span>
                 </div>
               )
@@ -78,53 +114,60 @@ export function AgentsBoard() {
           </div>
 
           {/* Mobile cards */}
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:hidden">
-            {agents.slice(0, 6).map((agent, i) => {
-              const positive = agent.totalReturn >= 0
+          <div className="grid gap-3 sm:grid-cols-2 lg:hidden">
+            {top.map((t, i) => {
+              const s = traderStats(t)
+              const positive = s.totalReturn >= 0
+              const riskLevel = traderRisk(t)
               return (
-                <div key={agent.id} className="rounded-xl border border-border bg-deep p-4 shadow-card">
-                  <div className="mb-3 flex items-center justify-between">
+                <div
+                  key={t.id}
+                  className="rounded-xl border border-border bg-navy p-4 shadow-card"
+                >
+                  <div className="mb-2.5 flex items-center justify-between gap-3">
                     <div className="flex min-w-0 items-center gap-2.5">
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-accent/15 font-mono text-xs font-bold text-accent">
-                        {agent.id}
+                      <span className="font-mono text-xs font-bold text-ink-soft">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="flex h-7 w-8 shrink-0 items-center justify-center rounded-md bg-accent/15 font-mono text-[10px] font-bold text-accent">
+                        {initials(t.id)}
                       </span>
                       <div className="min-w-0">
-                        <p className="truncate font-mono text-sm font-bold text-ink">
-                          {agent.name}
-                        </p>
-                        <p className="truncate font-mono text-[10px] text-ink-soft">
-                          {agent.strategy}
+                        <p className="truncate font-mono text-sm font-bold text-ink">{t.id}</p>
+                        <p className="truncate text-[10px] text-ink-soft">
+                          {t.model} • {t.market}
                         </p>
                       </div>
                     </div>
-                    <span
-                      className={`inline-flex shrink-0 rounded-full border px-2 py-0.5 font-mono text-[10px] font-bold uppercase ${RISK_BADGE[agent.risk]}`}
-                    >
-                      {agent.risk}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span
-                      className={`font-mono text-sm font-bold ${
+                    <p
+                      className={`shrink-0 font-mono text-sm font-bold ${
                         positive ? 'text-success' : 'text-danger'
                       }`}
                     >
-                      {agent.totalReturn > 0 ? '+' : ''}
-                      {agent.totalReturn.toFixed(1)}% · {CONFIDENCE[i]}% conf.
-                    </span>
-                    <Sparkline series={agent.series} positive={positive} width={110} height={28} />
+                      {positive ? '+' : ''}
+                      {s.totalReturn.toFixed(2)}%
+                    </p>
                   </div>
+                  <div className="mb-3 flex items-center justify-between gap-2">
+                    <span className="truncate text-xs text-muted-dark">{t.shortStrategy}</span>
+                    <span
+                      className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-bold ${riskBadge[riskLevel]}`}
+                    >
+                      {riskLevel}
+                    </span>
+                  </div>
+                  <FollowButton />
                 </div>
               )
             })}
           </div>
 
           <p className="mt-4 text-center font-mono text-[11px] text-ink-soft/70">
-            * Illustrative backtest performance. Past results do not guarantee
-            future performance.
+            * Illustrative demo performance — the roster comes from Agents.xlsx.
+            Past results do not guarantee future performance.
           </p>
           <div className="mt-6 text-center">
-            <Button to="/traders" variant="outline" className="group">
+            <Button to="/leaderboard" className="group">
               View Full Leaderboard
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
