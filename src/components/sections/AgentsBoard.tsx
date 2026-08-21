@@ -13,7 +13,7 @@ const CONFIDENCE = [87, 84, 89, 82, 86, 78, 74]
 
 export function AgentsBoard() {
   return (
-    <section id="agents" className="bg-deep pb-16 pt-20 lg:pb-20 lg:pt-24">
+    <section id="agents" className="bg-navy pb-16 pt-20 lg:pb-20 lg:pt-24">
       <div className="mx-auto max-w-container px-4 md:px-6">
         <Reveal>
           <SectionHeader
@@ -24,7 +24,7 @@ export function AgentsBoard() {
 
         {/* Desktop table */}
         <Reveal>
-          <div className="hidden overflow-hidden rounded-xl border border-border bg-navy shadow-card lg:block">
+          <div className="hidden overflow-hidden rounded-xl border border-border bg-deep shadow-card lg:block">
             <div className="grid grid-cols-[64px_1.2fr_100px_120px_110px_120px] items-center gap-1 border-b border-border bg-medium-navy/50 px-5 py-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-ink-soft">
               <span>Agent</span>
               <span>Strategy</span>
@@ -80,7 +80,7 @@ export function AgentsBoard() {
             {agents.slice(0, 6).map((agent, i) => {
               const positive = agent.totalReturn >= 0
               return (
-                <div key={agent.id} className="rounded-xl border border-border bg-navy p-4 shadow-card">
+                <div key={agent.id} className="rounded-xl border border-border bg-deep p-4 shadow-card">
                   <div className="mb-3 flex items-center justify-between">
                     <div className="flex min-w-0 items-center gap-2.5">
                       <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-accent/15 font-mono text-xs font-bold text-accent">

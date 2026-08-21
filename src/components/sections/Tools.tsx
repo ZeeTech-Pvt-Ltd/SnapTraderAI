@@ -18,6 +18,17 @@ export function Tools() {
           {tools.map((tool, i) => (
             <Reveal key={tool.title} delay={(i % 3) * 90}>
               <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-navy p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-card-lg">
+                {/* Gradient top hairline */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-[3px] gradient-brand opacity-70"
+                />
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-4 top-2 font-mono text-5xl font-black text-ink/5 transition-colors duration-300 group-hover:text-accent/10"
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"

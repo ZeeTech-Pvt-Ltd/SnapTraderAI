@@ -57,6 +57,7 @@ export const canCannot: CanCannotGroup = {
 export interface DataLabelItem {
   dot: string
   dotClass: string
+  topBorderClass: string
   label: string
   description: string
 }
@@ -65,24 +66,28 @@ export const dataLabels: DataLabelItem[] = [
   {
     dot: 'LIVE',
     dotClass: 'bg-success/15 text-success border-success/25',
+    topBorderClass: 'border-t-success/50',
     label: 'Live market data',
     description: 'Connected market feeds from verified data providers. Real-time where available.',
   },
   {
     dot: 'DELAYED',
     dotClass: 'bg-warning/15 text-warning border-warning/25',
+    topBorderClass: 'border-t-warning/50',
     label: 'Delayed market data',
     description: 'Labelled with the delay period. Suitable for analysis, not execution.',
   },
   {
     dot: 'BACKTEST',
     dotClass: 'bg-info/15 text-info border-info/25',
+    topBorderClass: 'border-t-info/50',
     label: 'Backtested results',
     description: 'Historical simulation only. Past patterns do not predict future market movements.',
   },
   {
     dot: 'ILLUSTRATIVE',
     dotClass: 'bg-danger/15 text-danger border-danger/25',
+    topBorderClass: 'border-t-danger/50',
     label: 'Illustrative figures',
     description: 'Example scenarios for explanation. Never treated as real performance.',
   },

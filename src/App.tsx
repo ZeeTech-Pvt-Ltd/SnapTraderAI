@@ -1,6 +1,7 @@
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
 import { Footer } from './components/Footer'
+import { TickerTape } from './components/TickerTape'
 import { TrustStrip } from './components/sections/TrustStrip'
 import { AgentsBoard } from './components/sections/AgentsBoard'
 import { MarketTicker } from './components/sections/MarketTicker'
@@ -30,6 +31,7 @@ export default function App() {
       <main id="main">
         <Hero />
         <TrustStrip />
+        <TickerTape />
         <AgentsBoard />
         <MarketTicker />
         <Tools />

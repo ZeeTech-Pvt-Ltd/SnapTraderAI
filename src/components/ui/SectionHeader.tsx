@@ -21,6 +21,12 @@ export function SectionHeader({
       <h2 className="text-3xl md:text-4xl lg:text-[2.6rem] font-extrabold leading-[1.15] tracking-tight text-ink mb-4">
         {title}
       </h2>
+      <div
+        aria-hidden="true"
+        className={`h-1 w-16 rounded-full gradient-brand mb-5 ${
+          align === 'center' ? 'mx-auto' : ''
+        }`}
+      />
       {description && (
         <p className="text-base md:text-lg text-ink-soft leading-relaxed">
           {description}

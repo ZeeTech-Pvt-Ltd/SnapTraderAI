@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react'
+import { Check, Monitor, Smartphone, TabletSmartphone } from 'lucide-react'
 import { features } from '../../content/features'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeader } from '../ui/SectionHeader'
@@ -20,20 +20,74 @@ export function Features() {
           />
         </Reveal>
 
+        {/* Bento grid — varied spans to break the uniform card rhythm */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature, i) => (
-            <Reveal key={feature.title} delay={(i % 3) * 90}>
-              <article className="group h-full rounded-2xl border border-border bg-navy p-7 shadow-card transition-shadow duration-300 hover:shadow-card-lg">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent transition-all duration-300 group-hover:scale-110 group-hover:shadow-glow">
-                  <feature.icon className="h-6 w-6" />
-                </div>
-                <h3 className="mb-2 text-base font-semibold text-ink">{feature.title}</h3>
-                <p className="text-sm leading-relaxed text-muted-dark">
-                  {feature.description}
-                </p>
-              </article>
-            </Reveal>
-          ))}
+          {features.map((feature, i) => {
+            const isWide = i === 0
+            const isFull = i === features.length - 1
+            return (
+              <Reveal
+                key={feature.title}
+                delay={(i % 3) * 90}
+                className={
+                  isFull
+                    ? 'sm:col-span-2 lg:col-span-3'
+                    : isWide
+                      ? 'sm:col-span-2 lg:col-span-2'
+                      : ''
+                }
+              >
+                <article
+                  className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-navy p-7 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/30 hover:shadow-card-lg ${
+                    isFull
+                      ? 'lg:flex-row lg:items-center lg:gap-8 lg:p-8'
+                      : ''
+                  } ${isWide ? 'md:p-8' : ''}`}
+                >
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
+                    style={{ background: 'rgb(0 180 230 / 0.12)' }}
+                  />
+                  <div
+                    className={`mb-5 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent transition-all duration-300 group-hover:scale-110 group-hover:shadow-glow ${
+                      isFull ? 'lg:mb-0' : ''
+                    }`}
+                  >
+                    <feature.icon className="h-6 w-6" />
+                  </div>
+                  <div className="min-w-0">
+                    <h3
+                      className={`mb-2 font-semibold text-ink ${
+                        isWide ? 'text-lg md:text-xl' : 'text-base'
+                      }`}
+                    >
+                      {feature.title}
+                    </h3>
+                    <p
+                      className={`leading-relaxed text-muted-dark ${
+                        isWide ? 'text-base' : 'text-sm'
+                      }`}
+                    >
+                      {feature.description}
+                    </p>
+                    {isWide && (
+                      <div className="mt-5 flex items-center gap-4 text-ink-soft">
+                        <Monitor className="h-7 w-7" aria-hidden="true" />
+                        <span className="font-mono text-xs text-ink-soft/60">/</span>
+                        <TabletSmartphone className="h-7 w-7" aria-hidden="true" />
+                        <span className="font-mono text-xs text-ink-soft/60">/</span>
+                        <Smartphone className="h-6 w-6" aria-hidden="true" />
+                        <span className="ml-1 text-xs font-medium">
+                          Desktop · Tablet · Mobile
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </article>
+              </Reveal>
+            )
+          })}
         </div>
 
         {/* Enhanced performance band */}

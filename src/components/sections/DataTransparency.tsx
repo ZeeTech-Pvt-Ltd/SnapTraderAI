@@ -38,7 +38,9 @@ export function DataTransparency() {
         <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {dataLabels.map((item, i) => (
             <Reveal key={item.label} delay={i * 80}>
-              <div className="flex h-full flex-col gap-3 rounded-xl border border-border bg-navy p-6 shadow-card">
+              <div
+                className={`flex h-full flex-col gap-3 rounded-xl border border-t-2 border-border bg-navy p-6 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-lg ${item.topBorderClass}`}
+              >
                 <span
                   className={`w-fit rounded-full border px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-wider ${item.dotClass}`}
                 >
