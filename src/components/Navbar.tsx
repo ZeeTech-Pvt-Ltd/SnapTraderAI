@@ -1,8 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react'
 import { navLinks, toolsDropdown } from '../content/nav'
 import { Logo } from './ui/Logo'
 import { Button } from './ui/Button'
+
+/** Hash links resolve to the homepage section; paths stay as-is. */
+const linkTo = (href: string) => (href.startsWith('#') ? `/${href}` : href)
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -51,9 +55,9 @@ export function Navbar() {
       }`}
     >
       <div className="mx-auto flex h-full max-w-container items-center justify-between px-4 md:px-6">
-        <a href="#top" aria-label="Snap Trader AI — home">
+        <Link to="/" aria-label="Snap Trader AI — home">
           <Logo />
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Main">
@@ -73,31 +77,31 @@ export function Navbar() {
             {toolsOpen && (
               <div className="absolute left-0 top-full mt-2 min-w-[220px] rounded-lg border border-border bg-navy p-2 shadow-card-lg">
                 {toolsDropdown.items.map((item) => (
-                  <a
+                  <Link
                     key={item.label}
-                    href={item.href}
+                    to={linkTo(item.href)}
                     onClick={() => setToolsOpen(false)}
                     className="block rounded-md px-3 py-2 text-sm text-ink/75 transition-colors hover:bg-medium-navy hover:text-ink"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             )}
           </div>
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.label}
-              href={link.href}
+              to={linkTo(link.href)}
               className="text-[0.925rem] font-medium text-ink/75 transition-colors hover:text-accent"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div className="hidden items-center gap-3 sm:flex">
-          <Button href="#get-started" size="sm">
+          <Button to="/get-started" size="sm">
             Get Started Free
             <ArrowRight className="h-4 w-4" />
           </Button>
@@ -132,29 +136,29 @@ export function Navbar() {
           AI Tools
         </p>
         {toolsDropdown.items.map((item) => (
-          <a
+          <Link
             key={item.label}
-            href={item.href}
+            to={linkTo(item.href)}
             onClick={() => setMobileOpen(false)}
             className="block border-b border-border py-2.5 text-[1.05rem] font-medium text-ink/85"
           >
             {item.label}
-          </a>
+          </Link>
         ))}
         <p className="mb-2 mt-6 text-xs font-bold uppercase tracking-wider text-ink-soft">
           Explore
         </p>
         {navLinks.map((link) => (
-          <a
+          <Link
             key={link.label}
-            href={link.href}
+            to={linkTo(link.href)}
             onClick={() => setMobileOpen(false)}
             className="block border-b border-border py-2.5 text-[1.05rem] font-medium text-ink/85"
           >
             {link.label}
-          </a>
+          </Link>
         ))}
-        <Button href="#get-started" className="mt-8 w-full" onClick={() => setMobileOpen(false)}>
+        <Button to="/get-started" className="mt-8 w-full" onClick={() => setMobileOpen(false)}>
           Get Started Free
         </Button>
       </div>

@@ -1,19 +1,30 @@
+import { useEffect } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { Navbar } from './components/Navbar'
-import { Hero } from './components/Hero'
 import { Footer } from './components/Footer'
-import { TickerTape } from './components/TickerTape'
-import { TrustStrip } from './components/sections/TrustStrip'
-import { AgentsBoard } from './components/sections/AgentsBoard'
-import { MarketTicker } from './components/sections/MarketTicker'
-import { Tools } from './components/sections/Tools'
-import { HowItWorks } from './components/sections/HowItWorks'
-import { Features } from './components/sections/Features'
-import { CanCannot } from './components/sections/CanCannot'
-import { DataTransparency } from './components/sections/DataTransparency'
-import { Stats } from './components/sections/Stats'
-import { Testimonials } from './components/sections/Testimonials'
-import { Faq } from './components/sections/Faq'
-import { CtaBanner } from './components/sections/CtaBanner'
+import { HomePage } from './pages/HomePage'
+import { TradersPage } from './pages/TradersPage'
+import { LeaderboardPage } from './pages/LeaderboardPage'
+import { ContactPage } from './pages/ContactPage'
+import { GetStartedPage } from './pages/GetStartedPage'
+
+/** Scrolls to top on route change, or to the hash target when present. */
+function ScrollManager() {
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.slice(1)
+      requestAnimationFrame(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+      })
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }, [location])
+
+  return null
+}
 
 export default function App() {
   return (
@@ -26,23 +37,17 @@ export default function App() {
         Skip to main content
       </a>
 
+      <ScrollManager />
       <Navbar />
 
       <main id="main">
-        <Hero />
-        <TrustStrip />
-        <TickerTape />
-        <AgentsBoard />
-        <MarketTicker />
-        <Tools />
-        <HowItWorks />
-        <Features />
-        <CanCannot />
-        <DataTransparency />
-        <Stats />
-        <Testimonials />
-        <Faq />
-        <CtaBanner />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/traders" element={<TradersPage />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/get-started" element={<GetStartedPage />} />
+        </Routes>
       </main>
 
       <Footer />

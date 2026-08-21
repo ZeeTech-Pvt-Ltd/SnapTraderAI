@@ -9,7 +9,16 @@ export interface NavDropdown {
 }
 
 export const navLinks: NavLink[] = [
+  { label: 'AI Trading Platform', href: '#tools' },
+  { label: 'Traders', href: '/traders' },
+  { label: 'Leaderboard', href: '/leaderboard' },
   { label: 'How It Works', href: '#how-it-works' },
+  { label: 'Contact', href: '/contact' },
+]
+
+/** Footer keeps the full explore list, including homepage-only sections. */
+export const footerLinks: NavLink[] = [
+  ...navLinks,
   { label: 'Why Snap Trader AI', href: '#why-snap' },
   { label: 'Markets', href: '#markets' },
   { label: 'FAQ', href: '#faq' },

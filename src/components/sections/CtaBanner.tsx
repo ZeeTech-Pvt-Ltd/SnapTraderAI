@@ -26,8 +26,8 @@ export function CtaBanner() {
             Start free: no deposit, no card, no hype.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Button href="#top" size="lg" className="group">
-              Explore the Platform
+            <Button to="/get-started" size="lg" className="group">
+              Start Free Access
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
             <Button href="#how-it-works" variant="outline" size="lg">

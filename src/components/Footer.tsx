@@ -1,5 +1,8 @@
-import { navLinks, toolsDropdown } from '../content/nav'
+import { Link } from 'react-router-dom'
+import { footerLinks, toolsDropdown } from '../content/nav'
 import { Logo } from './ui/Logo'
+
+const linkTo = (href: string) => (href.startsWith('#') ? `/${href}` : href)
 
 const FOOTER_COLUMNS = [
   {
@@ -8,13 +11,13 @@ const FOOTER_COLUMNS = [
   },
   {
     title: 'Explore',
-    links: navLinks,
+    links: footerLinks,
   },
   {
     title: 'Company',
     links: [
       { label: 'About Us', href: '#top' },
-      { label: 'Contact', href: '#get-started' },
+      { label: 'Contact', href: '/contact' },
       { label: 'Privacy Policy', href: '#top' },
       { label: 'Terms & Conditions', href: '#top' },
       { label: 'Disclaimer', href: '#top' },
@@ -29,7 +32,9 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3 lg:grid-cols-5">
           {/* Brand */}
           <div className="md:col-span-2">
-            <Logo />
+            <Link to="/" aria-label="Snap Trader AI — home">
+              <Logo />
+            </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed">
               SnapTrader AI — also known as Snap Trader AI — is an AI-powered
               chart analysis and trading signals platform for self-directed
@@ -47,12 +52,12 @@ export function Footer() {
               <ul className="space-y-2.5">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <a
-                      href={link.href}
+                    <Link
+                      to={linkTo(link.href)}
                       className="text-sm transition-colors hover:text-accent"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

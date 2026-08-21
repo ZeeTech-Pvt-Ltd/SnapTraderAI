@@ -1,4 +1,6 @@
+import { ArrowRight } from 'lucide-react'
 import { agents, type RiskLevel } from '../../content/agents'
+import { Button } from '../ui/Button'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeader } from '../ui/SectionHeader'
 import { Sparkline } from '../ui/Sparkline'
@@ -121,6 +123,12 @@ export function AgentsBoard() {
             * Illustrative backtest performance. Past results do not guarantee
             future performance.
           </p>
+          <div className="mt-6 text-center">
+            <Button to="/traders" variant="outline" className="group">
+              View Full Leaderboard
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </Button>
+          </div>
         </Reveal>
       </div>
     </section>
