@@ -33,7 +33,7 @@ function FaqItem({
         aria-expanded={isOpen}
         aria-controls={`faq-answer-${index}`}
       >
-        <span className={`text-sm font-semibold transition-colors ${isOpen ? 'text-white' : 'text-ink'}`}>
+        <span className={`text-sm font-semibold transition-colors ${isOpen ? 'text-accent' : 'text-ink'}`}>
           {faq.question}
         </span>
         <ChevronDown

@@ -50,7 +50,7 @@ export function Logo({ compact = false, className = '' }: LogoProps) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <LogoMark className="h-8 w-8" />
-      <span className="text-lg font-extrabold tracking-tight text-white">
+      <span className="text-lg font-extrabold tracking-tight text-ink">
         Snap Trader <span className="text-gradient-brand">AI</span>
       </span>
     </span>

@@ -24,7 +24,7 @@ const FOOTER_COLUMNS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-black pb-0 pt-16 text-ink-soft">
+    <footer className="border-t border-border bg-navy pb-0 pt-16 text-ink-soft">
       <div className="mx-auto max-w-container px-4 md:px-6">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3 lg:grid-cols-5">
           {/* Brand */}
@@ -47,7 +47,7 @@ export function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-sm transition-colors hover:text-white"
+                      className="text-sm transition-colors hover:text-accent"
                     >
                       {link.label}
                     </a>

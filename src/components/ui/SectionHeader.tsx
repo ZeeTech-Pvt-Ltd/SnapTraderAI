@@ -18,7 +18,7 @@ export function SectionHeader({
 
   return (
     <div className={`mb-10 md:mb-14 ${alignClasses} ${className}`}>
-      <h2 className="text-3xl md:text-4xl lg:text-[2.6rem] font-extrabold leading-[1.15] tracking-tight text-white mb-4">
+      <h2 className="text-3xl md:text-4xl lg:text-[2.6rem] font-extrabold leading-[1.15] tracking-tight text-ink mb-4">
         {title}
       </h2>
       {description && (

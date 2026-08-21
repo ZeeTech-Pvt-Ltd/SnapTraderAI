@@ -22,7 +22,7 @@ export function Sparkline({
         `${(i / (series.length - 1)) * width},${height - 4 - ((v - min) / span) * (height - 8)}`,
     )
     .join(' ')
-  const color = positive ? '#22c55e' : '#ef4444'
+  const color = positive ? '#16a34a' : '#dc2626'
   const id = `spark-${positive ? 'p' : 'n'}-${series.length}-${span.toFixed(0)}`
 
   return (

@@ -35,7 +35,7 @@ function CandleChart() {
           x2={w}
           y1={h * f}
           y2={h * f}
-          stroke="#1E2A3D"
+          stroke="#E3E9F2"
           strokeWidth="0.5"
           strokeDasharray="3 4"
         />
@@ -43,7 +43,7 @@ function CandleChart() {
       {CANDLES.map(([o, hi, lo, c], i) => {
         const x = i * step + step / 2
         const up = c >= o
-        const color = up ? '#22c55e' : '#ef4444'
+        const color = up ? '#16a34a' : '#dc2626'
         return (
           <g key={i}>
             <line x1={x} x2={x} y1={scale(hi)} y2={scale(lo)} stroke={color} strokeWidth="1.2" />
@@ -52,7 +52,7 @@ function CandleChart() {
               y={scale(Math.max(o, c))}
               width={step * 0.56}
               height={Math.max(Math.abs(scale(o) - scale(c)), 1.5)}
-              fill={up ? color : '#0D1626'}
+              fill={up ? color : '#ffffff'}
               stroke={color}
               strokeWidth="1"
               rx="1"
@@ -89,7 +89,7 @@ export function HeroTerminal() {
     >
       <div className="flex">
         {/* Watchlist — desktop only to keep the hero airy on small screens */}
-        <aside className="hidden w-[130px] shrink-0 flex-col border-r border-border bg-[#0A1424] sm:flex">
+        <aside className="hidden w-[130px] shrink-0 flex-col border-r border-border bg-[#F4F8FC] sm:flex">
           <p className="mb-1 px-3 pt-3 text-[8px] font-bold uppercase tracking-[0.15em] text-ink-soft/60">
             Watchlist
           </p>
@@ -118,7 +118,7 @@ export function HeroTerminal() {
         <div className="flex-1 p-5">
           <div className="mb-4 flex items-center justify-between">
             <div>
-              <p className="font-mono text-sm font-extrabold text-white">EUR/USD</p>
+              <p className="font-mono text-sm font-extrabold text-ink">EUR/USD</p>
               <p className="font-mono text-[9px] text-ink-soft">1H · LIVE DATA</p>
             </div>
             <div className="flex items-center gap-1.5 rounded-full bg-success/10 px-2.5 py-1 font-mono text-[10px] font-bold text-success">
@@ -127,7 +127,7 @@ export function HeroTerminal() {
             </div>
           </div>
 
-          <div className="mb-4 overflow-hidden rounded-md border border-border bg-[#080E18] p-2">
+          <div className="mb-4 overflow-hidden rounded-md border border-border bg-[#F8FAFD] p-2">
             <CandleChart />
           </div>
 
@@ -148,7 +148,7 @@ export function HeroTerminal() {
             ].map((r) => (
               <div
                 key={r.k}
-                className="rounded-md border border-border bg-[#0A1424] p-2.5 text-center"
+                className="rounded-md border border-border bg-[#F4F8FC] p-2.5 text-center"
               >
                 <p className="text-[7px] font-bold uppercase tracking-wider text-ink-soft/60">
                   {r.k}
@@ -177,7 +177,7 @@ export function HeroTerminal() {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-between border-t border-border bg-[#0A1424] px-4 py-1.5 font-mono text-[8px] text-ink-soft/50">
+      <div className="flex items-center justify-between border-t border-border bg-[#F4F8FC] px-4 py-1.5 font-mono text-[8px] text-ink-soft/60">
         <span>DATA LABEL: LIVE · SOURCE: VERIFIED FEED</span>
         <span className="hidden sm:inline">Analysis is an observation — not financial advice</span>
       </div>

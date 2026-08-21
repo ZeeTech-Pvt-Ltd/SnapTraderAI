@@ -17,9 +17,9 @@ export function TerminalFrame({
 }: TerminalFrameProps) {
   return (
     <div
-      className={`relative overflow-hidden rounded-xl border border-[#2A3A52] bg-[#0D1626] shadow-card-xl ${className}`}
+      className={`relative overflow-hidden rounded-xl border border-border bg-white shadow-card-xl ${className}`}
     >
-      <div className="flex items-center justify-between border-b border-border bg-[#0A1424] px-4 py-2.5">
+      <div className="flex items-center justify-between border-b border-border bg-[#F1F5F9] px-4 py-2.5">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5">
             <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />

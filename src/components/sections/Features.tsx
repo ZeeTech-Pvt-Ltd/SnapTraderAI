@@ -40,7 +40,7 @@ export function Features() {
         <Reveal>
           <div className="mt-14 grid items-center gap-10 rounded-2xl border border-border bg-navy p-8 shadow-card md:p-10 lg:grid-cols-2 lg:gap-16">
             <div>
-              <h3 className="mb-4 text-2xl font-extrabold leading-tight text-white md:text-3xl">
+              <h3 className="mb-4 text-2xl font-extrabold leading-tight text-ink md:text-3xl">
                 Enhanced Performance,
                 <br />
                 <span className="text-gradient-brand">Modifiable Settings</span>
@@ -61,7 +61,7 @@ export function Features() {
               </ul>
             </div>
             {/* Abstract performance visual */}
-            <div className="relative overflow-hidden rounded-xl border border-border bg-[#080E18] p-6">
+            <div className="relative overflow-hidden rounded-xl border border-border bg-[#F8FAFD] p-6">
               <div
                 aria-hidden="true"
                 className="absolute -right-8 -top-8 h-40 w-40 rounded-full blur-3xl"
@@ -82,7 +82,7 @@ export function Features() {
                   </linearGradient>
                 </defs>
                 {[32, 64, 96, 128].map((y) => (
-                  <line key={y} x1="0" x2="400" y1={y} y2={y} stroke="#1E2A3D" strokeWidth="0.5" strokeDasharray="3 4" />
+                  <line key={y} x1="0" x2="400" y1={y} y2={y} stroke="#E3E9F2" strokeWidth="0.5" strokeDasharray="3 4" />
                 ))}
                 {/* diversified portfolio curve */}
                 <path

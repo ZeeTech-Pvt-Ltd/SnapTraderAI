@@ -96,7 +96,7 @@ export function Testimonials() {
                     </blockquote>
                     <figcaption className="flex items-center justify-between border-t border-border pt-4">
                       <div>
-                        <p className="text-sm font-bold text-white">{t.name}</p>
+                        <p className="text-sm font-bold text-ink">{t.name}</p>
                         <p className="mt-0.5 text-xs text-ink-soft">{t.role}</p>
                       </div>
                       <span className="inline-flex items-center gap-1 rounded-full border border-accent/15 bg-accent/10 px-2.5 py-1 text-[10px] font-medium text-accent">
@@ -114,7 +114,7 @@ export function Testimonials() {
                 type="button"
                 onClick={prev}
                 aria-label="Previous testimonial"
-                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-border bg-navy text-ink-soft transition-colors hover:border-accent/50 hover:text-white"
+                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-border bg-navy text-ink-soft transition-colors hover:border-accent/50 hover:text-accent"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
@@ -140,7 +140,7 @@ export function Testimonials() {
                 type="button"
                 onClick={next}
                 aria-label="Next testimonial"
-                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-border bg-navy text-ink-soft transition-colors hover:border-accent/50 hover:text-white"
+                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-border bg-navy text-ink-soft transition-colors hover:border-accent/50 hover:text-accent"
               >
                 <ChevronRight className="h-5 w-5" />
               </button>

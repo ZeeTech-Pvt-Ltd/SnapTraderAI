@@ -6,32 +6,32 @@
    tradvioai.com's research-terminal aesthetic) */
 
 @theme {
-  /* Brand accents — logo gradient: #00a0d0 → #00c0a0 (brightened for dark UI) */
-  --color-accent: #00b4e6;
-  --color-accent-teal: #00c8ac;
-  --color-accent-hover: #33cbf5;
-  --color-accent-deep: #0297db;
+  /* Brand accents — logo gradient: #00a0d0 → #00c0a0 (deepened for light UI) */
+  --color-accent: #0090c8;
+  --color-accent-teal: #00a88f;
+  --color-accent-hover: #0079a8;
+  --color-accent-deep: #0077a8;
   --color-accent-teal-deep: #008a9e;
 
   /* Surfaces */
-  --color-deep: #060b14;
-  --color-navy: #0a1220;
-  --color-medium-navy: #101b2e;
-  --color-panel: #0d1626;
+  --color-deep: #f2f6fb;
+  --color-navy: #ffffff;
+  --color-medium-navy: #e9eef6;
+  --color-panel: #ffffff;
 
   /* Text */
-  --color-ink: #e8edf5;
-  --color-ink-soft: #94a3b8;
-  --color-muted-dark: #7c8aa0;
+  --color-ink: #16233c;
+  --color-ink-soft: #5c6b84;
+  --color-muted-dark: #64748b;
 
   /* Lines */
-  --color-border: #1e2a3d;
-  --color-border-light: #2a3a52;
+  --color-border: #e3e9f2;
+  --color-border-light: #cbd6e4;
 
   /* Status */
-  --color-success: #22c55e;
-  --color-warning: #facc15;
-  --color-danger: #ef4444;
+  --color-success: #16a34a;
+  --color-warning: #b45309;
+  --color-danger: #dc2626;
   --color-info: #7c3aed;
 
   /* Layout */
@@ -42,13 +42,13 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Shadows */
-  --shadow-card: 0 1px 3px rgb(0 0 0 / 0.35), 0 8px 24px -12px rgb(0 0 0 / 0.5);
-  --shadow-card-lg: 0 8px 20px -6px rgb(0 0 0 / 0.55),
-    0 24px 60px -24px rgb(0 0 0 / 0.65);
-  --shadow-card-xl: 0 16px 40px -12px rgb(0 0 0 / 0.7),
-    0 40px 100px -30px rgb(0 0 0 / 0.8);
-  --shadow-glow: 0 0 24px rgb(0 180 230 / 0.25);
-  --shadow-glow-teal: 0 0 24px rgb(0 200 172 / 0.25);
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px -12px rgb(15 23 42 / 0.1);
+  --shadow-card-lg: 0 8px 20px -6px rgb(15 23 42 / 0.08),
+    0 24px 60px -24px rgb(15 23 42 / 0.12);
+  --shadow-card-xl: 0 16px 40px -12px rgb(15 23 42 / 0.1),
+    0 40px 100px -30px rgb(15 23 42 / 0.16);
+  --shadow-glow: 0 0 24px rgb(0 144 200 / 0.22);
+  --shadow-glow-teal: 0 0 24px rgb(0 168 143 / 0.22);
 }
 
 @layer base {
@@ -78,7 +78,7 @@
 }
 
 @utility text-gradient-brand {
-  background-image: linear-gradient(135deg, #4dd7f7 0%, #2fe0c4 100%);
+  background-image: linear-gradient(135deg, #006fa8 0%, #008c76 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -107,11 +107,11 @@
 }
 
 .btn-outline {
-  @apply border border-border bg-white/5 text-ink hover:border-accent/60 hover:text-white;
+  @apply border border-border bg-white text-ink hover:border-accent/60 hover:text-accent;
 }
 
 .btn-ghost {
-  @apply text-ink-soft hover:text-white;
+  @apply text-ink-soft hover:text-ink;
 }
 
 .btn-sm {

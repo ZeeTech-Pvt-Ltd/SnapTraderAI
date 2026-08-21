@@ -69,7 +69,7 @@ export function HowItWorks() {
                       <span>
                         <span
                           className={`block text-sm font-bold transition-colors ${
-                            isActive ? 'text-white' : 'text-ink'
+                            isActive ? 'text-accent' : 'text-ink'
                           }`}
                         >
                           {step.title}
@@ -102,7 +102,7 @@ export function HowItWorks() {
                     className={`flex items-center gap-3 rounded-lg border p-3 transition-all duration-300 ${
                       active === 0
                         ? 'border-accent/40 bg-accent/5'
-                        : 'border-border bg-[#080E18] opacity-60'
+                        : 'border-border bg-[#F8FAFD] opacity-60'
                     }`}
                   >
                     <span
@@ -113,7 +113,7 @@ export function HowItWorks() {
                       {active > 0 ? <CheckCircle2 className="h-4 w-4" /> : <Circle className="h-4 w-4" />}
                     </span>
                     <div className="min-w-0">
-                      <p className="font-mono text-[10px] font-bold text-white">
+                      <p className="font-mono text-[10px] font-bold text-ink">
                         CHART UPLOADED — EUR/USD · 1H
                       </p>
                       <p className="font-mono text-[9px] text-ink-soft">
@@ -130,7 +130,7 @@ export function HowItWorks() {
                     className={`flex items-center gap-3 rounded-lg border p-3 transition-all duration-300 ${
                       active === 1
                         ? 'border-accent/40 bg-accent/5'
-                        : 'border-border bg-[#080E18] opacity-60'
+                        : 'border-border bg-[#F8FAFD] opacity-60'
                     }`}
                   >
                     <span
@@ -141,11 +141,11 @@ export function HowItWorks() {
                       {active > 1 ? <CheckCircle2 className="h-4 w-4" /> : <Circle className="h-4 w-4" />}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p className="font-mono text-[10px] font-bold text-white">
+                      <p className="font-mono text-[10px] font-bold text-ink">
                         SCANNING 26 INDICATORS · 4 TIMEFRAMES
                       </p>
                       {active >= 1 ? (
-                        <div className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-[#1A2A3D]">
+                        <div className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-[#E3E9F2]">
                           <div
                             className="h-full rounded-full gradient-brand transition-all duration-700"
                             style={{ width: active === 1 ? '68%' : '100%' }}
@@ -162,7 +162,7 @@ export function HowItWorks() {
                     className={`rounded-lg border p-3 transition-all duration-300 ${
                       active === 2
                         ? 'border-success/40 bg-success/5'
-                        : 'border-border bg-[#080E18] opacity-60'
+                        : 'border-border bg-[#F8FAFD] opacity-60'
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -174,7 +174,7 @@ export function HowItWorks() {
                         {active > 2 ? <CheckCircle2 className="h-4 w-4" /> : <Circle className="h-4 w-4" />}
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p className="font-mono text-[10px] font-bold text-white">
+                        <p className="font-mono text-[10px] font-bold text-ink">
                           SIGNAL READY — BUY · 87% CONFIDENCE
                         </p>
                         <p className="font-mono text-[9px] text-ink-soft">
@@ -199,7 +199,7 @@ export function HowItWorks() {
                     className={`flex items-center gap-3 rounded-lg border p-3 transition-all duration-300 ${
                       active === 3
                         ? 'border-accent/40 bg-accent/5'
-                        : 'border-border bg-[#080E18] opacity-60'
+                        : 'border-border bg-[#F8FAFD] opacity-60'
                     }`}
                   >
                     <span
@@ -210,7 +210,7 @@ export function HowItWorks() {
                       <Circle className="h-4 w-4" />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p className="font-mono text-[10px] font-bold text-white">
+                      <p className="font-mono text-[10px] font-bold text-ink">
                         EXECUTION — VIA YOUR BROKER
                       </p>
                       <p className="font-mono text-[9px] text-ink-soft">

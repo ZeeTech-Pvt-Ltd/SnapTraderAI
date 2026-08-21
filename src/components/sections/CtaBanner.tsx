@@ -16,7 +16,7 @@ export function CtaBanner() {
       />
       <div className="relative z-10 mx-auto max-w-4xl px-4 text-center md:px-6">
         <Reveal>
-          <h2 className="mb-5 text-[clamp(2rem,4vw,3.4rem)] font-black leading-[1.1] tracking-tight text-white">
+          <h2 className="mb-5 text-[clamp(2rem,4vw,3.4rem)] font-black leading-[1.1] tracking-tight text-ink">
             Ready to Read the Markets{' '}
             <span className="text-gradient-brand">Like a Pro?</span>
           </h2>

@@ -60,7 +60,7 @@ export function Navbar() {
           <div ref={toolsRef} className="relative">
             <button
               type="button"
-              className="flex items-center gap-1 text-[0.925rem] font-medium text-ink/75 transition-colors hover:text-white"
+              className="flex items-center gap-1 text-[0.925rem] font-medium text-ink/75 transition-colors hover:text-accent"
               onClick={() => setToolsOpen((v) => !v)}
               aria-expanded={toolsOpen}
               aria-haspopup="true"
@@ -77,7 +77,7 @@ export function Navbar() {
                     key={item.label}
                     href={item.href}
                     onClick={() => setToolsOpen(false)}
-                    className="block rounded-md px-3 py-2 text-sm text-ink/75 transition-colors hover:bg-medium-navy hover:text-white"
+                    className="block rounded-md px-3 py-2 text-sm text-ink/75 transition-colors hover:bg-medium-navy hover:text-ink"
                   >
                     {item.label}
                   </a>
@@ -89,7 +89,7 @@ export function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              className="text-[0.925rem] font-medium text-ink/75 transition-colors hover:text-white"
+              className="text-[0.925rem] font-medium text-ink/75 transition-colors hover:text-accent"
             >
               {link.label}
             </a>

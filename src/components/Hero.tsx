@@ -12,26 +12,26 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden bg-deep pb-16 pt-[calc(72px+5rem)] text-white md:pb-24"
+      className="relative overflow-hidden bg-deep pb-16 pt-[calc(72px+5rem)] md:pb-24"
     >
       {/* Ambient brand glows */}
       <div
         aria-hidden="true"
         className="glow-drift pointer-events-none absolute -right-[15%] -top-[30%] h-[500px] w-[500px]"
-        style={{ background: 'radial-gradient(circle, rgb(0 180 230 / 0.10) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgb(0 160 220 / 0.14) 0%, transparent 70%)' }}
       />
       <div
         aria-hidden="true"
         className="glow-drift pointer-events-none absolute -bottom-[20%] -left-[10%] h-[420px] w-[420px]"
-        style={{ background: 'radial-gradient(circle, rgb(0 200 172 / 0.08) 0%, transparent 70%)', animationDelay: '-7s' }}
+        style={{ background: 'radial-gradient(circle, rgb(0 190 165 / 0.12) 0%, transparent 70%)', animationDelay: '-7s' }}
       />
       {/* Grid pattern */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        className="pointer-events-none absolute inset-0 opacity-[0.05]"
         style={{
           backgroundImage:
-            'linear-gradient(rgb(0 180 230 / 0.4) 1px, transparent 1px), linear-gradient(90deg, rgb(0 180 230 / 0.4) 1px, transparent 1px)',
+            'linear-gradient(rgb(0 130 180 / 0.35) 1px, transparent 1px), linear-gradient(90deg, rgb(0 130 180 / 0.35) 1px, transparent 1px)',
           backgroundSize: '56px 56px',
         }}
       />
@@ -47,7 +47,7 @@ export function Hero() {
               <br />
               <span className="text-gradient-brand">Trade with Confidence.</span>
             </h1>
-            <p className="mb-9 max-w-[540px] text-lg leading-relaxed text-white/65">
+            <p className="mb-9 max-w-[540px] text-lg leading-relaxed text-muted-dark">
               Snap Trader AI turns raw market data into clear, actionable chart
               insights — entry and exit levels, bullish and bearish patterns, and
               risk warnings — across stocks, forex, crypto, indices and more.
