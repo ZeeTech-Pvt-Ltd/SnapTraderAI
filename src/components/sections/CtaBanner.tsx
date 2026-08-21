@@ -17,13 +17,13 @@ export function CtaBanner() {
       <div className="relative z-10 mx-auto max-w-4xl px-4 text-center md:px-6">
         <Reveal>
           <h2 className="mb-5 text-[clamp(2rem,4vw,3.4rem)] font-black leading-[1.1] tracking-tight text-ink">
-            Ready to Read the Markets{' '}
+            Ready to Snap Trade{' '}
             <span className="text-gradient-brand">Like a Pro?</span>
           </h2>
           <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-muted-dark">
-            Join 10,000+ traders using Snap Trader AI for clearer charts, honest
-            signals and risk-aware decision making. Start free — no deposit, no
-            card, no hype.
+            Join 10,000+ traders using SnapTrader AI — the Snap Trader platform —
+            for clearer charts, honest signals and risk-aware decision making.
+            Start free: no deposit, no card, no hype.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Button href="#top" size="lg" className="group">

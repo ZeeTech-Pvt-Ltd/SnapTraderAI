@@ -31,9 +31,11 @@ export function Footer() {
           <div className="md:col-span-2">
             <Logo />
             <p className="mt-4 max-w-sm text-sm leading-relaxed">
-              AI-powered chart analysis and trading signals for self-directed
-              traders. Scan charts, detect patterns and manage risk across
-              stocks, forex, crypto, indices, commodities and ETFs.
+              SnapTrader AI — also known as Snap Trader AI — is an AI-powered
+              chart analysis and trading signals platform for self-directed
+              traders. Snap trade smarter: scan charts, detect patterns and
+              manage risk across stocks, forex, crypto, indices, commodities
+              and ETFs.
             </p>
           </div>
 
@@ -76,7 +78,10 @@ export function Footer() {
         </div>
 
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border py-4 text-xs">
-          <p>© {new Date().getFullYear()} Snap Trader AI. All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} SnapTrader AI — Snap Trader AI. All
+            rights reserved.
+          </p>
           <p className="font-mono text-[10px] text-ink-soft/60">
             Research platform · Not a broker · No profit guarantees
           </p>

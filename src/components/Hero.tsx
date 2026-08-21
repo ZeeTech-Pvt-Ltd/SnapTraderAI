@@ -6,6 +6,7 @@ const HERO_BULLETS = [
   'Paper trading first',
   'Data labels on everything',
   'No profit guarantees — ever',
+  'Start free — snap trade smarter',
 ]
 
 export function Hero() {
@@ -48,9 +49,10 @@ export function Hero() {
               <span className="text-gradient-brand">Trade with Confidence.</span>
             </h1>
             <p className="mb-9 max-w-[540px] text-lg leading-relaxed text-muted-dark">
-              Snap Trader AI turns raw market data into clear, actionable chart
-              insights — entry and exit levels, bullish and bearish patterns, and
-              risk warnings — across stocks, forex, crypto, indices and more.
+              SnapTrader AI — the Snap Trader platform — turns raw market data
+              into clear, actionable chart insights: entry and exit levels,
+              bullish and bearish patterns, and risk warnings across stocks,
+              forex, crypto, indices and more.
             </p>
             <div className="mb-8 flex flex-wrap gap-4">
               <Button href="#get-started" size="lg" className="group">
