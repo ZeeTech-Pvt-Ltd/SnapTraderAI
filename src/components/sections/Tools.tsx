@@ -1,0 +1,47 @@
+import { ArrowRight } from 'lucide-react'
+import { tools } from '../../content/tools'
+import { Reveal } from '../ui/Reveal'
+import { SectionHeader } from '../ui/SectionHeader'
+
+export function Tools() {
+  return (
+    <section id="tools" className="bg-deep py-20 lg:py-28">
+      <div className="mx-auto max-w-container px-4 md:px-6">
+        <Reveal>
+          <SectionHeader
+            title="Research, Test, Decide — Six Tools Built for Traders Who Do Their Own Homework"
+            description="Each tool ships with transparent data labels and clear limitations. No hype, just structured analysis."
+          />
+        </Reveal>
+
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {tools.map((tool, i) => (
+            <Reveal key={tool.title} delay={(i % 3) * 90}>
+              <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-navy p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-card-lg">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
+                  style={{ background: 'rgb(0 180 230 / 0.12)' }}
+                />
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent transition-all duration-300 group-hover:scale-110 group-hover:shadow-glow">
+                  <tool.icon className="h-6 w-6" />
+                </div>
+                <h3 className="mb-2 text-base font-bold text-ink">{tool.title}</h3>
+                <p className="mb-5 flex-1 text-sm leading-relaxed text-muted-dark">
+                  {tool.description}
+                </p>
+                <a
+                  href={tool.href}
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors hover:text-accent-hover"
+                >
+                  {tool.linkLabel}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </a>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
