@@ -60,7 +60,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-8 lg:flex" aria-label="Main">
+        <nav className="hidden items-center gap-4 lg:flex xl:gap-8" aria-label="Main">
           <div ref={toolsRef} className="relative">
             <button
               type="button"

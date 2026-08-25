@@ -7,6 +7,11 @@ import { TradersPage } from './pages/TradersPage'
 import { LeaderboardPage } from './pages/LeaderboardPage'
 import { ContactPage } from './pages/ContactPage'
 import { GetStartedPage } from './pages/GetStartedPage'
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage'
+import { TermsConditionsPage } from './pages/TermsConditionsPage'
+import { DisclaimerPage } from './pages/DisclaimerPage'
+import { CookiePolicyPage } from './pages/CookiePolicyPage'
+import { RiskDisclosurePage } from './pages/RiskDisclosurePage'
 
 /** Scrolls to top on route change, or to the hash target when present. */
 function ScrollManager() {
@@ -47,6 +52,11 @@ export default function App() {
           <Route path="/leaderboard" element={<LeaderboardPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/get-started" element={<GetStartedPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms-conditions" element={<TermsConditionsPage />} />
+          <Route path="/disclaimer" element={<DisclaimerPage />} />
+          <Route path="/cookie-policy" element={<CookiePolicyPage />} />
+          <Route path="/risk-disclosure" element={<RiskDisclosurePage />} />
         </Routes>
       </main>
 

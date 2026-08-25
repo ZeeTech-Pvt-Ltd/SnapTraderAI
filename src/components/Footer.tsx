@@ -18,9 +18,11 @@ const FOOTER_COLUMNS = [
     links: [
       { label: 'About Us', href: '#top' },
       { label: 'Contact', href: '/contact' },
-      { label: 'Privacy Policy', href: '#top' },
-      { label: 'Terms & Conditions', href: '#top' },
-      { label: 'Disclaimer', href: '#top' },
+      { label: 'Privacy Policy', href: '/privacy-policy' },
+      { label: 'Terms & Conditions', href: '/terms-conditions' },
+      { label: 'Disclaimer', href: '/disclaimer' },
+      { label: 'Cookie Policy', href: '/cookie-policy' },
+      { label: 'Risk Disclosure', href: '/risk-disclosure' },
     ],
   },
 ]

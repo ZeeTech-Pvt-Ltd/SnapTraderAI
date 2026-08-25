@@ -1,40 +1,46 @@
-import { useEffect, useState, type FormEvent } from 'react'
-import { CheckCircle2, Clock, Mail, MessageSquare, Send } from 'lucide-react'
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { ChevronRight, Clock, Headset, Mail } from 'lucide-react'
+import { LeadForm } from '../components/LeadForm'
 import { Reveal } from '../components/ui/Reveal'
 
-const CONTACT_INFO = [
+interface Channel {
+  icon: typeof Mail
+  title: string
+  value: string
+  sub?: string
+  /** External/anchor link — renders a plain anchor */
+  href?: string
+  /** Internal route — renders a router Link */
+  to?: string
+}
+
+const CHANNELS: Channel[] = [
   {
     icon: Mail,
     title: 'Email Us',
-    lines: ['support@snap-traderai.com', 'We reply within 24 hours'],
+    value: 'support@snap-traderai.com',
+    sub: 'We reply within 24 hours',
+    href: 'mailto:support@snap-traderai.com',
+  },
+  {
+    icon: Headset,
+    title: 'Live Support',
+    value: 'Click here to live support',
+    sub: 'Chat with us in real time',
+    href: '#replain-link',
   },
   {
     icon: Clock,
     title: 'Support Hours',
-    lines: ['Monday – Friday', '09:00 – 18:00 (GMT)'],
-  },
-  {
-    icon: MessageSquare,
-    title: 'Quick Answers',
-    lines: ['Check the FAQ first', 'Most questions are answered there'],
+    value: 'Monday – Friday · 09:00–18:00 GMT',
   },
 ]
 
 export function ContactPage() {
-  const [sent, setSent] = useState(false)
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [subject, setSubject] = useState('General question')
-  const [message, setMessage] = useState('')
-
   useEffect(() => {
     document.title = 'Contact | SnapTrader AI'
   }, [])
-
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    setSent(true)
-  }
 
   return (
     <div className="bg-deep pt-[72px]">
@@ -48,11 +54,12 @@ export function ContactPage() {
         <div className="relative z-10 mx-auto max-w-container px-4 md:px-6">
           <Reveal>
             <h1 className="mb-5 max-w-[600px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-              Get in <span className="text-gradient-brand">Touch</span>
+              Contact <span className="text-gradient-brand">Us</span>
             </h1>
             <p className="max-w-2xl text-base leading-relaxed text-muted-dark md:text-lg">
-              Questions about the platform, your account, or our AI trading
-              agents? We're here to help — reach out any time.
+              If you have questions about Snap Trader AI, need assistance with
+              the platform, or want to learn more about our services, feel free
+              to reach out. Our team aims to respond as quickly as possible.
             </p>
           </Reveal>
         </div>
@@ -61,135 +68,96 @@ export function ContactPage() {
       {/* Contact body */}
       <section className="bg-deep pb-20 lg:pb-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-[1fr_1.4fr] lg:gap-8">
-            {/* Info cards */}
-            <div className="flex flex-col gap-4">
-              {CONTACT_INFO.map((item, i) => (
-                <Reveal key={item.title} delay={i * 90}>
-                  <div className="flex items-start gap-4 rounded-2xl border border-border bg-navy p-6 shadow-card">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
-                      <item.icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h2 className="mb-1.5 text-base font-bold text-ink">{item.title}</h2>
-                      <p className="text-sm font-semibold text-muted-dark">{item.lines[0]}</p>
-                      <p className="text-xs text-ink-soft">{item.lines[1]}</p>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-              <Reveal delay={270}>
-                <div className="rounded-2xl border border-border bg-navy p-6 shadow-card">
-                  <p className="text-sm leading-relaxed text-muted-dark">
-                    <span className="font-bold text-ink">Note:</span> Snap Trader
-                    AI is a research platform — not a broker. We do not accept
-                    deposits, hold funds or provide financial advice.
-                  </p>
-                </div>
-              </Reveal>
-            </div>
+          <div className="grid items-start gap-6 lg:grid-cols-[1fr_1.4fr] lg:gap-8">
+            {/* Contact channels — one directory panel */}
+            <Reveal>
+              <div className="overflow-hidden rounded-2xl border border-border bg-navy shadow-card">
+                {CHANNELS.map((channel, i) => {
+                  const inner = (
+                    <>
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent transition-all duration-300 group-hover:scale-105 group-hover:bg-accent/15">
+                        <channel.icon className="h-5 w-5" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-sm font-bold text-ink">
+                          {channel.title}
+                        </span>
+                        <span className="mt-0.5 block text-sm font-semibold text-accent">
+                          {channel.value}
+                        </span>
+                        {channel.sub && (
+                          <span className="mt-0.5 block text-xs text-ink-soft">
+                            {channel.sub}
+                          </span>
+                        )}
+                      </span>
+                      <ChevronRight className="h-4 w-4 shrink-0 text-ink-soft/60 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-accent" />
+                    </>
+                  )
 
-            {/* Form */}
+                  return (
+                    <div key={channel.title} className={i > 0 ? 'border-t border-border' : ''}>
+                      {channel.to ? (
+                        <Link
+                          to={channel.to}
+                          className="group flex items-center gap-4 p-5 transition-colors hover:bg-medium-navy/50"
+                        >
+                          {inner}
+                        </Link>
+                      ) : channel.href ? (
+                        <a
+                          href={channel.href}
+                          className="group flex items-center gap-4 p-5 transition-colors hover:bg-medium-navy/50"
+                        >
+                          {inner}
+                        </a>
+                      ) : (
+                        <div className="group flex items-center gap-4 p-5">
+                          {inner}
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+
+              </div>
+
+              {/* Get in Touch — from the reference contact page */}
+              <div className="mt-6 rounded-2xl border border-border bg-navy p-6 shadow-card">
+                <h2 className="mb-3 text-base font-bold text-ink">Get in Touch</h2>
+                <p className="text-sm leading-relaxed text-muted-dark">
+                  Please note that Snap Trader AI does not provide personalized
+                  financial or investment advice. Any questions related to
+                  trading decisions should be discussed with a qualified
+                  financial professional.
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-dark">
+                  We appreciate your interest in Snap Trader AI and value your
+                  trust. Your feedback helps us improve and serve you better.
+                </p>
+              </div>
+            </Reveal>
+
+            {/* Form — same lead form as the Get Started page */}
             <Reveal delay={120}>
-              <div className="h-full rounded-2xl border border-border bg-navy p-6 shadow-card md:p-8">
-                {sent ? (
-                  <div className="flex h-full flex-col items-center justify-center py-16 text-center">
-                    <span className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-success/15">
-                      <CheckCircle2 className="h-7 w-7 text-success" />
-                    </span>
-                    <h2 className="mb-2 text-xl font-extrabold text-ink">
-                      Message Sent
-                    </h2>
-                    <p className="max-w-sm text-sm leading-relaxed text-muted-dark">
-                      Thanks {name.trim() || 'for reaching out'} — we'll get back
-                      to you at {email || 'your email'} within 24 hours.
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => setSent(false)}
-                      className="mt-6 cursor-pointer text-sm font-semibold text-accent transition-colors hover:text-accent-hover"
-                    >
-                      Send another message
-                    </button>
-                  </div>
-                ) : (
-                  <form onSubmit={onSubmit} className="flex h-full flex-col gap-5">
-                    <div className="grid gap-5 sm:grid-cols-2">
-                      <div>
-                        <label htmlFor="contact-name" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-ink-soft">
-                          Your Name
-                        </label>
-                        <input
-                          id="contact-name"
-                          type="text"
-                          required
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          placeholder="John Smith"
-                          className="w-full rounded-lg border border-border bg-deep px-4 py-3 text-sm text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-accent/60"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="contact-email" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-ink-soft">
-                          Email Address
-                        </label>
-                        <input
-                          id="contact-email"
-                          type="email"
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="john@example.com"
-                          className="w-full rounded-lg border border-border bg-deep px-4 py-3 text-sm text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-accent/60"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label htmlFor="contact-subject" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-ink-soft">
-                        Subject
-                      </label>
-                      <select
-                        id="contact-subject"
-                        value={subject}
-                        onChange={(e) => setSubject(e.target.value)}
-                        className="w-full cursor-pointer appearance-none rounded-lg border border-border bg-deep px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-accent/60"
-                      >
-                        {[
-                          'General question',
-                          'Account & access',
-                          'AI trading agents',
-                          'Partnership',
-                          'Report an issue',
-                        ].map((o) => (
-                          <option key={o} value={o}>
-                            {o}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="flex-1">
-                      <label htmlFor="contact-message" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-ink-soft">
-                        Message
-                      </label>
-                      <textarea
-                        id="contact-message"
-                        required
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        rows={6}
-                        placeholder="How can we help?"
-                        className="w-full resize-none rounded-lg border border-border bg-deep px-4 py-3 text-sm text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-accent/60"
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="btn btn-primary btn-lg group w-full cursor-pointer"
-                    >
-                      Send Message
-                      <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                    </button>
-                  </form>
-                )}
+              <div className="rounded-2xl border border-border bg-navy p-6 shadow-card md:p-8">
+                <LeadForm
+                  formHeading="Explore Trading Opportunities"
+                  submitLabel="Register Now"
+                  successTitle={(firstName) => (
+                    <>Message Sent{firstName.trim() ? `, ${firstName.trim()}` : ''}</>
+                  )}
+                  successMessage={(_firstName, email) => (
+                    <>
+                      Thanks for reaching out — we'll get back to you at{' '}
+                      <span className="font-semibold text-ink">
+                        {email || 'your email'}
+                      </span>{' '}
+                      within 24 hours.
+                    </>
+                  )}
+                  retryLabel="Send another message"
+                />
               </div>
             </Reveal>
           </div>

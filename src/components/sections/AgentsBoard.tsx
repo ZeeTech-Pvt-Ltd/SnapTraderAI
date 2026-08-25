@@ -114,7 +114,7 @@ export function AgentsBoard() {
           </div>
 
           {/* Mobile cards */}
-          <div className="grid gap-3 sm:grid-cols-2 lg:hidden">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:hidden">
             {top.map((t, i) => {
               const s = traderStats(t)
               const positive = s.totalReturn >= 0

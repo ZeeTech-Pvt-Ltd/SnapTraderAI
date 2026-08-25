@@ -245,7 +245,7 @@ export function LeaderboardPage() {
             </div>
 
             {/* Mobile cards */}
-            <div className="grid gap-3 sm:grid-cols-2 lg:hidden">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:hidden">
               {visible.map((t, i) => {
                 const s = traderStats(t)
                 const positive = s.totalReturn >= 0
@@ -280,7 +280,7 @@ export function LeaderboardPage() {
                       </p>
                     </div>
                     <div className="mb-3 flex items-center justify-between gap-2">
-                      <span className="truncate text-xs text-muted-dark">{t.shortStrategy}</span>
+                      <span className="min-w-0 truncate text-xs text-muted-dark">{t.shortStrategy}</span>
                       <span
                         className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-bold ${riskBadge[riskLevel]}`}
                       >
