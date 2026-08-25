@@ -33,7 +33,7 @@ export const tools: Tool[] = [
     description:
       'Fast signals built for 1–5 minute charts. The scalp engine reads momentum, order flow and micro-structure for traders who work in minutes, not days.',
     limitation: 'Short timeframes are noisier — small moves can whipsaw.',
-    href: '#tools',
+    href: '/ai-scalp-analyzer',
     linkLabel: 'Explore Scalp Analysis',
   },
   {
