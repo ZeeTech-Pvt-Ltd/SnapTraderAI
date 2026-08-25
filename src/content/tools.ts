@@ -24,7 +24,7 @@ export const tools: Tool[] = [
     description:
       'Upload a chart and get structured observations: trend direction, key support and resistance levels, and entry and exit points with confidence scoring.',
     limitation: 'Visible data only — may miss broader market context.',
-    href: '#tools',
+    href: '/ai-trade-analyzer',
     linkLabel: 'Explore Chart Analyzer',
   },
   {

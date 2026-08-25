@@ -12,6 +12,7 @@ import { TermsConditionsPage } from './pages/TermsConditionsPage'
 import { DisclaimerPage } from './pages/DisclaimerPage'
 import { CookiePolicyPage } from './pages/CookiePolicyPage'
 import { RiskDisclosurePage } from './pages/RiskDisclosurePage'
+import { TradeAnalyzerPage } from './pages/TradeAnalyzerPage'
 
 /** Scrolls to top on route change, or to the hash target when present. */
 function ScrollManager() {
@@ -57,6 +58,7 @@ export default function App() {
           <Route path="/disclaimer" element={<DisclaimerPage />} />
           <Route path="/cookie-policy" element={<CookiePolicyPage />} />
           <Route path="/risk-disclosure" element={<RiskDisclosurePage />} />
+          <Route path="/ai-trade-analyzer" element={<TradeAnalyzerPage />} />
         </Routes>
       </main>
 

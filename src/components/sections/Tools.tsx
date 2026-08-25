@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { tools } from '../../content/tools'
 import { Reveal } from '../ui/Reveal'
@@ -41,13 +42,23 @@ export function Tools() {
                 <p className="mb-5 flex-1 text-sm leading-relaxed text-muted-dark">
                   {tool.description}
                 </p>
-                <a
-                  href={tool.href}
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors hover:text-accent-hover"
-                >
-                  {tool.linkLabel}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </a>
+                {tool.href.startsWith('/') ? (
+                  <Link
+                    to={tool.href}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors hover:text-accent-hover"
+                  >
+                    {tool.linkLabel}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </Link>
+                ) : (
+                  <a
+                    href={tool.href}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors hover:text-accent-hover"
+                  >
+                    {tool.linkLabel}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </a>
+                )}
               </article>
             </Reveal>
           ))}
