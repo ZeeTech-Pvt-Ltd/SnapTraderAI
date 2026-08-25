@@ -14,6 +14,7 @@ import { CookiePolicyPage } from './pages/CookiePolicyPage'
 import { RiskDisclosurePage } from './pages/RiskDisclosurePage'
 import { TradeAnalyzerPage } from './pages/TradeAnalyzerPage'
 import { ScalpAnalyzerPage } from './pages/ScalpAnalyzerPage'
+import { SwingTradingPage } from './pages/SwingTradingPage'
 
 /** Scrolls to top on route change, or to the hash target when present. */
 function ScrollManager() {
@@ -61,6 +62,7 @@ export default function App() {
           <Route path="/risk-disclosure" element={<RiskDisclosurePage />} />
           <Route path="/ai-trade-analyzer" element={<TradeAnalyzerPage />} />
           <Route path="/ai-scalp-analyzer" element={<ScalpAnalyzerPage />} />
+          <Route path="/ai-swing-trading" element={<SwingTradingPage />} />
         </Routes>
       </main>
 

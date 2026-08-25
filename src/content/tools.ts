@@ -42,7 +42,7 @@ export const tools: Tool[] = [
     description:
       'Multi-day swing setups built from higher-timeframe structure, momentum confluence and risk-to-reward scoring. Designed for traders who hold through the noise.',
     limitation: 'Past setups do not guarantee future performance.',
-    href: '#tools',
+    href: '/ai-swing-trading',
     linkLabel: 'Explore Swing Trading',
   },
   {

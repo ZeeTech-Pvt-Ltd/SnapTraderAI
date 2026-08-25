@@ -29,7 +29,7 @@ export const toolsDropdown: NavDropdown = {
   items: [
     { label: 'AI Trade Analyzer', href: '/ai-trade-analyzer' },
     { label: 'AI Scalp Analyzer', href: '/ai-scalp-analyzer' },
-    { label: 'AI Swing Trading', href: '#tools' },
+    { label: 'AI Swing Trading', href: '/ai-swing-trading' },
     { label: 'AI News Analysis', href: '#tools' },
   ],
 }
