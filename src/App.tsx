@@ -18,6 +18,8 @@ import { SwingTradingPage } from './pages/SwingTradingPage'
 import { StrategyBuilderPage } from './pages/StrategyBuilderPage'
 import { PatternDetectionPage } from './pages/PatternDetectionPage'
 import { StrategyBacktestingPage } from './pages/StrategyBacktestingPage'
+import { NotFoundPage } from './pages/NotFoundPage'
+import { TradingPlatformPage } from './pages/TradingPlatformPage'
 
 /** Scrolls to top on route change, or to the hash target when present. */
 function ScrollManager() {
@@ -69,6 +71,8 @@ export default function App() {
           <Route path="/ai-strategy-builder" element={<StrategyBuilderPage />} />
           <Route path="/ai-pattern-detection" element={<PatternDetectionPage />} />
           <Route path="/strategy-backtesting" element={<StrategyBacktestingPage />} />
+          <Route path="/ai-trading-platform" element={<TradingPlatformPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
 

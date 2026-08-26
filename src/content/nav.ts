@@ -9,7 +9,7 @@ export interface NavDropdown {
 }
 
 export const navLinks: NavLink[] = [
-  { label: 'AI Trading Platform', href: '#tools' },
+  { label: 'AI Trading Platform', href: '/ai-trading-platform' },
   { label: 'Traders', href: '/traders' },
   { label: 'Leaderboard', href: '/leaderboard' },
   { label: 'How It Works', href: '#how-it-works' },

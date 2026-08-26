@@ -179,6 +179,30 @@
   }
 }
 
+/* Wide ticker tape — 4 copies, shift 25% per loop for a seamless scroll */
+@keyframes marquee25 {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-25%);
+  }
+}
+
+.animate-marquee-25 {
+  animation: marquee25 44s linear infinite;
+}
+
+.animate-marquee-25:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-25 {
+    animation: none;
+  }
+}
+
 /* Terminal caret blink */
 @keyframes cursorBlink {
   0%,
