@@ -33,5 +33,6 @@ export const toolsDropdown: NavDropdown = {
     { label: 'AI Strategy Builder', href: '/ai-strategy-builder' },
     { label: 'AI Pattern Detection', href: '/ai-pattern-detection' },
     { label: 'Strategy Backtesting', href: '/strategy-backtesting' },
+    { label: 'Risk Calculator', href: '/risk-calculator' },
   ],
 }

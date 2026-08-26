@@ -28,19 +28,36 @@ export function LeadForm({
   const [agreed, setAgreed] = useState(true)
   const phoneRef = useRef<HTMLInputElement>(null)
 
-  // International phone input — same widget as the reference site
+  // International phone input — same widget as the reference site.
+  // Defaults to UK, then refines the country from the visitor's IP.
   useEffect(() => {
     const input = phoneRef.current
     if (!input) return
     const iti = intlTelInput(input, {
       separateDialCode: true,
-      initialCountry: 'us',
+      initialCountry: 'gb',
       // Popular countries first, then the rest A–Z (like the reference page)
-      countryOrder: ['us', 'gb', 'ca', 'au', 'de', 'fr', 'es', 'it'],
+      countryOrder: ['gb', 'us', 'ca', 'au', 'de', 'fr', 'es', 'it'],
       autoPlaceholder: 'off',
     })
-    input.placeholder = '201-555-0123'
-    return () => iti.destroy()
+    input.placeholder = '07123 456789'
+
+    let destroyed = false
+    fetch('https://ipwho.is/')
+      .then((res) => res.json())
+      .then((data) => {
+        if (!destroyed && data?.country_code) {
+          iti.setCountry(data.country_code.toLowerCase())
+        }
+      })
+      .catch(() => {
+        // Offline or blocked — keep the UK default
+      })
+
+    return () => {
+      destroyed = true
+      iti.destroy()
+    }
   }, [])
 
   const onSubmit = (e: FormEvent) => {
