@@ -1,10 +1,10 @@
 import type { LucideIcon } from 'lucide-react'
 import {
   ChartCandlestick,
+  FlaskConical,
   LineChart,
   NotebookPen,
   ScanLine,
-  ShieldCheck,
   Zap,
 } from 'lucide-react'
 
@@ -55,13 +55,13 @@ export const tools: Tool[] = [
     linkLabel: 'Explore Strategy Builder',
   },
   {
-    icon: ShieldCheck,
-    title: 'Risk Insights',
+    icon: FlaskConical,
+    title: 'Strategy Backtesting',
     description:
-      'Set position size limits, daily loss caps, exposure tracking and drawdown alerts. Controls are built into every workflow, not bolted on after.',
-    limitation: 'Controls reduce risk — they do not remove it.',
-    href: '#tools',
-    linkLabel: 'Explore Risk Insights',
+      'Replay your exact entry, exit and risk rules across years of historical price action — through rallies, chop and crashes — before your capital is on the line.',
+    limitation: 'Backtesting does not predict the future.',
+    href: '/strategy-backtesting',
+    linkLabel: 'Explore Backtesting',
   },
   {
     icon: ChartCandlestick,
