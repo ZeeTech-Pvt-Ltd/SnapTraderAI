@@ -2,7 +2,7 @@ import type { LucideIcon } from 'lucide-react'
 import {
   ChartCandlestick,
   LineChart,
-  Newspaper,
+  NotebookPen,
   ScanLine,
   ShieldCheck,
   Zap,
@@ -46,13 +46,13 @@ export const tools: Tool[] = [
     linkLabel: 'Explore Swing Trading',
   },
   {
-    icon: Newspaper,
-    title: 'AI News Analysis',
+    icon: NotebookPen,
+    title: 'AI Strategy Builder',
     description:
-      'News alerts and sentiment scoring that show how headlines are shifting market bias — bullish, bearish or neutral — before you commit to a trade.',
-    limitation: 'Sentiment is a snapshot — it can flip in seconds.',
-    href: '#tools',
-    linkLabel: 'Explore News Analysis',
+      'Say the rule in plain words — “buy gold when price breaks the 20-day high” — and get a complete, readable trading system: entry, exit, filters, risk rules and paper testing.',
+    limitation: 'A strategy is only as good as the idea behind it.',
+    href: '/ai-strategy-builder',
+    linkLabel: 'Explore Strategy Builder',
   },
   {
     icon: ShieldCheck,
