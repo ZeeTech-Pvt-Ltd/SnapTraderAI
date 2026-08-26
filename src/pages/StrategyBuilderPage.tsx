@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import {
   ArrowRight,
   CheckCheck,
@@ -270,7 +271,21 @@ export function StrategyBuilderPage() {
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <p className="text-sm font-semibold leading-relaxed text-muted-dark">
-                    {step}
+                    {i === APPROVAL_STEPS.length - 1 ? (
+                      <>
+                        Check historical results before going live (full detail
+                        on the{' '}
+                        <Link
+                          to="/strategy-backtesting"
+                          className="font-semibold text-accent hover:underline"
+                        >
+                          Strategy Backtester page
+                        </Link>
+                        )
+                      </>
+                    ) : (
+                      step
+                    )}
                   </p>
                 </div>
               </Reveal>
