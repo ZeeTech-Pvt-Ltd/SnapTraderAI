@@ -94,8 +94,9 @@ export function StrategyBuilderPage() {
         <div className="relative z-10 mx-auto max-w-container px-4 md:px-6">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal>
-              <h1 className="mb-5 max-w-[620px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.9rem]">
-                Say the Rule, Get the <span className="text-gradient-brand">System</span>
+              <h1 className="mb-5 max-w-[600px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
+                AI Strategy Builder — Say the Rule, Get the{' '}
+                <span className="text-gradient-brand">System</span>
               </h1>
               <p className="mb-8 max-w-[540px] text-lg leading-relaxed text-muted-dark">
                 Every trader has an idea. The problem is that the idea never
