@@ -25,7 +25,7 @@ export const footerLinks: NavLink[] = [
 ]
 
 export const toolsDropdown: NavDropdown = {
-  label: 'AI Tools',
+  label: 'AI Products',
   items: [
     { label: 'AI Trade Analyzer', href: '/ai-trade-analyzer' },
     { label: 'AI Scalp Analyzer', href: '/ai-scalp-analyzer' },

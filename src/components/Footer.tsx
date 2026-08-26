@@ -6,7 +6,7 @@ const linkTo = (href: string) => (href.startsWith('#') ? `/${href}` : href)
 
 const FOOTER_COLUMNS = [
   {
-    title: 'AI Tools',
+    title: 'AI Products',
     links: toolsDropdown.items,
   },
   {

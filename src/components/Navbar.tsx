@@ -133,7 +133,7 @@ export function Navbar() {
         }`}
       >
         <p className="mb-2 text-xs font-bold uppercase tracking-wider text-ink-soft">
-          AI Tools
+          AI Products
         </p>
         {toolsDropdown.items.map((item) => (
           <Link
