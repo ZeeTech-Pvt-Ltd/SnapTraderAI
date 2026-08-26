@@ -65,11 +65,11 @@ export const tools: Tool[] = [
   },
   {
     icon: ChartCandlestick,
-    title: 'Pattern Detection',
+    title: 'AI Pattern Detection',
     description:
-      '26 indicators scanning for bullish and bearish patterns across 4 timeframes, each rated with a confidence score and a clear data label.',
+      'The pattern engine watches the charts so you don’t have to — flags formations the moment they qualify, with breakout levels, invalidation points and confidence scores.',
     limitation: 'Patterns are probabilities, not certainties.',
-    href: '#tools',
+    href: '/ai-pattern-detection',
     linkLabel: 'Explore Pattern Detection',
   },
 ]

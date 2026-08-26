@@ -16,6 +16,7 @@ import { TradeAnalyzerPage } from './pages/TradeAnalyzerPage'
 import { ScalpAnalyzerPage } from './pages/ScalpAnalyzerPage'
 import { SwingTradingPage } from './pages/SwingTradingPage'
 import { StrategyBuilderPage } from './pages/StrategyBuilderPage'
+import { PatternDetectionPage } from './pages/PatternDetectionPage'
 
 /** Scrolls to top on route change, or to the hash target when present. */
 function ScrollManager() {
@@ -65,6 +66,7 @@ export default function App() {
           <Route path="/ai-scalp-analyzer" element={<ScalpAnalyzerPage />} />
           <Route path="/ai-swing-trading" element={<SwingTradingPage />} />
           <Route path="/ai-strategy-builder" element={<StrategyBuilderPage />} />
+          <Route path="/ai-pattern-detection" element={<PatternDetectionPage />} />
         </Routes>
       </main>
 

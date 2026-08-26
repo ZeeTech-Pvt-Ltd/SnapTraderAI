@@ -31,5 +31,6 @@ export const toolsDropdown: NavDropdown = {
     { label: 'AI Scalp Analyzer', href: '/ai-scalp-analyzer' },
     { label: 'AI Swing Trading', href: '/ai-swing-trading' },
     { label: 'AI Strategy Builder', href: '/ai-strategy-builder' },
+    { label: 'AI Pattern Detection', href: '/ai-pattern-detection' },
   ],
 }
