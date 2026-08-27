@@ -144,19 +144,6 @@ export function ContactPage() {
                 <LeadForm
                   formHeading="Explore Trading Opportunities"
                   submitLabel="Register Now"
-                  successTitle={(firstName) => (
-                    <>Message Sent{firstName.trim() ? `, ${firstName.trim()}` : ''}</>
-                  )}
-                  successMessage={(_firstName, email) => (
-                    <>
-                      Thanks for reaching out — we'll get back to you at{' '}
-                      <span className="font-semibold text-ink">
-                        {email || 'your email'}
-                      </span>{' '}
-                      within 24 hours.
-                    </>
-                  )}
-                  retryLabel="Send another message"
                 />
               </div>
             </Reveal>

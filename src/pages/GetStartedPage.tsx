@@ -54,20 +54,8 @@ export function GetStartedPage() {
           <Reveal delay={100}>
             <div className="rounded-2xl border border-border bg-navy p-6 shadow-card-lg md:p-8">
               <LeadForm
+                formHeading="Explore Trading Opportunities"
                 submitLabel="Start Free Access"
-                successTitle={(firstName) => (
-                  <>You're In, {firstName.trim() || 'Trader'}!</>
-                )}
-                successMessage={(_firstName, email) => (
-                  <>
-                    We've sent your access details to{' '}
-                    <span className="font-semibold text-ink">
-                      {email || 'your email'}
-                    </span>
-                    . Start with paper trading — no real capital required.
-                  </>
-                )}
-                retryLabel="Fill the form again"
               />
             </div>
           </Reveal>

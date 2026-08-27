@@ -42,5 +42,6 @@ export const resourcesDropdown: NavDropdown = {
   items: [
     { label: 'Academy', href: '/academy' },
     { label: 'Performance Verification', href: '/performance-verification' },
+    { label: 'Why Choose SnapTrader AI', href: '/why-choose-snaptrader-ai' },
   ],
 }

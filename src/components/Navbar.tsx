@@ -135,43 +135,57 @@ export function Navbar() {
         aria-hidden="true"
       />
       <div
-        className={`fixed top-[72px] right-0 z-50 h-[calc(100vh-72px)] w-[300px] overflow-y-auto border-l border-border bg-navy p-8 transition-transform duration-300 lg:hidden ${
+        className={`fixed top-[72px] right-0 z-50 flex h-[calc(100vh-72px)] w-[320px] flex-col border-l border-border bg-navy transition-transform duration-300 lg:hidden ${
           mobileOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {DROPDOWNS.map((dropdown) => (
-          <div key={dropdown.label}>
-            <p className="mb-2 mt-6 text-xs font-bold uppercase tracking-wider text-ink-soft first:mt-0">
-              {dropdown.label}
+        {/* Groups + links */}
+        <div className="flex-1 overflow-y-auto p-5">
+          {DROPDOWNS.map((dropdown) => (
+            <div key={dropdown.label}>
+              <p className="mb-3 mt-8 flex items-center gap-2 text-sm font-bold uppercase tracking-[0.12em] text-ink">
+                <span aria-hidden="true" className="h-2 w-2 rounded-full gradient-brand" />
+                {dropdown.label}
+              </p>
+              {dropdown.items.map((item) => (
+                <Link
+                  key={item.label}
+                  to={linkTo(item.href)}
+                  onClick={() => setMobileOpen(false)}
+                  className="block border-b border-border py-3 text-[0.95rem] font-medium text-ink/75 transition-colors hover:text-accent"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          ))}
+          <div className="mt-6">
+            <p className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-[0.12em] text-ink">
+              <span aria-hidden="true" className="h-2 w-2 rounded-full gradient-brand" />
+              Explore
             </p>
-            {dropdown.items.map((item) => (
+            {navLinks.map((link) => (
               <Link
-                key={item.label}
-                to={linkTo(item.href)}
+                key={link.label}
+                to={linkTo(link.href)}
                 onClick={() => setMobileOpen(false)}
-                className="block border-b border-border py-2.5 text-[1.05rem] font-medium text-ink/85"
+                className="block border-b border-border py-3 text-[0.95rem] font-medium text-ink/75 transition-colors hover:text-accent"
               >
-                {item.label}
+                {link.label}
               </Link>
             ))}
           </div>
-        ))}
-        <p className="mb-2 mt-6 text-xs font-bold uppercase tracking-wider text-ink-soft">
-          Explore
-        </p>
-        {navLinks.map((link) => (
-          <Link
-            key={link.label}
-            to={linkTo(link.href)}
-            onClick={() => setMobileOpen(false)}
-            className="block border-b border-border py-2.5 text-[1.05rem] font-medium text-ink/85"
-          >
-            {link.label}
-          </Link>
-        ))}
-        <Button to="/get-started" className="mt-8 w-full" onClick={() => setMobileOpen(false)}>
-          Get Started Free
-        </Button>
+        </div>
+
+        {/* Pinned CTA */}
+        <div className="border-t border-border p-5">
+          <Button to="/get-started" className="w-full" onClick={() => setMobileOpen(false)}>
+            Get Started Free
+          </Button>
+          <p className="mt-3 text-center text-xs text-ink-soft">
+            No credit card · No deposit required
+          </p>
+        </div>
       </div>
     </header>
   )
