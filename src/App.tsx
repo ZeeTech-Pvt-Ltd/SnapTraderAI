@@ -22,6 +22,8 @@ import { AcademyPage } from './pages/AcademyPage'
 import { PerformanceVerificationPage } from './pages/PerformanceVerificationPage'
 import { ThankYouPage } from './pages/ThankYouPage'
 import { WhyChoosePage } from './pages/WhyChoosePage'
+import { BlogPage } from './pages/BlogPage'
+import { BlogPostPage } from './pages/BlogPostPage'
 import { StrategyBacktestingPage } from './pages/StrategyBacktestingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { TradingPlatformPage } from './pages/TradingPlatformPage'
@@ -82,6 +84,8 @@ export default function App() {
           <Route path="/performance-verification" element={<PerformanceVerificationPage />} />
           <Route path="/thank-you" element={<ThankYouPage />} />
           <Route path="/why-choose-snaptrader-ai" element={<WhyChoosePage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

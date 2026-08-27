@@ -22,7 +22,7 @@ export const footerLinks: NavLink[] = [
 ]
 
 export const toolsDropdown: NavDropdown = {
-  label: 'AI Products',
+  label: 'Products',
   items: [
     { label: 'AI Trade Analyzer', href: '/ai-trade-analyzer' },
     { label: 'AI Scalp Analyzer', href: '/ai-scalp-analyzer' },
@@ -38,6 +38,7 @@ export const resourcesDropdown: NavDropdown = {
   label: 'Resources',
   items: [
     { label: 'Academy', href: '/academy' },
+    { label: 'Blog', href: '/blog' },
     { label: 'Performance Verification', href: '/performance-verification' },
     { label: 'Why Choose SnapTrader AI', href: '/why-choose-snaptrader-ai' },
   ],
