@@ -215,3 +215,45 @@ export function traderSeries(t: Trader, points = 20): number[] {
   const scale = totalReturn / last
   return walk.map((v) => Number((v * scale).toFixed(2)))
 }
+
+/** Deterministic monthly returns for the last 12 months (%). */
+export function traderMonthly(t: Trader): { month: string; value: number }[] {
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const h = hashSeed(t.id + '-monthly')
+  return MONTHS.map((month, i) => {
+    const v = (((h >>> (i * 2)) % 17) - 6) + ((h >>> (i * 3)) % 7) / 10 - 2.5
+    return { month, value: Number(v.toFixed(2)) }
+  })
+}
+
+export interface ClosedTrade {
+  date: string
+  symbol: string
+  action: 'BUY' | 'SELL'
+  entry: number
+  exit: number
+  pnl: number
+}
+
+/** Deterministic closed-trade history (demo). */
+export function traderClosedTrades(t: Trader, n = 6): ClosedTrade[] {
+  const h = hashSeed(t.id + '-trades')
+  const SYMBOLS = ['GBPUSD', 'EURUSD', 'XAUUSD', 'BTCUSD', 'US30', 'NAS100']
+  const trades: ClosedTrade[] = []
+  for (let i = 0; i < n; i++) {
+    const base = 1 + ((h >>> (i * 4)) % 300) / 100
+    const entry = base
+    const dir = ((h >>> (i * 5)) % 2) === 0 ? 1 : -1
+    const exit = base + dir * ((1 + ((h >>> (i * 6)) % 30)) / 1000)
+    const pnl = Number((dir * (1 + ((h >>> (i * 7)) % 40)) / 10).toFixed(2))
+    trades.push({
+      date: `2026-08-${String(26 - i).padStart(2, '0')} 0${i}:00`,
+      symbol: SYMBOLS[i % SYMBOLS.length],
+      action: dir > 0 ? 'BUY' : 'SELL',
+      entry: Number(entry.toFixed(4)),
+      exit: Number(exit.toFixed(4)),
+      pnl,
+    })
+  }
+  return trades
+}

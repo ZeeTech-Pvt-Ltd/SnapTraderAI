@@ -31,11 +31,11 @@ function FollowButton() {
 }
 
 export function AgentsBoard() {
-  // First 7 rows of the leaderboard — same default order (Return ↓)
+  // First 7 rows of the leaderboard — same default order (Roster Order)
   const top = useMemo(
     () =>
       [...traders]
-        .sort((a, b) => traderStats(b).totalReturn - traderStats(a).totalReturn)
+        .sort((a, b) => Number(a.id.split('-')[1]) - Number(b.id.split('-')[1]))
         .slice(0, 7),
     [],
   )

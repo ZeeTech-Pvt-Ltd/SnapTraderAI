@@ -8,12 +8,25 @@ interface LeadFormProps {
   submitLabel: string
   /** Optional heading rendered above the fields */
   formHeading?: ReactNode
+  /** Which form this is, sent to the backend (e.g. "contact_us") */
+  formName: string
 }
 
 /** Backend that receives the lead (user-provided mail handler). */
 const LEAD_ENDPOINT = 'https://quantryxtech.com/homeMailAction.php'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/** Auto-generated account password, matching the reference integration. */
+function generatePassword(): string {
+  const upper = 'ABCDEFGHJKLMNPQRSTUVWXYZ'
+  const lower = 'abcdefghijkmnopqrstuvwxyz'
+  const digits = '23456789'
+  const pick = (set: string) => set[Math.floor(Math.random() * set.length)]
+  return (
+    pick(upper) + pick(upper) + pick(digits) + pick(digits) + pick(lower) + pick(lower)
+  )
+}
 
 interface FieldErrors {
   firstName?: string
@@ -39,7 +52,7 @@ function FieldError({ message }: { message?: string }) {
 
 /** Shared lead-capture form (Get Started + Contact pages).
     Validation mirrors the reference form: inline field errors, no native bubbles. */
-export function LeadForm({ submitLabel, formHeading }: LeadFormProps) {
+export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) {
   const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -60,9 +73,11 @@ export function LeadForm({ submitLabel, formHeading }: LeadFormProps) {
     const iti = intlTelInput(input, {
       separateDialCode: true,
       initialCountry: 'gb',
-      // Popular countries first, then the rest A–Z (like the reference page)
-      countryOrder: ['gb', 'us', 'ca', 'au', 'de', 'fr', 'es', 'it'],
+      // Popular countries first, then the rest A–Z (same as the reference form)
+      preferredCountries: ['gb', 'us', 'ca', 'au', 'de', 'fr', 'es', 'it'],
       autoPlaceholder: 'off',
+      // Country-aware validation (v17 loads utils the same way as the reference)
+      utilsScript: '/vendor/intlTelInputUtils.js',
     })
     itiRef.current = iti
     input.placeholder = '07123 456789'
@@ -95,14 +110,28 @@ export function LeadForm({ submitLabel, formHeading }: LeadFormProps) {
     })
   }
 
+  /** Normalised national digits: strips formatting, leading zeros, and any
+      dial code the user may have typed themselves. */
+  const getNationalDigits = (): string => {
+    const raw = (phoneRef.current?.value ?? '').replace(/\D/g, '')
+    const dialDigits = (itiRef.current?.getSelectedCountryData() as { dialCode?: string } | undefined)?.dialCode?.replace(/\D/g, '') ?? ''
+    let national = raw.replace(/^0+/, '')
+    if (dialDigits && national.startsWith(dialDigits)) {
+      national = national.slice(dialDigits.length)
+    }
+    return national
+  }
+
   const validate = (): FieldErrors => {
     const errs: FieldErrors = {}
     if (firstName.trim() === '') errs.firstName = 'Please enter your first name.'
     if (lastName.trim() === '') errs.lastName = 'Please enter your last name.'
     if (!EMAIL_RE.test(email.trim())) errs.email = 'Please enter a valid email address.'
-    const phoneDigits = (phoneRef.current?.value ?? '').replace(/\D/g, '')
-    // Valid only with exactly 10 digits — anything shorter or longer is rejected
-    if (phoneDigits.length !== 10) errs.phone = 'Please enter a valid phone number.'
+    // Country-aware validation via the library's own number validator
+    // (correct digit counts per country: UK 10, Australia 9, Pakistan 10, …)
+    if (!itiRef.current?.isValidNumber()) {
+      errs.phone = 'Please enter a valid phone number.'
+    }
     if (!agreed) errs.agreed = 'Please accept the Privacy Policy to continue.'
     return errs
   }
@@ -129,22 +158,32 @@ export function LeadForm({ submitLabel, formHeading }: LeadFormProps) {
       const countryData = itiRef.current?.getSelectedCountryData() as
         | { dialCode?: string; name?: string }
         | undefined
-      const payload = new URLSearchParams({
-        name: `${firstName} ${lastName}`.trim(),
-        first_name: firstName,
-        last_name: lastName,
+      // International phone, reference style: "+44" + national digits
+      const dialCode = countryData?.dialCode ?? ''
+      const phone = `${dialCode}${getNationalDigits()}`
+
+      const utm = new URLSearchParams(window.location.search)
+      const payload = {
+        firstName,
+        lastName,
         email,
-        phone: phoneRef.current?.value ?? '',
-        dial_code: countryData?.dialCode ?? '',
-        country: countryData?.name ?? '',
+        phone,
+        password: generatePassword(),
+        offerName: 'SnapTraderAI-Site',
         source_page: window.location.pathname,
-        form_name: 'homepage_lead',
-        website,
-      })
+        form_name: formName,
+        utm_source: utm.get('utm_source') ?? '',
+        utm_medium: utm.get('utm_medium') ?? '',
+        utm_campaign: utm.get('utm_campaign') ?? '',
+        utm_term: utm.get('utm_term') ?? '',
+        utm_content: utm.get('utm_content') ?? '',
+        referrer: document.referrer ?? '',
+        submitted_at: new Date().toISOString(),
+      }
       const res = await fetch(LEAD_ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: payload.toString(),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       })
 
       // The endpoint answers with JSON even on failure (e.g. rate limits),

@@ -144,6 +144,7 @@ export function ContactPage() {
                 <LeadForm
                   formHeading="Explore Trading Opportunities"
                   submitLabel="Register Now"
+                  formName="contact_us"
                 />
               </div>
             </Reveal>

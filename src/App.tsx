@@ -24,6 +24,7 @@ import { ThankYouPage } from './pages/ThankYouPage'
 import { WhyChoosePage } from './pages/WhyChoosePage'
 import { BlogPage } from './pages/BlogPage'
 import { BlogPostPage } from './pages/BlogPostPage'
+import { TraderDetailPage } from './pages/TraderDetailPage'
 import { StrategyBacktestingPage } from './pages/StrategyBacktestingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { TradingPlatformPage } from './pages/TradingPlatformPage'
@@ -64,6 +65,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/traders" element={<TradersPage />} />
+          <Route path="/traders/:slug" element={<TraderDetailPage />} />
           <Route path="/leaderboard" element={<LeaderboardPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/get-started" element={<GetStartedPage />} />

@@ -17,7 +17,7 @@ import { Button } from '../components/ui/Button'
 import { FilterSelect } from '../components/ui/FilterSelect'
 import { Sparkline } from '../components/ui/Sparkline'
 
-const SORT_OPTIONS = ['Return ↓', 'Return ↑', 'Win Rate ↓', 'Drawdown ↓']
+const SORT_OPTIONS = ['Roster Order', 'Return ↓', 'Return ↑', 'Win Rate ↓', 'Drawdown ↓']
 
 function LiveBadge() {
   return (
@@ -52,7 +52,7 @@ export function LeaderboardPage() {
   const [market, setMarket] = useState('All Markets')
   const [strategy, setStrategy] = useState('All Strategies')
   const [risk, setRisk] = useState<'All Risk' | RiskLevel>('All Risk')
-  const [sort, setSort] = useState('Return ↓')
+  const [sort, setSort] = useState('Roster Order')
 
   useEffect(() => {
     document.title = 'AI Bot Leaderboard | SnapTrader AI'
@@ -78,6 +78,11 @@ export function LeaderboardPage() {
         (risk === 'All Risk' || traderRisk(t) === risk),
     )
     switch (sort) {
+      case 'Roster Order':
+        list = [...list].sort(
+          (a, b) => Number(a.id.split('-')[1]) - Number(b.id.split('-')[1]),
+        )
+        break
       case 'Return ↓':
         list = [...list].sort(
           (a, b) => traderStats(b).totalReturn - traderStats(a).totalReturn,

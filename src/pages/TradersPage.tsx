@@ -87,8 +87,13 @@ function TraderCard({ trader, index }: { trader: Trader; index: number }) {
               {trader.id.charAt(0).toUpperCase()}
             </span>
             <div className="min-w-0">
-              <h2 className="m-0 truncate whitespace-nowrap font-mono text-[15px] font-bold text-ink">
-                {trader.id}
+              <h2 className="m-0 truncate whitespace-nowrap font-mono text-[15px] font-bold">
+                <Link
+                  to={`/traders/${trader.id}`}
+                  className="text-ink transition-colors hover:text-accent hover:underline"
+                >
+                  {trader.id}
+                </Link>
               </h2>
               <p className="m-0 truncate whitespace-nowrap text-[9px] text-ink-soft">
                 {trader.model} • {trader.market}
@@ -155,7 +160,7 @@ function TraderCard({ trader, index }: { trader: Trader; index: number }) {
 }
 
 export function TradersPage() {
-  const [tab, setTab] = useState<Tab>('Trending')
+  const [tab, setTab] = useState<Tab | null>('Trending')
   const [market, setMarket] = useState('All Markets')
   const [strategy, setStrategy] = useState('All Strategies')
   const [model, setModel] = useState('All Models')
@@ -181,11 +186,14 @@ export function TradersPage() {
         (model === 'All Models' || t.model === model),
     )
 
+    // Roster sequence is the default order: falcon-01 → warden-18
+    list = [...list].sort(
+      (a, b) => Number(a.id.split('-')[1]) - Number(b.id.split('-')[1]),
+    )
+
     switch (tab) {
       case 'Trending':
-        list = [...list].sort(
-          (a, b) => traderStats(b).totalReturn - traderStats(a).totalReturn,
-        )
+        // Trending shows the roster sequence (already sorted above)
         break
       case 'New':
         list = [...list].sort(
@@ -234,7 +242,7 @@ export function TradersPage() {
                 <button
                   key={t}
                   type="button"
-                  onClick={() => setTab(t)}
+                  onClick={() => setTab(tab === t ? null : t)}
                   className={`min-w-[100px] flex-1 cursor-pointer border-0 px-4 py-[10px] font-mono text-xs font-bold transition-all duration-200 sm:min-w-[110px] ${
                     tab === t
                       ? 'gradient-brand rounded-md text-[#04212b] shadow-glow'

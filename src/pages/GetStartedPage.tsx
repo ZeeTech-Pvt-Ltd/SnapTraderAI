@@ -56,6 +56,7 @@ export function GetStartedPage() {
               <LeadForm
                 formHeading="Explore Trading Opportunities"
                 submitLabel="Start Free Access"
+                formName="homepage_lead"
               />
             </div>
           </Reveal>
