@@ -1,18 +1,20 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react'
-import { navLinks, toolsDropdown } from '../content/nav'
+import { navLinks, resourcesDropdown, toolsDropdown } from '../content/nav'
 import { Logo } from './ui/Logo'
 import { Button } from './ui/Button'
 
 /** Hash links resolve to the homepage section; paths stay as-is. */
 const linkTo = (href: string) => (href.startsWith('#') ? `/${href}` : href)
 
+const DROPDOWNS = [toolsDropdown, resourcesDropdown]
+
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [toolsOpen, setToolsOpen] = useState(false)
-  const toolsRef = useRef<HTMLDivElement>(null)
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const navRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -24,12 +26,12 @@ export function Navbar() {
   // Close dropdown on outside click / escape
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
-      if (toolsRef.current && !toolsRef.current.contains(e.target as Node)) {
-        setToolsOpen(false)
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setOpenDropdown(null)
       }
     }
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setToolsOpen(false)
+      if (e.key === 'Escape') setOpenDropdown(null)
     }
     document.addEventListener('mousedown', onClick)
     document.addEventListener('keydown', onKey)
@@ -60,35 +62,40 @@ export function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-4 lg:flex xl:gap-8" aria-label="Main">
-          <div ref={toolsRef} className="relative">
-            <button
-              type="button"
-              className="flex items-center gap-1 text-[0.925rem] font-medium text-ink/75 transition-colors hover:text-accent"
-              onClick={() => setToolsOpen((v) => !v)}
-              aria-expanded={toolsOpen}
-              aria-haspopup="true"
-            >
-              {toolsDropdown.label}
-              <ChevronDown
-                className={`ml-0.5 h-4 w-4 transition-transform duration-200 ${toolsOpen ? 'rotate-180' : ''}`}
-              />
-            </button>
-            {toolsOpen && (
-              <div className="absolute left-0 top-full mt-2 min-w-[220px] rounded-lg border border-border bg-navy p-2 shadow-card-lg">
-                {toolsDropdown.items.map((item) => (
-                  <Link
-                    key={item.label}
-                    to={linkTo(item.href)}
-                    onClick={() => setToolsOpen(false)}
-                    className="block rounded-md px-3 py-2 text-sm text-ink/75 transition-colors hover:bg-medium-navy hover:text-ink"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+        <nav ref={navRef} className="hidden items-center gap-4 lg:flex xl:gap-8" aria-label="Main">
+          {DROPDOWNS.map((dropdown) => {
+            const isOpen = openDropdown === dropdown.label
+            return (
+              <div key={dropdown.label} className="relative">
+                <button
+                  type="button"
+                  className="flex items-center gap-1 text-[0.925rem] font-medium text-ink/75 transition-colors hover:text-accent"
+                  onClick={() => setOpenDropdown(isOpen ? null : dropdown.label)}
+                  aria-expanded={isOpen}
+                  aria-haspopup="true"
+                >
+                  {dropdown.label}
+                  <ChevronDown
+                    className={`ml-0.5 h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                {isOpen && (
+                  <div className="absolute left-0 top-full mt-2 min-w-[220px] rounded-lg border border-border bg-navy p-2 shadow-card-lg">
+                    {dropdown.items.map((item) => (
+                      <Link
+                        key={item.label}
+                        to={linkTo(item.href)}
+                        onClick={() => setOpenDropdown(null)}
+                        className="block rounded-md px-3 py-2 text-sm text-ink/75 transition-colors hover:bg-medium-navy hover:text-ink"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            )
+          })}
           {navLinks.map((link) => (
             <Link
               key={link.label}
@@ -128,22 +135,26 @@ export function Navbar() {
         aria-hidden="true"
       />
       <div
-        className={`fixed top-[72px] right-0 z-50 h-[calc(100vh-72px)] w-[300px] border-l border-border bg-navy p-8 transition-transform duration-300 lg:hidden ${
+        className={`fixed top-[72px] right-0 z-50 h-[calc(100vh-72px)] w-[300px] overflow-y-auto border-l border-border bg-navy p-8 transition-transform duration-300 lg:hidden ${
           mobileOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <p className="mb-2 text-xs font-bold uppercase tracking-wider text-ink-soft">
-          AI Products
-        </p>
-        {toolsDropdown.items.map((item) => (
-          <Link
-            key={item.label}
-            to={linkTo(item.href)}
-            onClick={() => setMobileOpen(false)}
-            className="block border-b border-border py-2.5 text-[1.05rem] font-medium text-ink/85"
-          >
-            {item.label}
-          </Link>
+        {DROPDOWNS.map((dropdown) => (
+          <div key={dropdown.label}>
+            <p className="mb-2 mt-6 text-xs font-bold uppercase tracking-wider text-ink-soft first:mt-0">
+              {dropdown.label}
+            </p>
+            {dropdown.items.map((item) => (
+              <Link
+                key={item.label}
+                to={linkTo(item.href)}
+                onClick={() => setMobileOpen(false)}
+                className="block border-b border-border py-2.5 text-[1.05rem] font-medium text-ink/85"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
         ))}
         <p className="mb-2 mt-6 text-xs font-bold uppercase tracking-wider text-ink-soft">
           Explore

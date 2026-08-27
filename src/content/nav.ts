@@ -12,13 +12,13 @@ export const navLinks: NavLink[] = [
   { label: 'AI Trading Platform', href: '/ai-trading-platform' },
   { label: 'Traders', href: '/traders' },
   { label: 'Leaderboard', href: '/leaderboard' },
-  { label: 'How It Works', href: '#how-it-works' },
   { label: 'Contact', href: '/contact' },
 ]
 
 /** Footer keeps the full explore list, including homepage-only sections. */
 export const footerLinks: NavLink[] = [
   ...navLinks,
+  { label: 'How It Works', href: '#how-it-works' },
   { label: 'Why Snap Trader AI', href: '#why-snap' },
   { label: 'Markets', href: '#markets' },
   { label: 'FAQ', href: '#faq' },
@@ -35,4 +35,9 @@ export const toolsDropdown: NavDropdown = {
     { label: 'Strategy Backtesting', href: '/strategy-backtesting' },
     { label: 'Risk Calculator', href: '/risk-calculator' },
   ],
+}
+
+export const resourcesDropdown: NavDropdown = {
+  label: 'Resources',
+  items: [{ label: 'Academy', href: '/academy' }],
 }

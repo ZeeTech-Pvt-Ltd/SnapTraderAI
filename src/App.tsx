@@ -18,6 +18,7 @@ import { SwingTradingPage } from './pages/SwingTradingPage'
 import { StrategyBuilderPage } from './pages/StrategyBuilderPage'
 import { PatternDetectionPage } from './pages/PatternDetectionPage'
 import { RiskCalculatorPage } from './pages/RiskCalculatorPage'
+import { AcademyPage } from './pages/AcademyPage'
 import { StrategyBacktestingPage } from './pages/StrategyBacktestingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { TradingPlatformPage } from './pages/TradingPlatformPage'
@@ -74,6 +75,7 @@ export default function App() {
           <Route path="/strategy-backtesting" element={<StrategyBacktestingPage />} />
           <Route path="/ai-trading-platform" element={<TradingPlatformPage />} />
           <Route path="/risk-calculator" element={<RiskCalculatorPage />} />
+          <Route path="/academy" element={<AcademyPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
