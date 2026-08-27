@@ -39,5 +39,8 @@ export const toolsDropdown: NavDropdown = {
 
 export const resourcesDropdown: NavDropdown = {
   label: 'Resources',
-  items: [{ label: 'Academy', href: '/academy' }],
+  items: [
+    { label: 'Academy', href: '/academy' },
+    { label: 'Performance Verification', href: '/performance-verification' },
+  ],
 }

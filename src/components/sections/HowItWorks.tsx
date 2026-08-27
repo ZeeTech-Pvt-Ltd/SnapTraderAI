@@ -36,7 +36,7 @@ export function HowItWorks() {
           />
         </Reveal>
 
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Steps */}
           <div className="order-2 lg:order-1">
             <ol className="space-y-3">

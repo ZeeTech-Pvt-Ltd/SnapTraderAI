@@ -19,6 +19,7 @@ import { StrategyBuilderPage } from './pages/StrategyBuilderPage'
 import { PatternDetectionPage } from './pages/PatternDetectionPage'
 import { RiskCalculatorPage } from './pages/RiskCalculatorPage'
 import { AcademyPage } from './pages/AcademyPage'
+import { PerformanceVerificationPage } from './pages/PerformanceVerificationPage'
 import { StrategyBacktestingPage } from './pages/StrategyBacktestingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { TradingPlatformPage } from './pages/TradingPlatformPage'
@@ -76,6 +77,7 @@ export default function App() {
           <Route path="/ai-trading-platform" element={<TradingPlatformPage />} />
           <Route path="/risk-calculator" element={<RiskCalculatorPage />} />
           <Route path="/academy" element={<AcademyPage />} />
+          <Route path="/performance-verification" element={<PerformanceVerificationPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

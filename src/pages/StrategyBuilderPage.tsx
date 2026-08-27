@@ -92,7 +92,7 @@ export function StrategyBuilderPage() {
           style={{ background: 'radial-gradient(circle, rgb(0 160 220 / 0.14) 0%, transparent 70%)' }}
         />
         <div className="relative z-10 mx-auto max-w-container px-4 md:px-6">
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal>
               <h1 className="mb-5 max-w-[600px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
                 AI Strategy Builder — Say the Rule, Get the{' '}
