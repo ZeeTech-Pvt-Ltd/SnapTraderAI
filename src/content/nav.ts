@@ -18,10 +18,7 @@ export const navLinks: NavLink[] = [
 /** Footer keeps the full explore list, including homepage-only sections. */
 export const footerLinks: NavLink[] = [
   ...navLinks,
-  { label: 'How It Works', href: '#how-it-works' },
   { label: 'Why Snap Trader AI', href: '#why-snap' },
-  { label: 'Markets', href: '#markets' },
-  { label: 'FAQ', href: '#faq' },
 ]
 
 export const toolsDropdown: NavDropdown = {

@@ -14,10 +14,8 @@ const FOOTER_COLUMNS = [
     links: footerLinks,
   },
   {
-    title: 'Company',
+    title: 'Legal',
     links: [
-      { label: 'About Us', href: '#top' },
-      { label: 'Contact', href: '/contact' },
       { label: 'Privacy Policy', href: '/privacy-policy' },
       { label: 'Terms & Conditions', href: '/terms-conditions' },
       { label: 'Disclaimer', href: '/disclaimer' },
