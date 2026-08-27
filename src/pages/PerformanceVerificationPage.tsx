@@ -262,8 +262,8 @@ export function PerformanceVerificationPage() {
               />
               {/* Badge visual */}
               <div className="mt-8 flex items-center gap-5 rounded-2xl border border-border bg-deep p-6 shadow-card">
-                <span className="gradient-brand flex h-16 w-16 shrink-0 items-center justify-center rounded-full shadow-glow">
-                  <BadgeCheck className="h-8 w-8 text-[#04212b]" />
+                <span className="gradient-brand flex h-14 w-14 shrink-0 items-center justify-center rounded-full shadow-glow">
+                  <BadgeCheck className="h-6 w-6 text-[#04212b]" />
                 </span>
                 <div>
                   <p className="font-mono text-sm font-black text-ink">VERIFIED</p>
