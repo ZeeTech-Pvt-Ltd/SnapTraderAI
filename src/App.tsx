@@ -4,10 +4,9 @@ import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
 
 // Route-level code splitting: each page (and its heavy dependencies,
-// like the phone widget) loads only when visited.
-const HomePage = lazy(() =>
-  import('./pages/HomePage').then((m) => ({ default: m.HomePage })),
-)
+// like the phone widget) loads only when visited. The homepage stays in the
+// main bundle so the landing page paints without an extra round trip.
+import { HomePage } from './pages/HomePage'
 const TradersPage = lazy(() =>
   import('./pages/TradersPage').then((m) => ({ default: m.TradersPage })),
 )
