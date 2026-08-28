@@ -32,6 +32,157 @@ import { TradingPlatformPage } from './pages/TradingPlatformPage'
 /** Canonical URL of the site — change to the production domain if needed. */
 const SITE_URL = 'https://snap-traderai.com'
 
+const DEFAULT_SEO = {
+  title: 'SnapTrader AI | Snap Trader AI — AI Chart Analysis & Trading Signals',
+  description:
+    'SnapTrader AI (Snap Trader AI) is an AI-powered chart analysis and trading signals platform. Snap trade smarter — upload charts, detect patterns, and get entry & exit insights across stocks, forex, crypto and more.',
+}
+
+/** Static routes: title + meta description. Dynamic routes (/traders/:slug,
+    /blog/:slug) set their own titles in their pages and are skipped. */
+const SEO: Record<string, { title: string; description: string }> = {
+  '/': DEFAULT_SEO,
+  '/traders': {
+    title: 'AI Traders | SnapTrader AI',
+    description:
+      'Browse 18 AI trading agents across Forex, Crypto, Stocks, Indices, Gold & Commodities and Futures — with strategy, AI model and performance details.',
+  },
+  '/leaderboard': {
+    title: 'AI Bot Leaderboard | SnapTrader AI',
+    description:
+      'Live leaderboard of Snap Trader AI agents — ranked by return, win rate, risk and drawdown across global markets.',
+  },
+  '/contact': {
+    title: 'Contact | SnapTrader AI',
+    description:
+      'Questions about Snap Trader AI? Reach our support team by email or live chat — we reply within 24 hours.',
+  },
+  '/get-started': {
+    title: 'Get Started — Free | SnapTrader AI',
+    description:
+      'Start analysing with Snap Trader AI for free. No credit card, no deposit required — register in minutes.',
+  },
+  '/thank-you': {
+    title: 'Thank You | SnapTrader AI',
+    description: 'Your details have been received — welcome to Snap Trader AI.',
+  },
+  '/academy': {
+    title: 'Academy | SnapTrader AI',
+    description:
+      'Learn to trade with AI on your side — bite-sized modules, real charts and zero jargon, from beginner to advanced.',
+  },
+  '/blog': {
+    title: 'Blog | SnapTrader AI',
+    description:
+      'Risk, strategy, market structure and AI — articles written for traders who want to think clearly before risking capital.',
+  },
+  '/performance-verification': {
+    title: 'Performance Verification | SnapTrader AI',
+    description:
+      'Live results you can audit yourself — every AI agent trade is recorded, timestamped and made public. No edits, no exceptions.',
+  },
+  '/why-choose-snaptrader-ai': {
+    title: 'Why Choose SnapTrader AI | SnapTrader AI',
+    description:
+      'Decisions in milliseconds, AI that learns, full transparency and risk control first — see what makes SnapTrader AI different.',
+  },
+  '/ai-trading-platform': {
+    title: 'AI Trading Platform | SnapTrader AI',
+    description:
+      'One platform for every market you trade — chart analysis, pattern detection, strategy testing and risk management in a single dashboard.',
+  },
+  '/ai-trade-analyzer': {
+    title: 'AI Trade Analyzer | SnapTrader AI',
+    description:
+      'Grade your setup before you risk a rupee — the AI Trade Analyzer reads your chart in seconds and tells you if the trade is worth taking.',
+  },
+  '/ai-scalp-analyzer': {
+    title: 'AI Scalp Analyzer | SnapTrader AI',
+    description:
+      'Read 1M & 5M setups in seconds — the AI Scalp Analyzer checks structure, momentum and volume on fast timeframes.',
+  },
+  '/ai-swing-trading': {
+    title: 'AI Swing Trading | SnapTrader AI',
+    description:
+      'Multi-day setups managed by AI — scan 4-hour and daily charts, hold across sessions, and trail stops automatically.',
+  },
+  '/ai-strategy-builder': {
+    title: 'AI Strategy Builder | SnapTrader AI',
+    description:
+      'Say the rule, get the system — turn plain-English trading ideas into readable, testable strategies. No code, no spreadsheets.',
+  },
+  '/ai-pattern-detection': {
+    title: 'AI Pattern Detection | SnapTrader AI',
+    description:
+      'The pattern engine watches the charts so you don’t have to — formations flagged the moment they qualify, with confidence scores.',
+  },
+  '/strategy-backtesting': {
+    title: 'Strategy Backtesting | SnapTrader AI',
+    description:
+      'Test before you risk capital — replay your rules across years of historical data with honest, out-of-sample verification.',
+  },
+  '/risk-calculator': {
+    title: 'Risk Calculator | SnapTrader AI',
+    description:
+      'Position size, risk and reward in one click — see your risk per trade, consecutive losses to ruin and probability of ruin.',
+  },
+  '/privacy-policy': {
+    title: 'Privacy Policy | SnapTrader AI',
+    description: 'How SnapTrader AI collects, uses and protects your personal information.',
+  },
+  '/terms-conditions': {
+    title: 'Terms & Conditions | SnapTrader AI',
+    description: 'The terms that govern your use of the SnapTrader AI website and platform.',
+  },
+  '/disclaimer': {
+    title: 'Disclaimer | SnapTrader AI',
+    description:
+      'SnapTrader AI content is for informational and educational purposes only — not financial advice.',
+  },
+  '/cookie-policy': {
+    title: 'Cookie Policy | SnapTrader AI',
+    description: 'What cookies are, how we use them, and how you can manage your preferences.',
+  },
+  '/risk-disclosure': {
+    title: 'Risk Disclosure | SnapTrader AI',
+    description:
+      'Trading involves substantial risk — read the full risk disclosure before using the SnapTrader AI platform.',
+  },
+}
+
+/** Keeps <title> and the meta description in sync with the current route. */
+function SeoManager() {
+  const location = useLocation()
+
+  useEffect(() => {
+    const path = location.pathname.replace(/\/+$/, '') || '/'
+    const seo = SEO[path]
+
+    // Dynamic routes set their own titles; only refresh their description
+    if (!seo) {
+      if (path.startsWith('/traders/') || path.startsWith('/blog/')) {
+        setMetaDescription(DEFAULT_SEO.description)
+      }
+      return
+    }
+
+    document.title = seo.title
+    setMetaDescription(seo.description)
+  }, [location])
+
+  return null
+}
+
+function setMetaDescription(content: string) {
+  let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]')
+  if (!meta) {
+    meta = document.createElement('meta')
+    meta.name = 'description'
+    document.head.appendChild(meta)
+  }
+  meta.content = content
+}
+
 /** Keeps the <link rel="canonical"> in sync with the current route. */
 function CanonicalManager() {
   const location = useLocation()
@@ -81,6 +232,7 @@ export default function App() {
 
       <ScrollManager />
       <CanonicalManager />
+      <SeoManager />
       <Navbar />
 
       <main id="main">

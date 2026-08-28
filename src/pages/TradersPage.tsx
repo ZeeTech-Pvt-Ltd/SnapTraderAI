@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import {
   traderMarkets,
@@ -76,10 +76,21 @@ function TraderCard({ trader, index }: { trader: Trader; index: number }) {
   const s = traderStats(trader)
   const series = useMemo(() => traderSeries(trader), [trader])
   const positive = s.totalReturn >= 0
+  const navigate = useNavigate()
 
   return (
     <Reveal delay={(index % 3) * 80}>
-      <article className="flex h-full flex-col rounded-[10px] border border-border bg-navy p-4 shadow-card transition-all duration-200 hover:-translate-y-[3px] hover:border-accent/30 hover:shadow-card-lg">
+      {/* Whole card opens the trader's page */}
+      <article
+        onClick={() => navigate(`/traders/${trader.id}`)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') navigate(`/traders/${trader.id}`)
+        }}
+        tabIndex={0}
+        role="link"
+        aria-label={`View ${trader.id} details`}
+        className="flex h-full cursor-pointer flex-col rounded-[10px] border border-border bg-navy p-4 shadow-card outline-none transition-all duration-200 hover:-translate-y-[3px] hover:border-accent/30 hover:shadow-card-lg focus-visible:border-accent"
+      >
         {/* Header: avatar + name + days chip */}
         <div className="mb-[22px] flex items-start justify-between gap-[14px]">
           <div className="flex min-w-0 items-center gap-[11px]">
@@ -147,9 +158,10 @@ function TraderCard({ trader, index }: { trader: Trader; index: number }) {
           />
         </div>
 
-        {/* Follow → sign-up funnel */}
+        {/* Follow → sign-up funnel (stops card navigation) */}
         <Link
           to="/get-started"
+          onClick={(e) => e.stopPropagation()}
           className="block w-full rounded-md border-0 py-[10px] text-center font-mono text-[10px] font-bold tracking-wide gradient-brand text-[#04212b] transition-all duration-200 hover:brightness-110 hover:shadow-glow"
         >
           + FOLLOW
