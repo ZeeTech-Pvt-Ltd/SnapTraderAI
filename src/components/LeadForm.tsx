@@ -73,14 +73,14 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
     const iti = intlTelInput(input, {
       separateDialCode: true,
       initialCountry: 'gb',
-      // Popular countries first, then the rest A–Z (same as the reference form)
-      preferredCountries: ['gb', 'us', 'ca', 'au', 'de', 'fr', 'es', 'it'],
-      autoPlaceholder: 'off',
+      // US and UK first, then the rest A–Z (same as the reference sign-up form)
+      preferredCountries: ['us', 'gb'],
+      // Placeholder auto-generated in the selected country's local format
+      autoPlaceholder: 'aggressive',
       // Country-aware validation (v17 loads utils the same way as the reference)
       utilsScript: '/vendor/intlTelInputUtils.js',
     })
     itiRef.current = iti
-    input.placeholder = '07123 456789'
 
     let destroyed = false
     fetch('https://ipwho.is/')
@@ -127,10 +127,9 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
     if (firstName.trim() === '') errs.firstName = 'Please enter your first name.'
     if (lastName.trim() === '') errs.lastName = 'Please enter your last name.'
     if (!EMAIL_RE.test(email.trim())) errs.email = 'Please enter a valid email address.'
-    // Country-aware validation via the library's own number validator
-    // (correct digit counts per country: UK 10, Australia 9, Pakistan 10, …)
-    if (!itiRef.current?.isValidNumber()) {
-      errs.phone = 'Please enter a valid phone number.'
+    // Like the reference sign-up form: required only, no digit-count rules
+    if ((phoneRef.current?.value ?? '').trim() === '') {
+      errs.phone = 'Please enter your phone number.'
     }
     if (!agreed) errs.agreed = 'Please accept the Privacy Policy to continue.'
     return errs
@@ -203,6 +202,13 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
         }
       }
       if (!ok) {
+        // Phone rejections from the backend surface as a field error instead
+        if (/phone/i.test(backendMessage)) {
+          setBackendError('')
+          setStatus('idle')
+          setErrors((prev) => ({ ...prev, phone: 'Try a valid phone number.' }))
+          return
+        }
         setBackendError(backendMessage || `The server rejected the request (HTTP ${res.status}).`)
         setStatus('error')
         return
@@ -267,7 +273,7 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
 
       <div>
         <label htmlFor="lead-email" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-ink-soft">
-          Email Address <span className="text-danger">*</span>
+          Email <span className="text-danger">*</span>
         </label>
         <input
           id="lead-email"
