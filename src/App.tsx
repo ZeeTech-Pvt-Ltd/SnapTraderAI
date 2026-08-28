@@ -1,33 +1,101 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
-import { HomePage } from './pages/HomePage'
-import { TradersPage } from './pages/TradersPage'
-import { LeaderboardPage } from './pages/LeaderboardPage'
-import { ContactPage } from './pages/ContactPage'
-import { GetStartedPage } from './pages/GetStartedPage'
-import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage'
-import { TermsConditionsPage } from './pages/TermsConditionsPage'
-import { DisclaimerPage } from './pages/DisclaimerPage'
-import { CookiePolicyPage } from './pages/CookiePolicyPage'
-import { RiskDisclosurePage } from './pages/RiskDisclosurePage'
-import { TradeAnalyzerPage } from './pages/TradeAnalyzerPage'
-import { ScalpAnalyzerPage } from './pages/ScalpAnalyzerPage'
-import { SwingTradingPage } from './pages/SwingTradingPage'
-import { StrategyBuilderPage } from './pages/StrategyBuilderPage'
-import { PatternDetectionPage } from './pages/PatternDetectionPage'
-import { RiskCalculatorPage } from './pages/RiskCalculatorPage'
-import { AcademyPage } from './pages/AcademyPage'
-import { PerformanceVerificationPage } from './pages/PerformanceVerificationPage'
-import { ThankYouPage } from './pages/ThankYouPage'
-import { WhyChoosePage } from './pages/WhyChoosePage'
-import { BlogPage } from './pages/BlogPage'
-import { BlogPostPage } from './pages/BlogPostPage'
-import { TraderDetailPage } from './pages/TraderDetailPage'
-import { StrategyBacktestingPage } from './pages/StrategyBacktestingPage'
-import { NotFoundPage } from './pages/NotFoundPage'
-import { TradingPlatformPage } from './pages/TradingPlatformPage'
+
+// Route-level code splitting: each page (and its heavy dependencies,
+// like the phone widget) loads only when visited.
+const HomePage = lazy(() =>
+  import('./pages/HomePage').then((m) => ({ default: m.HomePage })),
+)
+const TradersPage = lazy(() =>
+  import('./pages/TradersPage').then((m) => ({ default: m.TradersPage })),
+)
+const LeaderboardPage = lazy(() =>
+  import('./pages/LeaderboardPage').then((m) => ({ default: m.LeaderboardPage })),
+)
+const ContactPage = lazy(() =>
+  import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })),
+)
+const GetStartedPage = lazy(() =>
+  import('./pages/GetStartedPage').then((m) => ({ default: m.GetStartedPage })),
+)
+const PrivacyPolicyPage = lazy(() =>
+  import('./pages/PrivacyPolicyPage').then((m) => ({ default: m.PrivacyPolicyPage })),
+)
+const TermsConditionsPage = lazy(() =>
+  import('./pages/TermsConditionsPage').then((m) => ({ default: m.TermsConditionsPage })),
+)
+const DisclaimerPage = lazy(() =>
+  import('./pages/DisclaimerPage').then((m) => ({ default: m.DisclaimerPage })),
+)
+const CookiePolicyPage = lazy(() =>
+  import('./pages/CookiePolicyPage').then((m) => ({ default: m.CookiePolicyPage })),
+)
+const RiskDisclosurePage = lazy(() =>
+  import('./pages/RiskDisclosurePage').then((m) => ({ default: m.RiskDisclosurePage })),
+)
+const TradeAnalyzerPage = lazy(() =>
+  import('./pages/TradeAnalyzerPage').then((m) => ({ default: m.TradeAnalyzerPage })),
+)
+const ScalpAnalyzerPage = lazy(() =>
+  import('./pages/ScalpAnalyzerPage').then((m) => ({ default: m.ScalpAnalyzerPage })),
+)
+const SwingTradingPage = lazy(() =>
+  import('./pages/SwingTradingPage').then((m) => ({ default: m.SwingTradingPage })),
+)
+const StrategyBuilderPage = lazy(() =>
+  import('./pages/StrategyBuilderPage').then((m) => ({ default: m.StrategyBuilderPage })),
+)
+const PatternDetectionPage = lazy(() =>
+  import('./pages/PatternDetectionPage').then((m) => ({ default: m.PatternDetectionPage })),
+)
+const RiskCalculatorPage = lazy(() =>
+  import('./pages/RiskCalculatorPage').then((m) => ({ default: m.RiskCalculatorPage })),
+)
+const AcademyPage = lazy(() =>
+  import('./pages/AcademyPage').then((m) => ({ default: m.AcademyPage })),
+)
+const PerformanceVerificationPage = lazy(() =>
+  import('./pages/PerformanceVerificationPage').then((m) => ({ default: m.PerformanceVerificationPage })),
+)
+const ThankYouPage = lazy(() =>
+  import('./pages/ThankYouPage').then((m) => ({ default: m.ThankYouPage })),
+)
+const WhyChoosePage = lazy(() =>
+  import('./pages/WhyChoosePage').then((m) => ({ default: m.WhyChoosePage })),
+)
+const BlogPage = lazy(() =>
+  import('./pages/BlogPage').then((m) => ({ default: m.BlogPage })),
+)
+const BlogPostPage = lazy(() =>
+  import('./pages/BlogPostPage').then((m) => ({ default: m.BlogPostPage })),
+)
+const TraderDetailPage = lazy(() =>
+  import('./pages/TraderDetailPage').then((m) => ({ default: m.TraderDetailPage })),
+)
+const StrategyBacktestingPage = lazy(() =>
+  import('./pages/StrategyBacktestingPage').then((m) => ({ default: m.StrategyBacktestingPage })),
+)
+const NotFoundPage = lazy(() =>
+  import('./pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage })),
+)
+const TradingPlatformPage = lazy(() =>
+  import('./pages/TradingPlatformPage').then((m) => ({ default: m.TradingPlatformPage })),
+)
+
+/** Shown while a lazy route chunk is loading. */
+function PageLoader() {
+  return (
+    <div className="flex min-h-[50vh] items-center justify-center pt-[72px]">
+      <span
+        aria-label="Loading page"
+        className="gradient-brand h-8 w-8 animate-spin rounded-full"
+        style={{ animationDuration: '0.8s', background: 'linear-gradient(135deg, #00b4e6 25%, transparent 60%)' }}
+      />
+    </div>
+  )
+}
 
 /** Canonical URL of the site — change to the production domain if needed. */
 const SITE_URL = 'https://snap-traderai.com'
@@ -236,6 +304,7 @@ export default function App() {
       <Navbar />
 
       <main id="main">
+        <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/traders" element={<TradersPage />} />
@@ -264,6 +333,7 @@ export default function App() {
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        </Suspense>
       </main>
 
       <Footer />
