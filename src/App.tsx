@@ -29,6 +29,27 @@ import { StrategyBacktestingPage } from './pages/StrategyBacktestingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { TradingPlatformPage } from './pages/TradingPlatformPage'
 
+/** Canonical URL of the site — change to the production domain if needed. */
+const SITE_URL = 'https://snap-traderai.com'
+
+/** Keeps the <link rel="canonical"> in sync with the current route. */
+function CanonicalManager() {
+  const location = useLocation()
+
+  useEffect(() => {
+    let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]')
+    if (!link) {
+      link = document.createElement('link')
+      link.rel = 'canonical'
+      document.head.appendChild(link)
+    }
+    const path = location.pathname === '/' ? '/' : location.pathname.replace(/\/+$/, '')
+    link.href = `${SITE_URL}${path}`
+  }, [location])
+
+  return null
+}
+
 /** Scrolls to top on route change, or to the hash target when present. */
 function ScrollManager() {
   const location = useLocation()
@@ -59,6 +80,7 @@ export default function App() {
       </a>
 
       <ScrollManager />
+      <CanonicalManager />
       <Navbar />
 
       <main id="main">
