@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
 import { ShieldCheck } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { LeadForm } from '../components/LeadForm'
 import { Reveal } from '../components/ui/Reveal'
 
@@ -10,9 +11,10 @@ const TRUST_POINTS = [
 ]
 
 export function GetStartedPage() {
-  useEffect(() => {
-    document.title = 'Get Started — Free | SnapTrader AI'
-  }, [])
+  const { t } = useTranslation()
+
+  // Gradient covers the tail of the heading in every language.
+  const [headingHead, headingTail] = splitStyledTail(t('Start Analysing — Free'))
 
   return (
     <div className="bg-deep pt-[72px]">
@@ -26,10 +28,10 @@ export function GetStartedPage() {
         <div className="relative z-10 mx-auto max-w-2xl px-4 text-center md:px-6">
           <Reveal>
             <h1 className="mb-5 text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-              Start Analysing — <span className="text-gradient-brand">Free</span>
+              {headingHead} <span className="text-gradient-brand">{headingTail}</span>
             </h1>
             <p className="text-base leading-relaxed text-muted-dark md:text-lg">
-              No credit card. No deposit required.
+              {t('No credit card. No deposit required.')}
             </p>
             {/* Trust points live above the form so the phone-country
                 dropdown never overlaps them */}
@@ -40,7 +42,7 @@ export function GetStartedPage() {
                   className="flex items-center gap-1.5 text-xs font-semibold text-ink-soft"
                 >
                   <ShieldCheck className="h-3.5 w-3.5 text-success" />
-                  {point}
+                  {t(point)}
                 </li>
               ))}
             </ul>
@@ -54,8 +56,8 @@ export function GetStartedPage() {
           <Reveal delay={100}>
             <div className="rounded-2xl border border-border bg-navy p-6 shadow-card-lg md:p-8">
               <LeadForm
-                formHeading="Explore Trading Opportunities"
-                submitLabel="Start Free Access"
+                formHeading={t('Explore Trading Opportunities')}
+                submitLabel={t('Start Free Access')}
                 formName="homepage_lead"
               />
             </div>
