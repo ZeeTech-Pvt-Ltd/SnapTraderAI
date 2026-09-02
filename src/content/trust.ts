@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
-import { BadgeCheck, BookOpenCheck, ShieldAlert, Wallet } from 'lucide-react'
+import { BookOpenCheck, ShieldAlert, Wallet } from 'lucide-react'
 
 export interface TrustItem {
   icon: LucideIcon
@@ -9,24 +9,19 @@ export interface TrustItem {
 
 export const trustStrip: TrustItem[] = [
   {
-    icon: ShieldAlert,
-    title: 'No Profit Guarantees',
-    description: 'We never promise returns. Markets are unpredictable.',
-  },
-  {
-    icon: BadgeCheck,
-    title: 'Labelled Signals',
-    description: 'Live, delayed, backtested or illustrative — always shown.',
-  },
-  {
-    icon: Wallet,
-    title: 'Paper Trading First',
-    description: 'Practise with virtual funds before risking real capital.',
-  },
-  {
     icon: BookOpenCheck,
     title: 'Educational Approach',
     description: 'Learn the method behind every signal, not just the call.',
+  },
+  {
+    icon: Wallet,
+    title: 'Your Funds Stay Yours',
+    description: 'Trades run through your own broker — we never hold your money.',
+  },
+  {
+    icon: ShieldAlert,
+    title: '24/7 Real-Human Support',
+    description: 'Onboarding calls and live help, not bots reading scripts.',
   },
 ]
 
