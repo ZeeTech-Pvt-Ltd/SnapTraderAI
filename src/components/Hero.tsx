@@ -41,18 +41,14 @@ export function Hero() {
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
           {/* Copy */}
           <div className="pt-6 md:pt-10">
-            <h1 className="mb-6 max-w-[600px] text-4xl font-black leading-[1.08] tracking-tight md:text-5xl lg:text-[3.4rem]">
-              Read the Charts.
-              <br />
-              Spot the Signals.
-              <br />
-              <span className="text-gradient-brand">Trade with Confidence.</span>
+            <h1 className="mb-6 max-w-[640px] text-4xl font-black leading-[1.08] tracking-tight md:text-5xl lg:text-[3.4rem]">
+              SnapTrader AI: Turn Any Chart Into a{' '}
+              <span className="text-gradient-brand">Clear Trading Plan</span>
             </h1>
             <p className="mb-9 max-w-[540px] text-lg leading-relaxed text-muted-dark">
-              SnapTrader AI — the Snap Trader platform — turns raw market data
-              into clear, actionable chart insights: entry and exit levels,
-              bullish and bearish patterns, and risk warnings across stocks,
-              forex, crypto, indices and more.
+              Stop guessing your charts. SnapTrader AI reads any screenshot
+              instantly, flags bullish or bearish setups and hands you a clear
+              entry and exit plan.
             </p>
             <div className="mb-8 flex flex-wrap gap-4">
               <Button to="/get-started" size="lg" className="group">

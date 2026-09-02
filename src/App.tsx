@@ -33,9 +33,9 @@ import { TradingPlatformPage } from './pages/TradingPlatformPage'
 const SITE_URL = 'https://snap-traderai.com'
 
 const DEFAULT_SEO = {
-  title: 'SnapTrader AI | Snap Trader AI — AI Chart Analysis & Trading Signals',
+  title: 'SnapTrader AI: Turn Any Chart Into a Clear Trading Plan',
   description:
-    'SnapTrader AI (Snap Trader AI) is an AI-powered chart analysis and trading signals platform. Snap trade smarter — upload charts, detect patterns, and get entry & exit insights across stocks, forex, crypto and more.',
+    'Stop guessing your charts. SnapTrader AI reads any screenshot instantly, flags bullish or bearish setups and hands you a clear entry and exit plan.',
 }
 
 /** Static routes: title + meta description. Dynamic routes (/traders/:slug,
