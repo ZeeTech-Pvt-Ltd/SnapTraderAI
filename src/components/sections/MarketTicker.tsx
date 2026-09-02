@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { markets, type DataLabel } from '../../content/markets'
+import { useTranslation } from 'react-i18next'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeader } from '../ui/SectionHeader'
 
 const FILTERS: ('All' | DataLabel)[] = ['All', 'Live', 'Delayed']
 
 export function MarketTicker() {
+  const { t } = useTranslation()
   const [filter, setFilter] = useState<'All' | DataLabel>('All')
   const filtered = markets.filter((m) => filter === 'All' || m.label === filter)
 
@@ -17,13 +19,13 @@ export function MarketTicker() {
             <SectionHeader
               align="left"
               className="mb-0"
-              title="Multi-Market Coverage, One Dashboard"
-              description="Every market shows its data label — live or delayed — right next to the price."
+              title={t('Multi-Market Coverage, One Dashboard')}
+              description={t('Every market shows its data label — live or delayed — right next to the price.')}
             />
             <div className="flex items-center gap-1.5 pb-1">
               {FILTERS.map((f) => (
                 <button
-                  key={f}
+                  key={t(f)}
                   type="button"
                   onClick={() => setFilter(f)}
                   className={`cursor-pointer rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
@@ -32,7 +34,7 @@ export function MarketTicker() {
                       : 'text-ink-soft hover:text-ink'
                   }`}
                 >
-                  {f}
+                  {t(f)}
                 </button>
               ))}
             </div>
@@ -55,10 +57,10 @@ export function MarketTicker() {
                         : 'bg-warning/10 text-warning'
                     }`}
                   >
-                    {m.label}
+                    {t(m.label)}
                   </span>
                 </div>
-                <p className="mt-1 truncate text-[10px] text-ink-soft">{m.name}</p>
+                <p className="mt-1 truncate text-[10px] text-ink-soft">{t(m.name)}</p>
                 <div className="mt-2 flex items-baseline justify-between gap-2">
                   <p className="font-mono text-sm font-bold text-ink">{m.price}</p>
                   <p
@@ -75,8 +77,7 @@ export function MarketTicker() {
         </Reveal>
         <Reveal>
           <p className="mt-5 text-center text-xs text-ink-soft">
-            Prices shown for illustration — real platform labels every feed with its
-            source and delay period.
+            {t('Prices shown for illustration — real platform labels every feed with its source and delay period.')}
           </p>
         </Reveal>
       </div>

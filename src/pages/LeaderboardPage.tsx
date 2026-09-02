@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import {
   marketBadge,
   riskBadge,
@@ -12,6 +13,7 @@ import {
   type RiskLevel,
   type Trader,
 } from '../content/traders'
+import { splitStyledTail } from '../i18n'
 import { Reveal } from '../components/ui/Reveal'
 import { Button } from '../components/ui/Button'
 import { FilterSelect } from '../components/ui/FilterSelect'
@@ -20,25 +22,27 @@ import { Sparkline } from '../components/ui/Sparkline'
 const SORT_OPTIONS = ['Roster Order', 'Return ↓', 'Return ↑', 'Win Rate ↓', 'Drawdown ↓']
 
 function LiveBadge() {
+  const { t } = useTranslation()
   return (
     <span className="flex items-center gap-1.5 rounded-full border border-success/30 bg-success/10 px-2.5 py-1 text-[10px] font-bold text-success">
       <span className="relative flex h-1.5 w-1.5">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
         <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
       </span>
-      LIVE
+      {t('LIVE')}
     </span>
   )
 }
 
 /** Follow → sign-up funnel */
 function FollowButton() {
+  const { t } = useTranslation()
   return (
     <Link
       to="/get-started"
       className="inline-flex items-center gap-1 rounded-md px-3 py-1.5 font-mono text-[10px] font-bold gradient-brand text-[#04212b] transition-all duration-200 hover:brightness-110"
     >
-      Follow
+      {t('Follow')}
     </Link>
   )
 }
@@ -49,14 +53,11 @@ function rankInitials(t: Trader) {
 }
 
 export function LeaderboardPage() {
+  const { t } = useTranslation()
   const [market, setMarket] = useState('All Markets')
   const [strategy, setStrategy] = useState('All Strategies')
   const [risk, setRisk] = useState<'All Risk' | RiskLevel>('All Risk')
   const [sort, setSort] = useState('Roster Order')
-
-  useEffect(() => {
-    document.title = 'AI Bot Leaderboard | SnapTrader AI'
-  }, [])
 
   const strategies = useMemo(
     () => ['All Strategies', ...new Set(traders.map((t) => t.shortStrategy))],
@@ -69,6 +70,12 @@ export function LeaderboardPage() {
   )
 
   const modelCount = useMemo(() => new Set(traders.map((t) => t.model)).size, [])
+
+  // Gradient covers the tail of the CTA heading in every language.
+  const [ctaHead, ctaTail] = splitStyledTail(
+    t('Browse Every Agent on the Traders Page'),
+    2,
+  )
 
   const visible = useMemo(() => {
     let list = traders.filter(
@@ -119,11 +126,10 @@ export function LeaderboardPage() {
         <div className="relative z-10 mx-auto max-w-container px-4 md:px-6">
           <Reveal>
             <h1 className="mb-5 max-w-[600px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-              <span className="text-gradient-brand">Leaderboard</span>
+              <span className="text-gradient-brand">{t('Leaderboard')}</span>
             </h1>
             <p className="max-w-2xl text-base leading-relaxed text-muted-dark md:text-lg">
-              Compare Snap Trader AI agents by performance, model transparency,
-              and risk across global markets.
+              {t('Compare Snap Trader AI agents by performance, model transparency, and risk across global markets.')}
             </p>
           </Reveal>
 
@@ -141,7 +147,7 @@ export function LeaderboardPage() {
                   className="rounded-xl border border-border bg-navy px-5 py-3 shadow-card"
                 >
                   <p className="font-mono text-xl font-black text-gradient-brand">{s.k}</p>
-                  <p className="text-xs font-semibold text-ink-soft">{s.v}</p>
+                  <p className="text-xs font-semibold text-ink-soft">{t(s.v)}</p>
                 </div>
               ))}
             </div>
@@ -187,23 +193,23 @@ export function LeaderboardPage() {
             {/* Desktop table */}
             <div className="hidden overflow-hidden rounded-2xl border border-border bg-navy shadow-card lg:block">
               <div className="grid grid-cols-[56px_1.3fr_100px_130px_160px_70px_120px_90px_90px] items-center gap-2 border-b border-border bg-medium-navy/60 px-5 py-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-ink-soft">
-                <span>Rank</span>
-                <span>Trader</span>
-                <span>Trend</span>
-                <span>Market</span>
-                <span>Strategy</span>
-                <span>Risk</span>
-                <span>Model</span>
-                <span className="text-right">Return</span>
-                <span className="text-right">Action</span>
+                <span>{t('Rank')}</span>
+                <span>{t('Trader')}</span>
+                <span>{t('Trend')}</span>
+                <span>{t('Market')}</span>
+                <span>{t('Strategy')}</span>
+                <span>{t('Risk')}</span>
+                <span>{t('Model')}</span>
+                <span className="text-right">{t('Return')}</span>
+                <span className="text-right">{t('Action')}</span>
               </div>
-              {visible.map((t, i) => {
-                const s = traderStats(t)
+              {visible.map((trader, i) => {
+                const s = traderStats(trader)
                 const positive = s.totalReturn >= 0
-                const riskLevel = traderRisk(t)
+                const riskLevel = traderRisk(trader)
                 return (
                   <div
-                    key={t.id}
+                    key={trader.id}
                     className="grid grid-cols-[56px_1.3fr_100px_130px_160px_70px_120px_90px_90px] items-center gap-2 border-b border-border px-5 py-3 transition-colors last:border-0 hover:bg-medium-navy/40"
                   >
                     <span className="flex items-center gap-1.5">
@@ -211,23 +217,23 @@ export function LeaderboardPage() {
                         {String(i + 1).padStart(2, '0')}
                       </span>
                       <span className="flex h-6 w-7 items-center justify-center rounded-md bg-accent/15 font-mono text-[9px] font-bold text-accent">
-                        {rankInitials(t)}
+                        {rankInitials(trader)}
                       </span>
                     </span>
-                    <p className="truncate font-mono text-sm font-bold text-ink">{t.id}</p>
-                    <Sparkline series={traderSeries(t)} positive={positive} width={90} height={24} />
+                    <p className="truncate font-mono text-sm font-bold text-ink">{trader.id}</p>
+                    <Sparkline series={traderSeries(trader)} positive={positive} width={90} height={24} />
                     <span
-                      className={`w-fit rounded-full border px-2 py-0.5 text-[10px] font-bold ${marketBadge[t.market]}`}
+                      className={`w-fit rounded-full border px-2 py-0.5 text-[10px] font-bold ${marketBadge[trader.market]}`}
                     >
-                      {t.market}
+                      {t(trader.market)}
                     </span>
-                    <p className="truncate text-xs text-muted-dark">{t.shortStrategy}</p>
+                    <p className="truncate text-xs text-muted-dark">{t(trader.shortStrategy)}</p>
                     <span
                       className={`w-fit rounded-full border px-2 py-0.5 text-[10px] font-bold ${riskBadge[riskLevel]}`}
                     >
-                      {riskLevel}
+                      {t(riskLevel)}
                     </span>
-                    <p className="truncate font-mono text-[11px] text-ink-soft">{t.model}</p>
+                    <p className="truncate font-mono text-[11px] text-ink-soft">{trader.model}</p>
                     <p
                       className={`text-right font-mono text-sm font-bold ${
                         positive ? 'text-success' : 'text-danger'
@@ -244,20 +250,20 @@ export function LeaderboardPage() {
               })}
               {visible.length === 0 && (
                 <div className="p-12 text-center font-mono text-sm text-ink-soft">
-                  No agents match this combination of filters.
+                  {t('No agents match this combination of filters.')}
                 </div>
               )}
             </div>
 
             {/* Mobile cards */}
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:hidden">
-              {visible.map((t, i) => {
-                const s = traderStats(t)
+              {visible.map((trader, i) => {
+                const s = traderStats(trader)
                 const positive = s.totalReturn >= 0
-                const riskLevel = traderRisk(t)
+                const riskLevel = traderRisk(trader)
                 return (
                   <div
-                    key={t.id}
+                    key={trader.id}
                     className="rounded-xl border border-border bg-navy p-4 shadow-card"
                   >
                     <div className="mb-2.5 flex items-center justify-between gap-3">
@@ -266,12 +272,12 @@ export function LeaderboardPage() {
                           {String(i + 1).padStart(2, '0')}
                         </span>
                         <span className="flex h-7 w-8 shrink-0 items-center justify-center rounded-md bg-accent/15 font-mono text-[10px] font-bold text-accent">
-                          {rankInitials(t)}
+                          {rankInitials(trader)}
                         </span>
                         <div className="min-w-0">
-                          <p className="truncate font-mono text-sm font-bold text-ink">{t.id}</p>
+                          <p className="truncate font-mono text-sm font-bold text-ink">{trader.id}</p>
                           <p className="truncate text-[10px] text-ink-soft">
-                            {t.model} • {t.market}
+                            {trader.model} • {t(trader.market)}
                           </p>
                         </div>
                       </div>
@@ -285,11 +291,11 @@ export function LeaderboardPage() {
                       </p>
                     </div>
                     <div className="mb-3 flex items-center justify-between gap-2">
-                      <span className="min-w-0 truncate text-xs text-muted-dark">{t.shortStrategy}</span>
+                      <span className="min-w-0 truncate text-xs text-muted-dark">{t(trader.shortStrategy)}</span>
                       <span
                         className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-bold ${riskBadge[riskLevel]}`}
                       >
-                        {riskLevel}
+                        {t(riskLevel)}
                       </span>
                     </div>
                     <FollowButton />
@@ -298,15 +304,13 @@ export function LeaderboardPage() {
               })}
               {visible.length === 0 && (
                 <div className="rounded-xl border border-border bg-navy p-10 text-center font-mono text-sm text-ink-soft sm:col-span-2">
-                  No agents match this combination of filters.
+                  {t('No agents match this combination of filters.')}
                 </div>
               )}
             </div>
 
             <p className="mt-6 text-center font-mono text-[11px] text-ink-soft/70">
-              Performance figures are illustrative demo data — the roster comes
-              from Agents.xlsx. Rankings change with live data. No agent
-              guarantees trading results.
+              {t('Performance figures are illustrative demo data — the roster comes from Agents.xlsx. Rankings change with live data. No agent guarantees trading results.')}
             </p>
           </Reveal>
         </div>
@@ -317,20 +321,18 @@ export function LeaderboardPage() {
         <div className="mx-auto max-w-2xl px-4 text-center md:px-6">
           <Reveal>
             <h2 className="mb-4 text-2xl font-extrabold text-ink md:text-3xl">
-              Browse Every Agent on the{' '}
-              <span className="text-gradient-brand">Traders</span> Page
+              {ctaHead} <span className="text-gradient-brand">{ctaTail}</span>
             </h2>
             <p className="mb-6 text-muted-dark">
-              See the full roster with strategy details and performance graphs —
-              or head back home to see the analysis in action.
+              {t('See the full roster with strategy details and performance graphs — or head back home to see the analysis in action.')}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Button to="/traders" size="lg" className="group">
-                Browse Traders
+                {t('Browse Traders')}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
               <Button to="/" variant="outline" size="lg">
-                Back to Homepage
+                {t('Back to Homepage')}
               </Button>
             </div>
           </Reveal>

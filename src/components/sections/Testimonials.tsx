@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight, Quote, Star, StarHalf } from 'lucide-react'
 import { testimonials } from '../../content/testimonials'
+import { useTranslation } from 'react-i18next'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeader } from '../ui/SectionHeader'
 
@@ -20,6 +21,7 @@ function Rating({ value }: { value: number }) {
 }
 
 export function Testimonials() {
+  const { t } = useTranslation()
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
   const touchStartX = useRef<number | null>(null)
@@ -58,8 +60,8 @@ export function Testimonials() {
       <div className="mx-auto max-w-container px-4 md:px-6">
         <Reveal>
           <SectionHeader
-            title="Real Feedback From Platform Users"
-            description="Individual experiences — trading outcomes vary."
+            title={t('Real Feedback From Platform Users')}
+            description={t('Individual experiences — trading outcomes vary.')}
           />
         </Reveal>
 
@@ -79,28 +81,28 @@ export function Testimonials() {
                 className="flex transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                 style={{ transform: `translateX(-${index * 100}%)` }}
               >
-                {testimonials.map((t, i) => (
+                {testimonials.map((tm, i) => (
                   <figure
-                    key={t.name}
+                    key={tm.name}
                     aria-hidden={i !== index}
                     className={`w-full shrink-0 rounded-2xl border border-border bg-navy p-8 shadow-card transition-opacity duration-500 md:p-10 ${
                       i === index ? 'opacity-100' : 'opacity-40'
                     }`}
                   >
                     <div className="mb-5 flex items-center justify-between">
-                      <Rating value={t.rating} />
+                      <Rating value={tm.rating} />
                       <Quote className="h-6 w-6 text-accent/20" />
                     </div>
                     <blockquote className="mb-6 text-base leading-relaxed text-muted-dark md:text-lg">
-                      “{t.quote}”
+                      “{t(tm.quote)}”
                     </blockquote>
                     <figcaption className="flex items-center justify-between border-t border-border pt-4">
                       <div>
-                        <p className="text-sm font-bold text-ink">{t.name}</p>
-                        <p className="mt-0.5 text-xs text-ink-soft">{t.role}</p>
+                        <p className="text-sm font-bold text-ink">{tm.name}</p>
+                        <p className="mt-0.5 text-xs text-ink-soft">{t(tm.role)}</p>
                       </div>
                       <span className="inline-flex items-center gap-1 rounded-full border border-accent/15 bg-accent/10 px-2.5 py-1 text-[10px] font-medium text-accent">
-                        Verified
+                        {t('Verified')}
                       </span>
                     </figcaption>
                   </figure>
@@ -113,19 +115,19 @@ export function Testimonials() {
               <button
                 type="button"
                 onClick={prev}
-                aria-label="Previous testimonial"
+                aria-label={t('Previous testimonial')}
                 className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-border bg-navy text-ink-soft transition-colors hover:border-accent/50 hover:text-accent"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
 
               <div className="flex items-center gap-2">
-                {testimonials.map((t, i) => (
+                {testimonials.map((tm, i) => (
                   <button
-                    key={t.name}
+                    key={tm.name}
                     type="button"
                     onClick={() => goTo(i)}
-                    aria-label={`Go to testimonial ${i + 1}`}
+                    aria-label={t('Go to testimonial {{number}}', { number: i + 1 })}
                     aria-current={i === index}
                     className={`h-2 cursor-pointer rounded-full transition-all duration-300 ${
                       i === index
@@ -139,7 +141,7 @@ export function Testimonials() {
               <button
                 type="button"
                 onClick={next}
-                aria-label="Next testimonial"
+                aria-label={t('Next testimonial')}
                 className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-border bg-navy text-ink-soft transition-colors hover:border-accent/50 hover:text-accent"
               >
                 <ChevronRight className="h-5 w-5" />
@@ -150,8 +152,7 @@ export function Testimonials() {
 
         <Reveal>
           <p className="mt-8 text-center text-xs text-ink-soft">
-            ★ 4.8/5 · Based on 200+ reviews · Sample feedback from platform users.
-            Individual results vary. Trading involves risk of loss.
+            {t('★ 4.8/5 · Based on 200+ reviews · Sample feedback from platform users. Individual results vary. Trading involves risk of loss.')}
           </p>
         </Reveal>
       </div>

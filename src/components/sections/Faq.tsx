@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { faqs } from '../../content/faq'
+import { useTranslation } from 'react-i18next'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeader } from '../ui/SectionHeader'
 
@@ -20,6 +21,8 @@ function FaqItem({
   isOpen: boolean
   onToggle: () => void
 }) {
+  const { t } = useTranslation()
+
   return (
     <div
       className={`overflow-hidden rounded-lg border bg-medium-navy/40 transition-colors ${
@@ -34,7 +37,7 @@ function FaqItem({
         aria-controls={`faq-answer-${index}`}
       >
         <span className={`text-sm font-semibold transition-colors ${isOpen ? 'text-accent' : 'text-ink'}`}>
-          {faq.question}
+          {t(faq.question)}
         </span>
         <ChevronDown
           className={`h-5 w-5 shrink-0 text-ink-soft transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
@@ -48,7 +51,7 @@ function FaqItem({
       >
         <div className="overflow-hidden">
           <p className="px-6 pb-4 text-sm leading-relaxed text-muted-dark">
-            {faq.answer}
+            {t(faq.answer)}
           </p>
         </div>
       </div>
@@ -57,6 +60,7 @@ function FaqItem({
 }
 
 export function Faq() {
+  const { t } = useTranslation()
   const [open, setOpen] = useState<number | null>(0)
 
   return (
@@ -64,8 +68,8 @@ export function Faq() {
       <div className="mx-auto max-w-container px-4 md:px-6">
         <Reveal>
           <SectionHeader
-            title="Frequently Asked Questions"
-            description="Everything you need to know before you upload your first chart."
+            title={t('Frequently Asked Questions')}
+            description={t('Everything you need to know before you upload your first chart.')}
           />
         </Reveal>
 

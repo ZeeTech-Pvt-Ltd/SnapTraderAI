@@ -1,8 +1,11 @@
 import { stats } from '../../content/stats'
 import { CountUp } from '../ui/CountUp'
+import { useTranslation } from 'react-i18next'
 import { Reveal } from '../ui/Reveal'
 
 export function Stats() {
+  const { t } = useTranslation()
+
   return (
     <section className="bg-deep py-20 lg:py-28">
       <div className="mx-auto max-w-container px-4 md:px-6">
@@ -24,21 +27,21 @@ export function Stats() {
 
             <div className="relative z-10 mx-auto mb-12 max-w-2xl text-center">
               <h2 className="mb-4 text-3xl font-extrabold leading-[1.15] tracking-tight text-ink md:text-4xl">
-                Context Matters
+                {t('Context Matters')}
               </h2>
               <div
                 aria-hidden="true"
                 className="mx-auto mb-5 h-1 w-16 rounded-full gradient-brand"
               />
               <p className="text-base leading-relaxed text-ink-soft md:text-lg">
-                Key platform figures — for context, not promises.
+                {t('Key platform figures — for context, not promises.')}
               </p>
             </div>
 
             <div className="relative z-10 mx-auto grid max-w-4xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {stats.map((stat) => (
                 <div
-                  key={stat.label}
+                  key={t(stat.label)}
                   className="rounded-2xl border border-border bg-navy p-6 text-center shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/30 hover:shadow-card-lg"
                 >
                   <p className="mb-2 font-mono text-3xl font-black tracking-tight text-gradient-brand">
@@ -49,16 +52,14 @@ export function Stats() {
                       suffix={stat.suffix}
                     />
                   </p>
-                  <p className="mb-3 text-sm font-semibold text-ink">{stat.label}</p>
-                  <p className="text-xs italic text-ink-soft">{stat.note}</p>
+                  <p className="mb-3 text-sm font-semibold text-ink">{t(stat.label)}</p>
+                  <p className="text-xs italic text-ink-soft">{t(stat.note)}</p>
                 </div>
               ))}
             </div>
 
             <p className="relative z-10 mx-auto mt-10 max-w-2xl text-center text-xs italic text-ink-soft">
-              Statistics are for context only. They describe the platform — not a
-              promise of trading results. Past data, backtests and industry
-              statistics do not guarantee future performance.
+              {t('Statistics are for context only. They describe the platform — not a promise of trading results. Past data, backtests and industry statistics do not guarantee future performance.')}
             </p>
           </div>
         </Reveal>

@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react'
 import { navLinks, resourcesDropdown, toolsDropdown } from '../content/nav'
 import { Logo } from './ui/Logo'
 import { Button } from './ui/Button'
+import { LanguageSwitcher } from './LanguageSwitcher'
 
 /** Hash links resolve to the homepage section; paths stay as-is. */
 const linkTo = (href: string) => (href.startsWith('#') ? `/${href}` : href)
@@ -11,6 +13,7 @@ const linkTo = (href: string) => (href.startsWith('#') ? `/${href}` : href)
 const DROPDOWNS = [toolsDropdown, resourcesDropdown]
 
 export function Navbar() {
+  const { t } = useTranslation()
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
@@ -74,7 +77,7 @@ export function Navbar() {
                   aria-expanded={isOpen}
                   aria-haspopup="true"
                 >
-                  {dropdown.label}
+                  {t(dropdown.label)}
                   <ChevronDown
                     className={`ml-0.5 h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
                   />
@@ -88,7 +91,7 @@ export function Navbar() {
                         onClick={() => setOpenDropdown(null)}
                         className="block rounded-md px-3 py-2 text-sm text-ink/75 transition-colors hover:bg-medium-navy hover:text-ink"
                       >
-                        {item.label}
+                        {t(item.label)}
                       </Link>
                     ))}
                   </div>
@@ -102,14 +105,15 @@ export function Navbar() {
               to={linkTo(link.href)}
               className="text-[0.925rem] font-medium text-ink/75 transition-colors hover:text-accent"
             >
-              {link.label}
+              {t(link.label)}
             </Link>
           ))}
         </nav>
 
         <div className="hidden items-center gap-3 sm:flex">
+          <LanguageSwitcher />
           <Button to="/get-started" size="sm">
-            Get Started Free
+            {t('Get Started Free')}
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
@@ -119,7 +123,7 @@ export function Navbar() {
           type="button"
           className="flex h-10 w-10 items-center justify-center rounded-md border border-border text-ink transition-colors hover:bg-medium-navy lg:hidden"
           onClick={() => setMobileOpen((v) => !v)}
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          aria-label={mobileOpen ? t('Close menu') : t('Open menu')}
           aria-expanded={mobileOpen}
         >
           {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -145,7 +149,7 @@ export function Navbar() {
             <div key={dropdown.label}>
               <p className="mb-3 mt-8 flex items-center gap-2 text-sm font-bold uppercase tracking-[0.12em] text-ink">
                 <span aria-hidden="true" className="h-2 w-2 rounded-full gradient-brand" />
-                {dropdown.label}
+                {t(dropdown.label)}
               </p>
               {dropdown.items.map((item) => (
                 <Link
@@ -154,7 +158,7 @@ export function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className="block border-b border-border py-3 text-[0.95rem] font-medium text-ink/75 transition-colors hover:text-accent"
                 >
-                  {item.label}
+                  {t(item.label)}
                 </Link>
               ))}
             </div>
@@ -162,7 +166,7 @@ export function Navbar() {
           <div className="mt-6">
             <p className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-[0.12em] text-ink">
               <span aria-hidden="true" className="h-2 w-2 rounded-full gradient-brand" />
-              Explore
+              {t('Explore')}
             </p>
             {navLinks.map((link) => (
               <Link
@@ -171,7 +175,7 @@ export function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className="block border-b border-border py-3 text-[0.95rem] font-medium text-ink/75 transition-colors hover:text-accent"
               >
-                {link.label}
+                {t(link.label)}
               </Link>
             ))}
           </div>
@@ -180,10 +184,13 @@ export function Navbar() {
         {/* Pinned CTA */}
         <div className="border-t border-border p-5">
           <Button to="/get-started" className="w-full" onClick={() => setMobileOpen(false)}>
-            Get Started Free
+            {t('Get Started Free')}
           </Button>
+          <div className="mt-4 flex justify-center">
+            <LanguageSwitcher />
+          </div>
           <p className="mt-3 text-center text-xs text-ink-soft">
-            No credit card · No deposit required
+            {t('No credit card · No deposit required')}
           </p>
         </div>
       </div>

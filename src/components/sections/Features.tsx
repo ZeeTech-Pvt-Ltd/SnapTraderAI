@@ -1,5 +1,6 @@
 import { Check, Monitor, Smartphone, TabletSmartphone } from 'lucide-react'
 import { features } from '../../content/features'
+import { useTranslation } from 'react-i18next'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeader } from '../ui/SectionHeader'
 
@@ -10,13 +11,14 @@ const CHECKLIST = [
 ]
 
 export function Features() {
+  const { t } = useTranslation()
   return (
     <section id="why-snap" className="bg-deep py-20 lg:py-28">
       <div className="mx-auto max-w-container px-4 md:px-6">
         <Reveal>
           <SectionHeader
-            title="Built for Traders Who Want an Edge — Without the Hype"
-            description="Advanced chart analysis, risk controls and education in one place. Here's what sets the platform apart."
+            title={t('Built for Traders Who Want an Edge — Without the Hype')}
+            description={t("Advanced chart analysis, risk controls and education in one place. Here's what sets the platform apart.")}
           />
         </Reveal>
 
@@ -27,7 +29,7 @@ export function Features() {
             const isFull = i === features.length - 1
             return (
               <Reveal
-                key={feature.title}
+                key={t(feature.title)}
                 delay={(i % 3) * 90}
                 className={
                   isFull
@@ -62,14 +64,14 @@ export function Features() {
                         isWide ? 'text-lg md:text-xl' : 'text-base'
                       }`}
                     >
-                      {feature.title}
+                      {t(feature.title)}
                     </h3>
                     <p
                       className={`leading-relaxed text-muted-dark ${
                         isWide ? 'text-base' : 'text-sm'
                       }`}
                     >
-                      {feature.description}
+                      {t(feature.description)}
                     </p>
                     {isWide && (
                       <div className="mt-5 flex items-center gap-4 text-ink-soft">
@@ -79,7 +81,7 @@ export function Features() {
                         <span className="font-mono text-xs text-ink-soft/60">/</span>
                         <Smartphone className="h-6 w-6" aria-hidden="true" />
                         <span className="ml-1 text-xs font-medium">
-                          Desktop · Tablet · Mobile
+                          {t('Desktop · Tablet · Mobile')}
                         </span>
                       </div>
                     )}
@@ -95,21 +97,20 @@ export function Features() {
           <div className="mt-14 grid items-center gap-10 rounded-2xl border border-border bg-navy p-8 shadow-card md:p-10 lg:grid-cols-2 lg:gap-16">
             <div>
               <h3 className="mb-4 text-2xl font-extrabold leading-tight text-ink md:text-3xl">
-                Enhanced Performance,
+                {t('Enhanced Performance,')}
                 <br />
-                <span className="text-gradient-brand">Modifiable Settings</span>
+                <span className="text-gradient-brand">{t('Modifiable Settings')}</span>
               </h3>
               <p className="mb-6 text-base leading-relaxed text-muted-dark md:text-lg">
-                Automated features with adjustable settings let you trade according
-                to your style and preferences — scalp the minutes or swing the weeks.
+                {t('Automated features with adjustable settings let you trade according to your style and preferences — scalp the minutes or swing the weeks.')}
               </p>
               <ul className="space-y-3">
                 {CHECKLIST.map((item) => (
-                  <li key={item} className="flex items-center gap-3 text-sm text-muted-dark">
+                  <li key={t(item)} className="flex items-center gap-3 text-sm text-muted-dark">
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-accent/10 transition-colors">
                       <Check className="h-3.5 w-3.5 text-accent" />
                     </span>
-                    {item}
+                    {t(item)}
                   </li>
                 ))}
               </ul>
@@ -122,7 +123,7 @@ export function Features() {
                 style={{ background: 'rgb(0 180 230 / 0.12)' }}
               />
               <p className="mb-4 font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-ink-soft">
-                Portfolio Simulation · 12 months
+                {t('Portfolio Simulation · 12 months')}
               </p>
               <svg viewBox="0 0 400 160" className="w-full" aria-hidden="true">
                 <defs>
@@ -162,14 +163,14 @@ export function Features() {
               </svg>
               <div className="mt-4 flex items-center justify-between">
                 <p className="flex items-center gap-1.5 font-mono text-[10px] text-ink-soft">
-                  <span className="h-2 w-2 rounded-sm gradient-brand" /> Diversified portfolio
+                  <span className="h-2 w-2 rounded-sm gradient-brand" /> {t('Diversified portfolio')}
                 </p>
                 <p className="flex items-center gap-1.5 font-mono text-[10px] text-ink-soft">
-                  <span className="h-2 w-2 rounded-sm bg-ink-soft/50" /> Single market
+                  <span className="h-2 w-2 rounded-sm bg-ink-soft/50" /> {t('Single market')}
                 </p>
               </div>
               <p className="mt-2 font-mono text-[8px] text-ink-soft/50">
-                Illustrative — not actual performance.
+                {t('Illustrative — not actual performance.')}
               </p>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import { Activity, TrendingUp } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { TerminalFrame } from './ui/TerminalFrame'
 
 /** Deterministic candle series for the mockup chart: [open, high, low, close] */
@@ -18,6 +19,7 @@ const WATCHLIST = [
 ]
 
 function CandleChart() {
+  const { t } = useTranslation()
   const w = 320
   const h = 150
   const step = w / CANDLES.length
@@ -63,35 +65,36 @@ function CandleChart() {
       {/* support / resistance hints */}
       <line x1="0" x2={w} y1={scale(64)} y2={scale(64)} stroke="#00C8AC" strokeWidth="1" strokeDasharray="5 4" opacity="0.85" />
       <text x={w - 4} y={scale(64) - 4} textAnchor="end" fontSize="8" fill="#00C8AC" fontFamily="JetBrains Mono, monospace">
-        RESISTANCE 64.00
+        {t('RESISTANCE')} 64.00
       </text>
       <line x1="0" x2={w} y1={scale(46)} y2={scale(46)} stroke="#00B4E6" strokeWidth="1" strokeDasharray="5 4" opacity="0.85" />
       <text x={w - 4} y={scale(46) - 4} textAnchor="end" fontSize="8" fill="#00B4E6" fontFamily="JetBrains Mono, monospace">
-        SUPPORT 46.00
+        {t('SUPPORT')} 46.00
       </text>
     </svg>
   )
 }
 
 export function HeroTerminal() {
+  const { t } = useTranslation()
   return (
     <TerminalFrame
-      title="Snap Trader AI · Research Terminal"
+      title={t('Snap Trader AI · Research Terminal')}
       titleExtra={
         <span className="flex items-center gap-1.5 rounded-full border border-success/30 bg-success/10 px-2 py-0.5 text-[9px] font-bold text-success">
           <span className="relative flex h-1.5 w-1.5">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
           </span>
-          AI ONLINE
+          {t('AI ONLINE')}
         </span>
       }
     >
       <div className="flex">
-        {/* Watchlist — desktop only to keep the hero airy on small screens */}
+        {/* {t('Watchlist')} — desktop only to keep the hero airy on small screens */}
         <aside className="hidden w-[130px] shrink-0 flex-col border-r border-border bg-[#F4F8FC] sm:flex">
           <p className="mb-1 px-3 pt-3 text-[8px] font-bold uppercase tracking-[0.15em] text-ink-soft/60">
-            Watchlist
+            {t('Watchlist')}
           </p>
           {WATCHLIST.map((m) => (
             <div
@@ -109,8 +112,8 @@ export function HeroTerminal() {
             </div>
           ))}
           <div className="mx-3 my-2 rounded-md border border-accent/20 bg-accent/5 px-2 py-1.5">
-            <p className="text-[8px] font-bold uppercase tracking-wider text-accent">Scanning</p>
-            <p className="font-mono text-[9px] text-ink-soft">26 indicators</p>
+            <p className="text-[8px] font-bold uppercase tracking-wider text-accent">{t('Scanning')}</p>
+            <p className="font-mono text-[9px] text-ink-soft">{t('26 indicators')}</p>
           </div>
         </aside>
 
@@ -119,11 +122,11 @@ export function HeroTerminal() {
           <div className="mb-4 flex items-center justify-between">
             <div>
               <p className="font-mono text-sm font-extrabold text-ink">EUR/USD</p>
-              <p className="font-mono text-[9px] text-ink-soft">1H · LIVE DATA</p>
+              <p className="font-mono text-[9px] text-ink-soft">{t('1H · LIVE DATA')}</p>
             </div>
             <div className="flex items-center gap-1.5 rounded-full bg-success/10 px-2.5 py-1 font-mono text-[10px] font-bold text-success">
               <TrendingUp className="h-3 w-3" />
-              BULLISH
+              {t('BULLISH')}
             </div>
           </div>
 
@@ -133,18 +136,17 @@ export function HeroTerminal() {
 
           {/* AI reading */}
           <div className="mb-4 rounded-md border border-accent/20 bg-accent/5 px-3 py-2 font-mono text-[10px] text-ink-soft">
-            <span className="font-bold text-accent">AI ▸</span> Analysing 26 indicators
-            across 4 timeframes...
+            <span className="font-bold text-accent">AI ▸</span> {t('Analysing 26 indicators across 4 timeframes...')}
             <span className="cursor-blink ml-0.5 inline-block h-2.5 w-[3px] bg-accent align-middle" />
           </div>
 
           {/* Results grid — four key levels, roomier cells */}
           <div className="grid grid-cols-4 gap-2">
             {[
-              { k: 'TREND', v: 'Bullish', c: 'text-success' },
-              { k: 'ENTRY', v: '1.0842', c: 'text-accent' },
-              { k: 'STOP', v: '1.0804', c: 'text-danger' },
-              { k: 'R : R', v: '1 : 2.1', c: 'text-success' },
+              { k: t('TREND'), v: t('Bullish'), c: 'text-success' },
+              { k: t('ENTRY'), v: '1.0842', c: 'text-accent' },
+              { k: t('STOP'), v: '1.0804', c: 'text-danger' },
+              { k: t('R : R'), v: '1 : 2.1', c: 'text-success' },
             ].map((r) => (
               <div
                 key={r.k}
@@ -166,10 +168,10 @@ export function HeroTerminal() {
               </div>
               <div>
                 <p className="font-mono text-[10px] font-bold text-success">
-                  SIGNAL · BUY · 87% CONFIDENCE
+                  {t('SIGNAL · BUY · 87% CONFIDENCE')}
                 </p>
                 <p className="mt-0.5 text-[9px] text-ink-soft">
-                  Exit 1.0918 · Via your broker · you stay in control
+                  {t('EXIT')} 1.0918 · {t('Via your broker · you stay in control')}
                 </p>
               </div>
             </div>
@@ -178,8 +180,8 @@ export function HeroTerminal() {
         </div>
       </div>
       <div className="flex items-center justify-between border-t border-border bg-[#F4F8FC] px-4 py-1.5 font-mono text-[8px] text-ink-soft/60">
-        <span>DATA LABEL: LIVE · SOURCE: VERIFIED FEED</span>
-        <span className="hidden sm:inline">Analysis is an observation — not financial advice</span>
+        <span>{t('DATA LABEL: LIVE · SOURCE: VERIFIED FEED')}</span>
+        <span className="hidden sm:inline">{t('Analysis is an observation — not financial advice')}</span>
       </div>
     </TerminalFrame>
   )

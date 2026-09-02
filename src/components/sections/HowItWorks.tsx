@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { CheckCircle2, Circle } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeader } from '../ui/SectionHeader'
 import { TerminalFrame } from '../ui/TerminalFrame'
@@ -24,6 +25,7 @@ const STEPS = [
 ]
 
 export function HowItWorks() {
+  const { t } = useTranslation()
   const [active, setActive] = useState(0)
 
   return (
@@ -31,8 +33,8 @@ export function HowItWorks() {
       <div className="mx-auto max-w-container px-4 md:px-6">
         <Reveal>
           <SectionHeader
-            title="See It in Action — Four Steps, Full Transparency"
-            description="From chart to signal in seconds. Follow the pipeline and watch the data labels every step of the way."
+            title={t('See It in Action — Four Steps, Full Transparency')}
+            description={t('From chart to signal in seconds. Follow the pipeline and watch the data labels every step of the way.')}
           />
         </Reveal>
 
@@ -44,7 +46,7 @@ export function HowItWorks() {
                 const isActive = i === active
                 const isDone = i < active
                 return (
-                  <li key={step.title}>
+                  <li key={t(step.title)}>
                     <button
                       type="button"
                       onClick={() => setActive(i)}
@@ -72,10 +74,10 @@ export function HowItWorks() {
                             isActive ? 'text-accent' : 'text-ink'
                           }`}
                         >
-                          {step.title}
+                          {t(step.title)}
                         </span>
                         <span className="mt-1 block text-sm leading-relaxed text-ink-soft">
-                          {step.description}
+                          {t(step.description)}
                         </span>
                       </span>
                     </button>
@@ -89,10 +91,10 @@ export function HowItWorks() {
           <div className="order-1 lg:order-2">
             <Reveal delay={120}>
               <TerminalFrame
-                title="Snap Trader AI · Analysis Pipeline"
+                title={t('Snap Trader AI · Analysis Pipeline')}
                 titleExtra={
                   <span className="font-mono text-[9px] font-bold text-accent">
-                    STEP {active + 1}/4
+                    {t('STEP')} {active + 1}/4
                   </span>
                 }
               >
@@ -114,14 +116,14 @@ export function HowItWorks() {
                     </span>
                     <div className="min-w-0">
                       <p className="font-mono text-[10px] font-bold text-ink">
-                        CHART UPLOADED — EUR/USD · 1H
+                        {t('CHART UPLOADED — EUR/USD · 1H')}
                       </p>
                       <p className="font-mono text-[9px] text-ink-soft">
-                        Screenshot received · 3840×2160 · PNG
+                        {t('Screenshot received · 3840×2160 · PNG')}
                       </p>
                     </div>
                     <span className="ml-auto shrink-0 rounded-full bg-success/10 px-2 py-0.5 font-mono text-[8px] font-bold text-success">
-                      OK
+                      {t('OK')}
                     </span>
                   </div>
 
@@ -142,7 +144,7 @@ export function HowItWorks() {
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="font-mono text-[10px] font-bold text-ink">
-                        SCANNING 26 INDICATORS · 4 TIMEFRAMES
+                        {t('SCANNING 26 INDICATORS · 4 TIMEFRAMES')}
                       </p>
                       {active >= 1 ? (
                         <div className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-[#E3E9F2]">
@@ -152,7 +154,7 @@ export function HowItWorks() {
                           />
                         </div>
                       ) : (
-                        <p className="font-mono text-[9px] text-ink-soft">Waiting for chart…</p>
+                        <p className="font-mono text-[9px] text-ink-soft">{t('Waiting for chart…')}</p>
                       )}
                     </div>
                   </div>
@@ -175,21 +177,21 @@ export function HowItWorks() {
                       </span>
                       <div className="min-w-0 flex-1">
                         <p className="font-mono text-[10px] font-bold text-ink">
-                          SIGNAL READY — BUY · 87% CONFIDENCE
+                          {t('SIGNAL READY — BUY · 87% CONFIDENCE')}
                         </p>
                         <p className="font-mono text-[9px] text-ink-soft">
-                          Entry 1.0842 · Exit 1.0918 · Stop 1.0804 · R:R 1:2.1
+                          {t('Entry 1.0842 · Exit 1.0918 · Stop 1.0804 · R:R 1:2.1')}
                         </p>
                       </div>
                       {active >= 2 && (
                         <span className="shrink-0 rounded-full bg-success/15 px-2 py-0.5 font-mono text-[8px] font-bold text-success">
-                          VERIFY
+                          {t('VERIFY')}
                         </span>
                       )}
                     </div>
                     {active >= 2 && (
                       <p className="mt-2 rounded-md bg-success/10 px-2.5 py-1.5 font-mono text-[8px] text-success/80">
-                        Signal is an observation — not financial advice. Verify before acting.
+                        {t('Signal is an observation — not financial advice. Verify before acting.')}
                       </p>
                     )}
                   </div>
@@ -211,14 +213,14 @@ export function HowItWorks() {
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="font-mono text-[10px] font-bold text-ink">
-                        EXECUTION — VIA YOUR BROKER
+                        {t('EXECUTION — VIA YOUR BROKER')}
                       </p>
                       <p className="font-mono text-[9px] text-ink-soft">
-                        Execution: manual (your control) · Snap Trader AI never holds funds
+                        {t('Execution: manual (your control) · Snap Trader AI never holds funds')}
                       </p>
                     </div>
                     <span className="shrink-0 rounded-full bg-accent/10 px-2 py-0.5 font-mono text-[8px] font-bold text-accent">
-                      CONNECTED
+                      {t('CONNECTED')}
                     </span>
                   </div>
                 </div>

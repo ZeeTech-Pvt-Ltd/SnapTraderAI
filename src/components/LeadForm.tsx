@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import intlTelInput from 'intl-tel-input'
 import 'intl-tel-input/build/css/intlTelInput.css'
 
@@ -53,6 +54,7 @@ function FieldError({ message }: { message?: string }) {
 /** Shared lead-capture form (Get Started + Contact pages).
     Validation mirrors the reference form: inline field errors, no native bubbles. */
 export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) {
+  const { t } = useTranslation()
   const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -124,14 +126,14 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
 
   const validate = (): FieldErrors => {
     const errs: FieldErrors = {}
-    if (firstName.trim() === '') errs.firstName = 'Please enter your first name.'
-    if (lastName.trim() === '') errs.lastName = 'Please enter your last name.'
-    if (!EMAIL_RE.test(email.trim())) errs.email = 'Please enter a valid email address.'
+    if (firstName.trim() === '') errs.firstName = t('Please enter your first name.')
+    if (lastName.trim() === '') errs.lastName = t('Please enter your last name.')
+    if (!EMAIL_RE.test(email.trim())) errs.email = t('Please enter a valid email address.')
     // Like the reference sign-up form: required only, no digit-count rules
     if ((phoneRef.current?.value ?? '').trim() === '') {
-      errs.phone = 'Please enter your phone number.'
+      errs.phone = t('Please enter your phone number.')
     }
-    if (!agreed) errs.agreed = 'Please accept the Privacy Policy to continue.'
+    if (!agreed) errs.agreed = t('Please accept the Privacy Policy to continue.')
     return errs
   }
 
@@ -206,7 +208,7 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
         if (/phone/i.test(backendMessage)) {
           setBackendError('')
           setStatus('idle')
-          setErrors((prev) => ({ ...prev, phone: 'Try a valid phone number.' }))
+          setErrors((prev) => ({ ...prev, phone: t('Try a valid phone number.') }))
           return
         }
         setBackendError(backendMessage || `The server rejected the request (HTTP ${res.status}).`)
@@ -231,7 +233,7 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="lead-first" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-ink-soft">
-            First Name <span className="text-danger">*</span>
+            {t('First Name')} <span className="text-danger">*</span>
           </label>
           <input
             id="lead-first"
@@ -251,7 +253,7 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
         </div>
         <div>
           <label htmlFor="lead-last" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-ink-soft">
-            Last Name <span className="text-danger">*</span>
+            {t('Last Name')} <span className="text-danger">*</span>
           </label>
           <input
             id="lead-last"
@@ -273,7 +275,7 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
 
       <div>
         <label htmlFor="lead-email" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-ink-soft">
-          Email <span className="text-danger">*</span>
+          {t('Email')} <span className="text-danger">*</span>
         </label>
         <input
           id="lead-email"
@@ -294,7 +296,7 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
 
       <div>
         <label htmlFor="lead-phone" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-ink-soft">
-          Phone Number <span className="text-danger">*</span>
+          {t('Phone Number')} <span className="text-danger">*</span>
         </label>
         <input
           id="lead-phone"
@@ -334,19 +336,19 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
             className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-[#0090c8]"
           />
           <span className="text-xs leading-relaxed text-muted-dark">
-            I have read and agree to the{' '}
+            {t('I have read and agree to the')}{' '}
             <Link
               to="/privacy-policy"
               className="font-semibold text-accent hover:underline"
             >
-              Privacy Policy
+              {t('Privacy Policy')}
             </Link>{' '}
-            and{' '}
+            {t('and')}{' '}
             <Link
               to="/terms-conditions"
               className="font-semibold text-accent hover:underline"
             >
-              Terms &amp; Conditions
+              {t('Terms & Conditions')}
             </Link>
             .
           </span>
@@ -357,8 +359,8 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
       {status === 'error' && (
         <p className="rounded-lg border border-danger/30 bg-danger/5 p-3.5 text-sm leading-relaxed text-muted-dark" role="alert">
           {backendError
-            ? `${backendError} Please try again, or email us directly at `
-            : 'Something went wrong while sending your details. Please try again, or email us directly at '}
+            ? `${backendError} ${t('Please try again, or email us directly at ')}`
+            : t('Something went wrong while sending your details. Please try again, or email us directly at ')}
           <a
             href="mailto:support@snap-traderai.com"
             className="font-semibold text-accent hover:underline"
@@ -374,7 +376,7 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
         disabled={status === 'sending'}
         className="btn btn-primary btn-lg group w-full cursor-pointer disabled:cursor-wait disabled:opacity-70"
       >
-        {status === 'sending' ? 'Sending…' : submitLabel}
+        {status === 'sending' ? t('Sending…') : submitLabel}
         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
       </button>
     </form>

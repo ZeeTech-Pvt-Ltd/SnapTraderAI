@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
 import { HomePage } from './pages/HomePage'
@@ -153,6 +154,8 @@ const SEO: Record<string, { title: string; description: string }> = {
 /** Keeps <title> and the meta description in sync with the current route. */
 function SeoManager() {
   const location = useLocation()
+  const { t, i18n } = useTranslation()
+  const lang = i18n.language
 
   useEffect(() => {
     const path = location.pathname.replace(/\/+$/, '') || '/'
@@ -167,10 +170,14 @@ function SeoManager() {
       return
     }
 
-    document.title = seo.title
-    setMetaDescription(seo.description)
-    setSocialMeta(seo.title, seo.description, path)
-  }, [location])
+    // Titles and descriptions follow the selected language where a
+    // translation exists — untranslated routes fall back to the English key.
+    const title = t(seo.title)
+    const description = t(seo.description)
+    document.title = title
+    setMetaDescription(description)
+    setSocialMeta(title, description, path)
+  }, [location, lang, t])
 
   return null
 }
@@ -243,6 +250,8 @@ function ScrollManager() {
 }
 
 export default function App() {
+  const { t } = useTranslation()
+
   return (
     <div className="min-h-screen bg-deep font-sans text-ink">
       {/* Skip link for keyboard users */}
@@ -250,7 +259,7 @@ export default function App() {
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[9999] focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-[#04212b]"
       >
-        Skip to main content
+        {t('Skip to main content')}
       </a>
 
       <ScrollManager />

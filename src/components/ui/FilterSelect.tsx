@@ -1,4 +1,5 @@
 import { ChevronDown } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 interface FilterSelectProps {
   label: string
@@ -8,9 +9,11 @@ interface FilterSelectProps {
 }
 
 export function FilterSelect({ label, value, options, onChange }: FilterSelectProps) {
+  const { t } = useTranslation()
+
   return (
     <label className="relative inline-flex h-[42px] min-w-[150px] cursor-pointer items-center overflow-hidden rounded-lg border border-border bg-navy shadow-card">
-      <span className="sr-only">{label}</span>
+      <span className="sr-only">{t(label)}</span>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -18,7 +21,7 @@ export function FilterSelect({ label, value, options, onChange }: FilterSelectPr
       >
         {options.map((o) => (
           <option key={o} value={o}>
-            {o}
+            {t(o)}
           </option>
         ))}
       </select>

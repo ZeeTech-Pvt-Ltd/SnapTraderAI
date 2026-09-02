@@ -1,4 +1,6 @@
 import { ArrowRight, CheckCircle2, PlayCircle } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { Button } from './ui/Button'
 import { HeroTerminal } from './HeroTerminal'
 
@@ -10,6 +12,14 @@ const HERO_BULLETS = [
 ]
 
 export function Hero() {
+  const { t } = useTranslation()
+
+  // Split the caption so the final word keeps its accent styling in every
+  // language (the translated sentence is one i18n key).
+  const [captionHead, captionTail] = splitStyledTail(
+    t('The real platform shows live data, confidence labels and risk warnings at every step — always.'),
+  )
+
   return (
     <section
       id="top"
@@ -42,29 +52,26 @@ export function Hero() {
           {/* Copy */}
           <div className="pt-6 md:pt-10">
             <h1 className="mb-6 max-w-[640px] text-4xl font-black leading-[1.08] tracking-tight md:text-5xl lg:text-[3.4rem]">
-              SnapTrader AI: Turn Any Chart Into a{' '}
-              <span className="text-gradient-brand">Clear Trading Plan</span>
+              {t('SnapTrader AI: Turn Any Chart Into a Clear Trading Plan')}
             </h1>
             <p className="mb-9 max-w-[540px] text-lg leading-relaxed text-muted-dark">
-              Stop guessing your charts. SnapTrader AI reads any screenshot
-              instantly, flags bullish or bearish setups and hands you a clear
-              entry and exit plan.
+              {t('Stop guessing your charts. SnapTrader AI reads any screenshot instantly, flags bullish or bearish setups and hands you a clear entry and exit plan.')}
             </p>
             <div className="mb-8 flex flex-wrap gap-4">
               <Button to="/get-started" size="lg" className="group">
-                Start Analyzing Free
+                {t('Start Analyzing Free')}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
               <Button href="#how-it-works" variant="outline" size="lg">
                 <PlayCircle className="h-5 w-5 text-accent" />
-                See How It Works
+                {t('See How It Works')}
               </Button>
             </div>
             <ul className="flex flex-wrap gap-x-6 gap-y-2.5 text-xs text-ink-soft">
               {HERO_BULLETS.map((b) => (
                 <li key={b} className="flex items-center gap-1.5">
                   <CheckCircle2 className="h-3.5 w-3.5 text-success" />
-                  <span className="font-semibold">{b}</span>
+                  <span className="font-semibold">{t(b)}</span>
                 </li>
               ))}
             </ul>
@@ -79,8 +86,8 @@ export function Hero() {
             />
             <HeroTerminal />
             <p className="mt-4 text-center text-xs text-ink-soft">
-              The real platform shows live data, confidence labels and risk
-              warnings at every step — <span className="font-semibold text-accent">always.</span>
+              {captionHead}{' '}
+              <span className="font-semibold text-accent">{captionTail}</span>
             </p>
           </div>
         </div>

@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ChevronRight, Clock, Headset, Mail } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { LeadForm } from '../components/LeadForm'
 import { Reveal } from '../components/ui/Reveal'
 
@@ -38,9 +39,10 @@ const CHANNELS: Channel[] = [
 ]
 
 export function ContactPage() {
-  useEffect(() => {
-    document.title = 'Contact | SnapTrader AI'
-  }, [])
+  const { t } = useTranslation()
+
+  // Gradient covers the tail of the heading in every language.
+  const [headingHead, headingTail] = splitStyledTail(t('Contact Us'))
 
   return (
     <div className="bg-deep pt-[72px]">
@@ -54,12 +56,10 @@ export function ContactPage() {
         <div className="relative z-10 mx-auto max-w-container px-4 md:px-6">
           <Reveal>
             <h1 className="mb-5 max-w-[600px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-              Contact <span className="text-gradient-brand">Us</span>
+              {headingHead} <span className="text-gradient-brand">{headingTail}</span>
             </h1>
             <p className="max-w-2xl text-base leading-relaxed text-muted-dark md:text-lg">
-              If you have questions about Snap Trader AI, need assistance with
-              the platform, or want to learn more about our services, feel free
-              to reach out. Our team aims to respond as quickly as possible.
+              {t('If you have questions about Snap Trader AI, need assistance with the platform, or want to learn more about our services, feel free to reach out. Our team aims to respond as quickly as possible.')}
             </p>
           </Reveal>
         </div>
@@ -80,14 +80,14 @@ export function ContactPage() {
                       </span>
                       <span className="min-w-0 flex-1">
                         <span className="block text-sm font-bold text-ink">
-                          {channel.title}
+                          {t(channel.title)}
                         </span>
                         <span className="mt-0.5 block text-sm font-semibold text-accent">
-                          {channel.value}
+                          {t(channel.value)}
                         </span>
                         {channel.sub && (
                           <span className="mt-0.5 block text-xs text-ink-soft">
-                            {channel.sub}
+                            {t(channel.sub)}
                           </span>
                         )}
                       </span>
@@ -124,16 +124,12 @@ export function ContactPage() {
 
               {/* Get in Touch — from the reference contact page */}
               <div className="mt-6 rounded-2xl border border-border bg-navy p-6 shadow-card">
-                <h2 className="mb-3 text-base font-bold text-ink">Get in Touch</h2>
+                <h2 className="mb-3 text-base font-bold text-ink">{t('Get in Touch')}</h2>
                 <p className="text-sm leading-relaxed text-muted-dark">
-                  Please note that Snap Trader AI does not provide personalized
-                  financial or investment advice. Any questions related to
-                  trading decisions should be discussed with a qualified
-                  financial professional.
+                  {t('Please note that Snap Trader AI does not provide personalized financial or investment advice. Any questions related to trading decisions should be discussed with a qualified financial professional.')}
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-muted-dark">
-                  We appreciate your interest in Snap Trader AI and value your
-                  trust. Your feedback helps us improve and serve you better.
+                  {t('We appreciate your interest in Snap Trader AI and value your trust. Your feedback helps us improve and serve you better.')}
                 </p>
               </div>
             </Reveal>
@@ -142,8 +138,8 @@ export function ContactPage() {
             <Reveal delay={120}>
               <div className="rounded-2xl border border-border bg-navy p-6 shadow-card md:p-8">
                 <LeadForm
-                  formHeading="Explore Trading Opportunities"
-                  submitLabel="Register Now"
+                  formHeading={t('Explore Trading Opportunities')}
+                  submitLabel={t('Register Now')}
                   formName="contact_us"
                 />
               </div>

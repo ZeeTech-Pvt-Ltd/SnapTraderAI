@@ -1,7 +1,9 @@
+import { useTranslation } from 'react-i18next'
 import { markets } from '../content/markets'
 
 /** Scrolling live-market tape — decorative motion strip. */
 export function TickerTape() {
+  const { t } = useTranslation()
   // Duplicate the list once so the -50% marquee loop is seamless
   const tape = [...markets, ...markets]
 
@@ -29,7 +31,7 @@ export function TickerTape() {
                   : 'bg-warning/10 text-warning'
               }`}
             >
-              {m.label}
+              {t(m.label)}
             </span>
           </span>
         ))}
