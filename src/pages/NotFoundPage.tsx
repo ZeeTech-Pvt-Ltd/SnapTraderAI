@@ -1,12 +1,16 @@
 import { useEffect } from 'react'
 import { ArrowRight, Home, LineChart } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
 
 export function NotFoundPage() {
+  const { t, i18n } = useTranslation()
+
+  // No SEO entry for the catch-all route — set the title here, per language.
   useEffect(() => {
-    document.title = 'Page Not Found | SnapTrader AI'
-  }, [])
+    document.title = t('Page Not Found | SnapTrader AI')
+  }, [t, i18n.language])
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-deep px-4 pt-[72px] pb-16 text-center">
@@ -23,19 +27,18 @@ export function NotFoundPage() {
           <span className="text-gradient-brand">404</span>
         </h1>
         <h2 className="mb-3 text-2xl font-extrabold text-ink md:text-3xl">
-          This Chart Doesn&apos;t Exist
+          {t("This Chart Doesn't Exist")}
         </h2>
         <p className="mx-auto mb-8 max-w-md text-muted-dark">
-          The page you&apos;re looking for was moved, renamed, or never existed
-          in the first place. Just like a bad trade — cut it and move on.
+          {t("The page you're looking for was moved, renamed, or never existed in the first place. Just like a bad trade — cut it and move on.")}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Button to="/" size="lg" className="group">
             <Home className="h-4 w-4" />
-            Back to Homepage
+            {t('Back to Homepage')}
           </Button>
           <Button to="/leaderboard" variant="outline" size="lg" className="group">
-            View Leaderboard
+            {t('View Leaderboard')}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Button>
         </div>

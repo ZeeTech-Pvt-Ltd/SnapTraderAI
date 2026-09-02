@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { ArrowRight, CheckCircle2, Mail, PlayCircle, Search } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
 
@@ -28,13 +28,10 @@ const NEXT_STEPS = [
 ]
 
 export function ThankYouPage() {
+  const { t } = useTranslation()
   const location = useLocation()
   const state = (location.state ?? {}) as ThankYouState
   const name = state.firstName?.trim()
-
-  useEffect(() => {
-    document.title = 'Thank You | SnapTrader AI'
-  }, [])
 
   return (
     <div className="bg-deep pt-[72px]">
@@ -55,16 +52,13 @@ export function ThankYouPage() {
               <CheckCircle2 className="h-10 w-10 text-[#04212b]" />
             </span>
             <h1 className="mb-4 text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-              Thank You{name ? `, ${name}` : ''}!{' '}
-              <span className="text-gradient-brand">You&apos;re In.</span>
+              {name ? t('Thank You, {{name}}!', { name }) : t('Thank You!')}{' '}
+              <span className="text-gradient-brand">{t("You're In.")}</span>
             </h1>
             <p className="mx-auto mb-10 max-w-xl text-lg leading-relaxed text-muted-dark">
-              Your details have been received and your free access is being
-              prepared. Keep an eye on{' '}
-              <span className="font-semibold text-ink">
-                {state.email || 'your inbox'}
-              </span>{' '}
-              — we&apos;ll be in touch shortly.
+              {t("Your details have been received and your free access is being prepared. Keep an eye on {{email}} — we'll be in touch shortly.", {
+                email: state.email || t('your inbox'),
+              })}
             </p>
 
             {/* Next steps */}
@@ -75,9 +69,9 @@ export function ThankYouPage() {
                     <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10 text-accent">
                       <step.icon className="h-5 w-5" />
                     </span>
-                    <h2 className="mb-1.5 text-sm font-bold text-ink">{step.title}</h2>
+                    <h2 className="mb-1.5 text-sm font-bold text-ink">{t(step.title)}</h2>
                     <p className="text-xs leading-relaxed text-muted-dark">
-                      {step.description}
+                      {t(step.description)}
                     </p>
                   </div>
                 </Reveal>
@@ -86,11 +80,11 @@ export function ThankYouPage() {
 
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Button to="/" size="lg" className="group">
-                Back to Homepage
+                {t('Back to Homepage')}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
               <Button to="/#tools" variant="outline" size="lg">
-                Explore AI Products
+                {t('Explore AI Products')}
               </Button>
             </div>
           </Reveal>
