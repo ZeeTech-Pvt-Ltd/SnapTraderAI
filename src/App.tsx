@@ -162,15 +162,38 @@ function SeoManager() {
     if (!seo) {
       if (path.startsWith('/traders/') || path.startsWith('/blog/')) {
         setMetaDescription(DEFAULT_SEO.description)
+        setSocialMeta(document.title, DEFAULT_SEO.description, path)
       }
       return
     }
 
     document.title = seo.title
     setMetaDescription(seo.description)
+    setSocialMeta(seo.title, seo.description, path)
   }, [location])
 
   return null
+}
+
+/** Keeps Open Graph + Twitter tags in sync with the current route. */
+function setSocialMeta(title: string, description: string, path: string) {
+  const url = `${SITE_URL}${path}`
+  const set = (selector: string, attr: string, value: string) => {
+    let meta = document.querySelector<HTMLMetaElement>(selector)
+    if (!meta) {
+      meta = document.createElement('meta')
+      const name = selector.replace(/^meta\[name="([^"]+)"\]$/, '$1')
+      if (selector.includes('name=')) meta.name = name
+      else meta.setAttribute('property', name)
+      document.head.appendChild(meta)
+    }
+    meta.setAttribute(attr, value)
+  }
+  set('meta[property="og:title"]', 'content', title)
+  set('meta[property="og:description"]', 'content', description)
+  set('meta[property="og:url"]', 'content', url)
+  set('meta[name="twitter:title"]', 'content', title)
+  set('meta[name="twitter:description"]', 'content', description)
 }
 
 function setMetaDescription(content: string) {
