@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import {
   ArrowRight,
   Award,
@@ -17,6 +16,8 @@ import {
   Sparkles,
   TrendingUp,
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
 import { SectionHeader } from '../components/ui/SectionHeader'
@@ -85,9 +86,17 @@ const FOR_BEGINNERS = [
 ]
 
 export function AcademyPage() {
-  useEffect(() => {
-    document.title = 'Academy | SnapTrader AI'
-  }, [])
+  const { t } = useTranslation()
+
+  // Gradient covers the tail of each headline in every language.
+  const [heroHead, heroTail] = splitStyledTail(
+    t('Trading Academy — Learn to Trade, with AI on Your Side'),
+    4,
+  )
+  const [ctaHead, ctaTail] = splitStyledTail(
+    t('Your first module is free. Your first mistake shouldn’t cost you.'),
+    2,
+  )
 
   return (
     <div className="bg-deep pt-[72px]">
@@ -102,18 +111,16 @@ export function AcademyPage() {
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
             <Reveal>
               <h1 className="mb-5 max-w-[640px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-                Trading Academy — Learn to Trade, with{' '}
-                <span className="text-gradient-brand">AI on Your Side</span>
+                {heroHead} <span className="text-gradient-brand">{heroTail}</span>
               </h1>
               <p className="mb-3 text-lg font-semibold leading-relaxed text-ink">
-                Short lessons. Real charts. Zero jargon.
+                {t('Short lessons. Real charts. Zero jargon.')}
               </p>
               <p className="mb-8 max-w-[560px] text-lg leading-relaxed text-muted-dark">
-                Go from “what even is a candlestick?” to reading market
-                structure with confidence — at your own pace.
+                {t('Go from “what even is a candlestick?” to reading market structure with confidence — at your own pace.')}
               </p>
               <Button to="/get-started" size="lg" className="group">
-                Start Free
+                {t('Start Free')}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
             </Reveal>
@@ -130,9 +137,9 @@ export function AcademyPage() {
                   <div className="gradient-brand flex items-center justify-between px-6 py-4">
                     <p className="flex items-center gap-2 font-mono text-xs font-bold text-[#04212b]">
                       <GraduationCap className="h-4 w-4" />
-                      PICK YOUR LEVEL
+                      {t('PICK YOUR LEVEL')}
                     </p>
-                    <p className="font-mono text-[10px] font-bold text-[#04212b]/70">3 TRACKS</p>
+                    <p className="font-mono text-[10px] font-bold text-[#04212b]/70">{t('3 TRACKS')}</p>
                   </div>
                   {LEVELS.map((l, i) => (
                     <div
@@ -146,9 +153,9 @@ export function AcademyPage() {
                       </span>
                       <div className="min-w-0">
                         <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-accent">
-                          {l.track}
+                          {t(l.track)}
                         </p>
-                        <p className="text-sm font-bold text-ink">{l.title}</p>
+                        <p className="text-sm font-bold text-ink">{t(l.title)}</p>
                       </div>
                       <ArrowRight className="ml-auto h-4 w-4 shrink-0 text-ink-soft/50 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-accent" />
                     </div>
@@ -164,7 +171,7 @@ export function AcademyPage() {
       <section className="border-y border-border bg-navy py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="Why Traders Start Here" />
+            <SectionHeader title={t('Why Traders Start Here')} />
           </Reveal>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {WHY_START_HERE.map((w, i) => (
@@ -174,8 +181,8 @@ export function AcademyPage() {
                   <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent">
                     <w.icon className="h-6 w-6" />
                   </span>
-                  <h2 className="mb-1.5 text-sm font-bold text-ink">{w.title}</h2>
-                  <p className="text-xs leading-relaxed text-muted-dark">{w.description}</p>
+                  <h2 className="mb-1.5 text-sm font-bold text-ink">{t(w.title)}</h2>
+                  <p className="text-xs leading-relaxed text-muted-dark">{t(w.description)}</p>
                 </div>
               </Reveal>
             ))}
@@ -187,7 +194,7 @@ export function AcademyPage() {
       <section className="bg-deep py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="Pick Your Level" />
+            <SectionHeader title={t('Pick Your Level')} />
           </Reveal>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {LEVELS.map((l, i) => (
@@ -196,12 +203,12 @@ export function AcademyPage() {
                   <div aria-hidden="true" className="absolute inset-x-0 top-0 h-[3px] gradient-brand opacity-70" />
                   {i === 0 && (
                     <span className="absolute right-4 top-4 rounded-full gradient-brand px-2.5 py-1 font-mono text-[9px] font-black uppercase tracking-wider text-[#04212b]">
-                      Start here
+                      {t('Start here')}
                     </span>
                   )}
                   {i === LEVELS.length - 1 && (
                     <span className="absolute right-4 top-4 rounded-full border border-violet-500/30 bg-violet-500/10 px-2.5 py-1 font-mono text-[9px] font-black uppercase tracking-wider text-violet-500">
-                      Pro
+                      {t('Pro')}
                     </span>
                   )}
                   <div className="mb-4 flex items-center gap-3">
@@ -209,15 +216,15 @@ export function AcademyPage() {
                       <l.icon className="h-5 w-5" />
                     </span>
                     <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-accent">
-                      {l.track}
+                      {t(l.track)}
                     </span>
                   </div>
-                  <h2 className="mb-4 text-base font-bold text-ink">{l.title}</h2>
+                  <h2 className="mb-4 text-base font-bold text-ink">{t(l.title)}</h2>
                   <ul className="space-y-3">
                     {l.points.map((point) => (
                       <li key={point} className="flex items-start gap-3 text-sm leading-relaxed text-muted-dark">
                         <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full gradient-brand" />
-                        {point}
+                        {t(point)}
                       </li>
                     ))}
                   </ul>
@@ -232,7 +239,7 @@ export function AcademyPage() {
       <section className="border-t border-border bg-navy py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="What’s Inside" />
+            <SectionHeader title={t('What’s Inside')} />
           </Reveal>
           <Reveal>
             <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-border bg-deep shadow-card">
@@ -247,10 +254,10 @@ export function AcademyPage() {
                     <w.icon className="h-5 w-5" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <h2 className="text-sm font-bold text-ink md:text-base">{w.title}</h2>
+                    <h2 className="text-sm font-bold text-ink md:text-base">{t(w.title)}</h2>
                     {w.description && (
                       <p className="mt-0.5 text-xs leading-relaxed text-muted-dark md:text-sm">
-                        {w.description}
+                        {t(w.description)}
                       </p>
                     )}
                   </div>
@@ -259,7 +266,7 @@ export function AcademyPage() {
               ))}
               <div className="flex items-center justify-between border-t border-border bg-medium-navy/30 px-5 py-3.5">
                 <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-success">
-                  5/5 included with every track
+                  {t('5/5 included with every track')}
                 </p>
                 <p className="font-mono text-[9px] text-ink-soft/60">SNAP-ACADEMY</p>
               </div>
@@ -289,8 +296,8 @@ export function AcademyPage() {
                       />
                     )}
                   </div>
-                  <h3 className="mb-1.5 text-base font-bold text-ink">{s.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-dark">{s.description}</p>
+                  <h3 className="mb-1.5 text-base font-bold text-ink">{t(s.title)}</h3>
+                  <p className="text-sm leading-relaxed text-muted-dark">{t(s.description)}</p>
                 </div>
               </Reveal>
             ))}
@@ -316,8 +323,8 @@ export function AcademyPage() {
               />
               <div className="relative z-10">
                 <SectionHeader
-                  title="Built for Real Beginners"
-                  description="Most trading courses assume you already know the language. This academy doesn’t."
+                  title={t('Built for Real Beginners')}
+                  description={t('Most trading courses assume you already know the language. This academy doesn’t.')}
                 />
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {FOR_BEGINNERS.map((point, i) => (
@@ -326,7 +333,7 @@ export function AcademyPage() {
                         <span className="gradient-brand flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-[#04212b]">
                           <point.icon className="h-5 w-5" />
                         </span>
-                        <p className="text-sm font-semibold text-muted-dark">{point.title}</p>
+                        <p className="text-sm font-semibold text-muted-dark">{t(point.title)}</p>
                       </div>
                     </Reveal>
                   ))}
@@ -342,12 +349,11 @@ export function AcademyPage() {
         <div className="mx-auto max-w-2xl px-4 text-center md:px-6">
           <Reveal>
             <h2 className="mb-4 text-3xl font-extrabold text-ink md:text-4xl">
-              Your first module is free. Your first mistake{' '}
-              <span className="text-gradient-brand">shouldn’t cost you.</span>
+              {ctaHead} <span className="text-gradient-brand">{ctaTail}</span>
             </h2>
             <div className="mt-6">
               <Button to="/get-started" size="lg" className="group">
-                Start Learning
+                {t('Start Learning')}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
             </div>

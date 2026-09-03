@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import {
   ArrowRight,
   Brain,
@@ -9,6 +8,8 @@ import {
   Wallet,
   Zap,
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
 import { SectionHeader } from '../components/ui/SectionHeader'
@@ -86,9 +87,10 @@ const TIME_TABLE = [
 ]
 
 export function WhyChoosePage() {
-  useEffect(() => {
-    document.title = 'Why Choose SnapTrader AI | SnapTrader AI'
-  }, [])
+  const { t } = useTranslation()
+
+  // Gradient covers the brand tail of the heading in every language.
+  const [head, tail] = splitStyledTail(t('Why Choose SnapTrader AI'), 2)
 
   return (
     <div className="bg-deep pt-[72px]">
@@ -102,18 +104,16 @@ export function WhyChoosePage() {
         <div className="relative z-10 mx-auto max-w-3xl px-4 text-center md:px-6">
           <Reveal>
             <h1 className="mb-5 text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-              Why Choose <span className="text-gradient-brand">SnapTrader AI</span>
+              {head} <span className="text-gradient-brand">{tail}</span>
             </h1>
             <p className="mb-3 text-lg font-semibold leading-relaxed text-ink">
-              Markets move in seconds. Most traders react in minutes.
+              {t('Markets move in seconds. Most traders react in minutes.')}
             </p>
             <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-muted-dark">
-              SnapTrader AI closes that gap — scanning, deciding, and executing
-              while the opportunity is still on the table. Here&apos;s what
-              makes it different.
+              {t("SnapTrader AI closes that gap — scanning, deciding, and executing while the opportunity is still on the table. Here's what makes it different.")}
             </p>
             <Button to="/get-started" size="lg" className="group">
-              Start on Your Terms
+              {t('Start on Your Terms')}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
           </Reveal>
@@ -139,7 +139,7 @@ export function WhyChoosePage() {
                   </span>
                   <div>
                     <h2 className="text-2xl font-extrabold text-ink md:text-3xl">
-                      {feature.title}
+                      {t(feature.title)}
                     </h2>
                   </div>
                 </div>
@@ -149,7 +149,7 @@ export function WhyChoosePage() {
                   {feature.points.map((point) => (
                     <li key={point} className="flex items-start gap-3 text-base leading-relaxed text-muted-dark">
                       <span className="mt-2.5 h-2 w-2 shrink-0 rounded-full gradient-brand" />
-                      {point}
+                      {t(point)}
                     </li>
                   ))}
                 </ul>
@@ -163,7 +163,7 @@ export function WhyChoosePage() {
       <section className="border-y border-border bg-navy py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="Simple for Beginners, Deep for Pros" />
+            <SectionHeader title={t('Simple for Beginners, Deep for Pros')} />
           </Reveal>
           <div className="grid gap-6 lg:grid-cols-2">
             <Reveal>
@@ -172,7 +172,7 @@ export function WhyChoosePage() {
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
                     <Sparkles className="h-5 w-5" />
                   </span>
-                  <h3 className="text-lg font-bold text-ink">New to trading?</h3>
+                  <h3 className="text-lg font-bold text-ink">{t('New to trading?')}</h3>
                 </div>
                 <ul className="space-y-3.5">
                   {[
@@ -182,7 +182,7 @@ export function WhyChoosePage() {
                   ].map((point) => (
                     <li key={point} className="flex items-start gap-3 text-sm leading-relaxed text-muted-dark md:text-base">
                       <span className="mt-2 h-2 w-2 shrink-0 rounded-full gradient-brand" />
-                      {point}
+                      {t(point)}
                     </li>
                   ))}
                 </ul>
@@ -194,7 +194,7 @@ export function WhyChoosePage() {
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
                     <Brain className="h-5 w-5" />
                   </span>
-                  <h3 className="text-lg font-bold text-ink">Been at this for years?</h3>
+                  <h3 className="text-lg font-bold text-ink">{t('Been at this for years?')}</h3>
                 </div>
                 <ul className="space-y-3.5">
                   {[
@@ -204,7 +204,7 @@ export function WhyChoosePage() {
                   ].map((point) => (
                     <li key={point} className="flex items-start gap-3 text-sm leading-relaxed text-muted-dark md:text-base">
                       <span className="mt-2 h-2 w-2 shrink-0 rounded-full gradient-brand" />
-                      {point}
+                      {t(point)}
                     </li>
                   ))}
                 </ul>
@@ -218,13 +218,13 @@ export function WhyChoosePage() {
       <section className="bg-deep py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="Built for Traders Who Value Their Time" />
+            <SectionHeader title={t('Built for Traders Who Value Their Time')} />
           </Reveal>
           <Reveal>
             <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-border bg-navy shadow-card">
               <div className="grid grid-cols-2 border-b border-border bg-medium-navy/50 px-6 py-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-ink-soft">
-                <span>What you get</span>
-                <span>What it means for you</span>
+                <span>{t('What you get')}</span>
+                <span>{t('What it means for you')}</span>
               </div>
               {TIME_TABLE.map((row, i) => (
                 <div
@@ -233,8 +233,8 @@ export function WhyChoosePage() {
                     i > 0 ? 'border-t border-border' : ''
                   }`}
                 >
-                  <p className="text-sm font-bold text-ink md:text-base">{row.what}</p>
-                  <p className="text-sm leading-relaxed text-muted-dark md:text-base">{row.means}</p>
+                  <p className="text-sm font-bold text-ink md:text-base">{t(row.what)}</p>
+                  <p className="text-sm leading-relaxed text-muted-dark md:text-base">{t(row.means)}</p>
                 </div>
               ))}
             </div>
@@ -254,7 +254,7 @@ export function WhyChoosePage() {
         />
         <div className="relative z-10 mx-auto max-w-3xl px-4 text-center md:px-6">
           <Reveal>
-            <SectionHeader title="Start on Your Terms" />
+            <SectionHeader title={t('Start on Your Terms')} />
             <ul className="mx-auto mb-10 max-w-xl space-y-3 pl-5 text-left lg:pl-0">
               {[
                 'Free demo mode — test everything with zero capital at risk',
@@ -263,20 +263,18 @@ export function WhyChoosePage() {
               ].map((point) => (
                 <li key={point} className="flex items-start gap-3 text-base leading-relaxed text-muted-dark">
                   <span className="mt-2.5 h-2 w-2 shrink-0 rounded-full gradient-brand" />
-                  {point}
+                  {t(point)}
                 </li>
               ))}
             </ul>
             <p className="mb-4 text-lg font-semibold leading-relaxed text-ink md:text-xl">
-              Trading is a game of speed, discipline, and data. SnapTrader AI
-              gives you all three — in one platform.
+              {t('Trading is a game of speed, discipline, and data. SnapTrader AI gives you all three — in one platform.')}
             </p>
             <p className="mb-8 text-muted-dark">
-              Create your free account and see your first AI-generated signal
-              in under five minutes.
+              {t('Create your free account and see your first AI-generated signal in under five minutes.')}
             </p>
             <Button to="/get-started" size="lg" className="group">
-              Create Your Free Account
+              {t('Create Your Free Account')}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
           </Reveal>
