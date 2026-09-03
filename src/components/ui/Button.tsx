@@ -24,7 +24,7 @@ export function Button({
     ghost: 'btn-ghost',
   }[variant]
   const sizeClass = { sm: 'btn-sm', md: 'btn-md', lg: 'btn-lg' }[size]
-  const classes = `btn ${variantClass} ${sizeClass} ${className}`
+  const classes = `btn ${variantClass} ${sizeClass} whitespace-nowrap ${className}`
 
   if (to) {
     const { href: _ignored, ...linkRest } = rest

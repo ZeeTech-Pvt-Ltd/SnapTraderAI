@@ -60,20 +60,20 @@ export function Navbar() {
           : 'border-border bg-transparent'
       }`}
     >
-      <div className="mx-auto flex h-full max-w-container items-center justify-between px-4 md:px-6">
-        <Link to="/" aria-label="Snap Trader AI — home">
+      <div className="mx-auto flex h-full max-w-container items-center justify-between gap-3 px-4 md:px-6">
+        <Link to="/" aria-label="Snap Trader AI — home" className="shrink-0">
           <Logo />
         </Link>
 
         {/* Desktop nav */}
-        <nav ref={navRef} className="hidden items-center gap-4 lg:flex xl:gap-8" aria-label="Main">
+        <nav ref={navRef} className="hidden items-center gap-2 lg:flex xl:gap-6 2xl:gap-8" aria-label="Main">
           {DROPDOWNS.map((dropdown) => {
             const isOpen = openDropdown === dropdown.label
             return (
               <div key={dropdown.label} className="relative">
                 <button
                   type="button"
-                  className="flex items-center gap-1 text-[0.925rem] font-medium text-ink/75 transition-colors hover:text-accent"
+                  className="flex items-center gap-1 whitespace-nowrap text-sm font-medium text-ink/75 transition-colors hover:text-accent xl:text-[0.925rem]"
                   onClick={() => setOpenDropdown(isOpen ? null : dropdown.label)}
                   aria-expanded={isOpen}
                   aria-haspopup="true"
@@ -84,13 +84,13 @@ export function Navbar() {
                   />
                 </button>
                 {isOpen && (
-                  <div className="absolute left-0 top-full mt-2 min-w-[220px] rounded-lg border border-border bg-navy p-2 shadow-card-lg">
+                  <div className="absolute left-0 top-full mt-2 min-w-[240px] rounded-lg border border-border bg-navy p-2 shadow-card-lg">
                     {dropdown.items.map((item) => (
                       <Link
                         key={item.label}
                         to={linkTo(item.href)}
                         onClick={() => setOpenDropdown(null)}
-                        className="block rounded-md px-3 py-2 text-sm text-ink/75 transition-colors hover:bg-medium-navy hover:text-ink"
+                        className="block whitespace-nowrap rounded-md px-3 py-2 text-sm text-ink/75 transition-colors hover:bg-medium-navy hover:text-ink"
                       >
                         {t(item.label)}
                       </Link>
@@ -104,14 +104,14 @@ export function Navbar() {
             <Link
               key={link.label}
               to={linkTo(link.href)}
-              className="text-[0.925rem] font-medium text-ink/75 transition-colors hover:text-accent"
+              className="whitespace-nowrap text-sm font-medium text-ink/75 transition-colors hover:text-accent xl:text-[0.925rem]"
             >
               {t(link.label)}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 sm:flex">
+        <div className="hidden shrink-0 items-center gap-3 sm:flex">
           <LanguageSwitcher />
           <Button to="/get-started" size="sm">
             {t('Get Started Free')}
