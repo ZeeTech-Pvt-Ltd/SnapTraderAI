@@ -233,16 +233,13 @@ function CanonicalManager() {
   return null
 }
 
-/** Renders one route per language variant so every language's URL works
-    regardless of the active language. */
-function LocalizedRoute({ base, element }: { base: string; element: ReactNode }) {
-  return (
-    <>
-      {pathVariants(base).map((path) => (
-        <Route key={path} path={path} element={element} />
-      ))}
-    </>
-  )
+/** One <Route> per language variant, so every language's URL works
+    regardless of the active language. Returns a plain array — <Routes>
+    only accepts Route/React.Fragment children, not wrapper components. */
+function localizedRoutes(base: string, element: ReactNode) {
+  return pathVariants(base).map((path) => (
+    <Route key={path} path={path} element={element} />
+  ))
 }
 
 /** Scrolls to top on route change, or to the hash target when present. */
@@ -283,31 +280,31 @@ export default function App() {
 
       <main id="main">
         <Routes>
-          <LocalizedRoute base="/" element={<HomePage />} />
-          <LocalizedRoute base="/traders" element={<TradersPage />} />
-          <LocalizedRoute base="/traders/:slug" element={<TraderDetailPage />} />
-          <LocalizedRoute base="/leaderboard" element={<LeaderboardPage />} />
-          <LocalizedRoute base="/contact" element={<ContactPage />} />
-          <LocalizedRoute base="/get-started" element={<GetStartedPage />} />
-          <LocalizedRoute base="/privacy-policy" element={<PrivacyPolicyPage />} />
-          <LocalizedRoute base="/terms-conditions" element={<TermsConditionsPage />} />
-          <LocalizedRoute base="/disclaimer" element={<DisclaimerPage />} />
-          <LocalizedRoute base="/cookie-policy" element={<CookiePolicyPage />} />
-          <LocalizedRoute base="/risk-disclosure" element={<RiskDisclosurePage />} />
-          <LocalizedRoute base="/ai-trade-analyzer" element={<TradeAnalyzerPage />} />
-          <LocalizedRoute base="/ai-scalp-analyzer" element={<ScalpAnalyzerPage />} />
-          <LocalizedRoute base="/ai-swing-trading" element={<SwingTradingPage />} />
-          <LocalizedRoute base="/ai-strategy-builder" element={<StrategyBuilderPage />} />
-          <LocalizedRoute base="/ai-pattern-detection" element={<PatternDetectionPage />} />
-          <LocalizedRoute base="/strategy-backtesting" element={<StrategyBacktestingPage />} />
-          <LocalizedRoute base="/ai-trading-platform" element={<TradingPlatformPage />} />
-          <LocalizedRoute base="/risk-calculator" element={<RiskCalculatorPage />} />
-          <LocalizedRoute base="/academy" element={<AcademyPage />} />
-          <LocalizedRoute base="/performance-verification" element={<PerformanceVerificationPage />} />
-          <LocalizedRoute base="/thank-you" element={<ThankYouPage />} />
-          <LocalizedRoute base="/why-choose-snaptrader-ai" element={<WhyChoosePage />} />
-          <LocalizedRoute base="/blog" element={<BlogPage />} />
-          <LocalizedRoute base="/blog/:slug" element={<BlogPostPage />} />
+          {localizedRoutes('/', <HomePage />)}
+          {localizedRoutes('/traders', <TradersPage />)}
+          {localizedRoutes('/traders/:slug', <TraderDetailPage />)}
+          {localizedRoutes('/leaderboard', <LeaderboardPage />)}
+          {localizedRoutes('/contact', <ContactPage />)}
+          {localizedRoutes('/get-started', <GetStartedPage />)}
+          {localizedRoutes('/privacy-policy', <PrivacyPolicyPage />)}
+          {localizedRoutes('/terms-conditions', <TermsConditionsPage />)}
+          {localizedRoutes('/disclaimer', <DisclaimerPage />)}
+          {localizedRoutes('/cookie-policy', <CookiePolicyPage />)}
+          {localizedRoutes('/risk-disclosure', <RiskDisclosurePage />)}
+          {localizedRoutes('/ai-trade-analyzer', <TradeAnalyzerPage />)}
+          {localizedRoutes('/ai-scalp-analyzer', <ScalpAnalyzerPage />)}
+          {localizedRoutes('/ai-swing-trading', <SwingTradingPage />)}
+          {localizedRoutes('/ai-strategy-builder', <StrategyBuilderPage />)}
+          {localizedRoutes('/ai-pattern-detection', <PatternDetectionPage />)}
+          {localizedRoutes('/strategy-backtesting', <StrategyBacktestingPage />)}
+          {localizedRoutes('/ai-trading-platform', <TradingPlatformPage />)}
+          {localizedRoutes('/risk-calculator', <RiskCalculatorPage />)}
+          {localizedRoutes('/academy', <AcademyPage />)}
+          {localizedRoutes('/performance-verification', <PerformanceVerificationPage />)}
+          {localizedRoutes('/thank-you', <ThankYouPage />)}
+          {localizedRoutes('/why-choose-snaptrader-ai', <WhyChoosePage />)}
+          {localizedRoutes('/blog', <BlogPage />)}
+          {localizedRoutes('/blog/:slug', <BlogPostPage />)}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
