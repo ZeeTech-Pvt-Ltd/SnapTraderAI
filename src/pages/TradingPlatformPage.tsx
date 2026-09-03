@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   ArrowRight,
   BarChart3,
@@ -10,6 +10,8 @@ import {
   X,
   Zap,
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { Button } from '../components/ui/Button'
 import { CountUp } from '../components/ui/CountUp'
 import { Reveal } from '../components/ui/Reveal'
@@ -136,11 +138,15 @@ const FAQS = [
 ]
 
 export function TradingPlatformPage() {
+  const { t } = useTranslation()
   const [openFaq, setOpenFaq] = useState<number | null>(0)
 
-  useEffect(() => {
-    document.title = 'AI Trading Platform | SnapTrader AI'
-  }, [])
+  // Gradient covers the tail of each headline in every language.
+  const [heroHead, heroTail] = splitStyledTail(
+    t('One Platform for Every Market You Trade.'),
+    2,
+  )
+  const [ctaHead, ctaTail] = splitStyledTail(t('Your Next Trade Starts With a Plan.'), 2)
 
   return (
     <div className="bg-deep pt-[72px]">
@@ -155,22 +161,18 @@ export function TradingPlatformPage() {
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal>
               <h1 className="mb-5 max-w-[620px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-                One Platform for Every Market{' '}
-                <span className="text-gradient-brand">You Trade.</span>
+                {heroHead} <span className="text-gradient-brand">{heroTail}</span>
               </h1>
               <p className="mb-8 max-w-[540px] text-lg leading-relaxed text-muted-dark">
-                Snap Trader AI brings chart analysis, pattern detection,
-                strategy testing and risk management into a single dashboard —
-                so you can research, test and trade with discipline across
-                stocks, crypto, forex, commodities, indices, ETFs and CFDs.
+                {t('Snap Trader AI brings chart analysis, pattern detection, strategy testing and risk management into a single dashboard — so you can research, test and trade with discipline across stocks, crypto, forex, commodities, indices, ETFs and CFDs.')}
               </p>
               <div className="mb-8 flex flex-wrap gap-4">
                 <Button to="/get-started" size="lg" className="group">
-                  Start Free — No Platform Fee
+                  {t('Start Free — No Platform Fee')}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
                 <Button to="#steps" variant="outline" size="lg">
-                  See How It Works
+                  {t('See How It Works')}
                 </Button>
               </div>
               <div className="flex flex-wrap gap-x-8 gap-y-3">
@@ -180,7 +182,7 @@ export function TradingPlatformPage() {
                 ].map((s) => (
                   <div key={s.v}>
                     <p className="font-mono text-lg font-black text-gradient-brand">{s.k}</p>
-                    <p className="text-xs text-ink-soft">{s.v}</p>
+                    <p className="text-xs text-ink-soft">{t(s.v)}</p>
                   </div>
                 ))}
               </div>
@@ -195,14 +197,14 @@ export function TradingPlatformPage() {
                   style={{ background: 'radial-gradient(ellipse, rgb(0 180 230 / 0.14) 0%, transparent 70%)' }}
                 />
                 <TerminalFrame
-                  title="Snap Trader AI — Command Center"
+                  title={t('Snap Trader AI — Command Center')}
                   titleExtra={
                     <span className="flex items-center gap-1.5 rounded-full bg-success/10 px-2.5 py-1 font-mono text-[9px] font-bold text-success">
                       <span className="relative flex h-1.5 w-1.5">
                         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
                         <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
                       </span>
-                      LIVE
+                      {t('LIVE')}
                     </span>
                   }
                 >
@@ -210,7 +212,7 @@ export function TradingPlatformPage() {
                     {/* Watchlist */}
                     <aside className="border-b border-border bg-[#F4F8FC] sm:w-[150px] sm:border-b-0 sm:border-r">
                       <p className="px-3 pt-3 pb-1 font-mono text-[8px] font-bold uppercase tracking-[0.15em] text-ink-soft/60">
-                        Watchlist
+                        {t('Watchlist')}
                       </p>
                       {WATCHLIST.map((m) => (
                         <div key={m.s} className="flex items-center justify-between px-3 py-1.5">
@@ -227,16 +229,18 @@ export function TradingPlatformPage() {
                       <div className="mb-3 flex items-center justify-between">
                         <div>
                           <p className="font-mono text-sm font-extrabold text-ink">BTC / USD</p>
-                          <p className="font-mono text-[9px] text-ink-soft">Bitcoin — 1H chart · $67,420 · +2.41% today</p>
+                          <p className="font-mono text-[9px] text-ink-soft">
+                            {t('Bitcoin — 1H chart · $67,420 · +2.41% today')}
+                          </p>
                         </div>
                         <div className="flex gap-1.5">
                           <div className="rounded-md border border-border bg-[#F4F8FC] p-1.5 text-center">
                             <p className="font-mono text-[10px] font-black text-accent">82%</p>
-                            <p className="text-[7px] font-bold uppercase text-ink-soft/70">Confidence</p>
+                            <p className="text-[7px] font-bold uppercase text-ink-soft/70">{t('CONFIDENCE')}</p>
                           </div>
                           <div className="rounded-md border border-border bg-[#F4F8FC] p-1.5 text-center">
                             <p className="font-mono text-[10px] font-black text-ink">41%</p>
-                            <p className="text-[7px] font-bold uppercase text-ink-soft/70">Market Vol.</p>
+                            <p className="text-[7px] font-bold uppercase text-ink-soft/70">{t('Market Vol.')}</p>
                           </div>
                         </div>
                       </div>
@@ -272,31 +276,31 @@ export function TradingPlatformPage() {
                       <div className="mb-3 rounded-md border border-success/30 bg-success/5 p-3.5">
                         <div className="mb-2 flex items-center justify-between">
                           <p className="font-mono text-[10px] font-bold text-success">
-                            ⚡ AI SIGNAL: BUY · 82% CONF.
+                            {t('⚡ AI SIGNAL: BUY · 82% CONF.')}
                           </p>
                           <p className="font-mono text-[8px] text-ink-soft/60">SNAP-3412</p>
                         </div>
                         <p className="mb-2 text-[10px] text-muted-dark">
-                          Breakout above key resistance with rising volume
+                          {t('Breakout above key resistance with rising volume')}
                         </p>
                         <div className="flex flex-wrap gap-x-5 gap-y-1 font-mono text-[9px]">
                           <span className="text-ink-soft">
-                            Stop Loss: <span className="font-bold text-danger">Active</span>
+                            {t('Stop Loss:')} <span className="font-bold text-danger">{t('Active')}</span>
                           </span>
                           <span className="text-ink-soft">
-                            Take Profit: <span className="font-bold text-success">$69,800</span>
+                            {t('Take Profit:')} <span className="font-bold text-success">$69,800</span>
                           </span>
                           <span className="text-ink-soft">
-                            Risk per trade: <span className="font-bold text-ink">2%</span>
+                            {t('Risk per trade:')} <span className="font-bold text-ink">2%</span>
                           </span>
                           <span className="text-ink-soft">
-                            Positions open: <span className="font-bold text-ink">3 / 10</span>
+                            {t('Positions open:')} <span className="font-bold text-ink">3 / 10</span>
                           </span>
                         </div>
                       </div>
 
                       <p className="text-center font-mono text-[9px] text-ink-soft/60">
-                        WATCHLIST · SIGNALS · RISK — ONE DASHBOARD
+                        {t('WATCHLIST · SIGNALS · RISK — ONE DASHBOARD')}
                       </p>
                     </div>
                   </div>
@@ -315,8 +319,8 @@ export function TradingPlatformPage() {
               key={`${m.name}-${i}`}
               className="flex shrink-0 items-baseline gap-2 rounded-xl border border-border bg-deep px-4 py-2.5 shadow-card"
             >
-              <span className="text-sm font-bold text-ink">{m.name}</span>
-              <span className="font-mono text-[10px] text-ink-soft">{m.sub}</span>
+              <span className="text-sm font-bold text-ink">{t(m.name)}</span>
+              <span className="font-mono text-[10px] text-ink-soft">{t(m.sub)}</span>
             </div>
           ))}
         </div>
@@ -327,8 +331,8 @@ export function TradingPlatformPage() {
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
             <SectionHeader
-              title="A Toolkit for Serious Traders"
-              description="Four capabilities, one dashboard — built to work together."
+              title={t('A Toolkit for Serious Traders')}
+              description={t('Four capabilities, one dashboard — built to work together.')}
             />
           </Reveal>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -344,8 +348,8 @@ export function TradingPlatformPage() {
                       {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>
-                  <h2 className="mb-2 text-base font-bold text-ink">{c.title}</h2>
-                  <p className="text-sm leading-relaxed text-muted-dark">{c.description}</p>
+                  <h2 className="mb-2 text-base font-bold text-ink">{t(c.title)}</h2>
+                  <p className="text-sm leading-relaxed text-muted-dark">{t(c.description)}</p>
                 </div>
               </Reveal>
             ))}
@@ -358,8 +362,8 @@ export function TradingPlatformPage() {
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
             <SectionHeader
-              title="From Signup to Your First Live Trade"
-              description="Four short steps — most traders finish in under a day."
+              title={t('From Signup to Your First Live Trade')}
+              description={t('Four short steps — most traders finish in under a day.')}
             />
           </Reveal>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-4">
@@ -377,8 +381,8 @@ export function TradingPlatformPage() {
                       />
                     )}
                   </div>
-                  <h3 className="mb-2 text-base font-bold text-ink">{s.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-dark">{s.description}</p>
+                  <h3 className="mb-2 text-base font-bold text-ink">{t(s.title)}</h3>
+                  <p className="text-sm leading-relaxed text-muted-dark">{t(s.description)}</p>
                 </div>
               </Reveal>
             ))}
@@ -390,7 +394,7 @@ export function TradingPlatformPage() {
       <section className="border-t border-border bg-deep py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="AI Assistance vs. Going It Alone" />
+            <SectionHeader title={t('AI Assistance vs. Going It Alone')} />
           </Reveal>
           <div className="grid gap-6 lg:grid-cols-2">
             {AI_VS_MANUAL.map((col, i) => (
@@ -403,7 +407,7 @@ export function TradingPlatformPage() {
                   }`}
                 >
                   <h3 className={`mb-5 text-lg font-bold ${col.ai ? 'text-success' : 'text-ink'}`}>
-                    {col.title}
+                    {t(col.title)}
                   </h3>
                   <ul className="space-y-3.5">
                     {col.points.map((point) => (
@@ -417,7 +421,7 @@ export function TradingPlatformPage() {
                             <X className="h-3 w-3 text-ink-soft" />
                           </span>
                         )}
-                        {point}
+                        {t(point)}
                       </li>
                     ))}
                   </ul>
@@ -443,7 +447,7 @@ export function TradingPlatformPage() {
                   <p className="mb-1 font-mono text-3xl font-black text-gradient-brand">
                     <CountUp target={s.target} decimals={s.decimals} prefix={s.prefix} suffix={s.suffix} />
                   </p>
-                  <p className="text-xs text-ink-soft">{s.label}</p>
+                  <p className="text-xs text-ink-soft">{t(s.label)}</p>
                 </div>
               </Reveal>
             ))}
@@ -459,8 +463,8 @@ export function TradingPlatformPage() {
               <SectionHeader
                 align="left"
                 className="mb-0"
-                title="Every Device. One Dashboard."
-                description="Your portfolio, signals and strategies sync across web, iOS and Android — check in from anywhere, adjust anything in seconds."
+                title={t('Every Device. One Dashboard.')}
+                description={t('Your portfolio, signals and strategies sync across web, iOS and Android — check in from anywhere, adjust anything in seconds.')}
               />
             </Reveal>
             <Reveal delay={120}>
@@ -477,7 +481,7 @@ export function TradingPlatformPage() {
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
                       <MonitorSmartphone className="h-5 w-5" />
                     </span>
-                    <p className="text-sm font-semibold text-muted-dark">{item}</p>
+                    <p className="text-sm font-semibold text-muted-dark">{t(item)}</p>
                   </div>
                 ))}
               </div>
@@ -490,7 +494,7 @@ export function TradingPlatformPage() {
       <section className="border-t border-border bg-navy py-20 lg:py-28">
         <div className="mx-auto max-w-3xl px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="Frequently Asked Questions" />
+            <SectionHeader title={t('Frequently Asked Questions')} />
           </Reveal>
           <div className="flex flex-col gap-3">
             {FAQS.map((faq, i) => {
@@ -509,7 +513,7 @@ export function TradingPlatformPage() {
                     aria-expanded={isOpen}
                   >
                     <span className={`text-sm font-semibold ${isOpen ? 'text-accent' : 'text-ink'}`}>
-                      {faq.q}
+                      {t(faq.q)}
                     </span>
                     <ChevronDown
                       className={`h-5 w-5 shrink-0 text-ink-soft transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
@@ -522,7 +526,7 @@ export function TradingPlatformPage() {
                   >
                     <div className="overflow-hidden">
                       <p className="px-6 pb-4 text-sm leading-relaxed text-muted-dark">
-                        {faq.answer}
+                        {t(faq.answer)}
                       </p>
                     </div>
                   </div>
@@ -546,14 +550,13 @@ export function TradingPlatformPage() {
         <div className="relative z-10 mx-auto max-w-2xl px-4 text-center md:px-6">
           <Reveal>
             <h2 className="mb-4 text-3xl font-extrabold text-ink md:text-4xl">
-              Your Next Trade Starts With{' '}
-              <span className="text-gradient-brand">a Plan.</span>
+              {ctaHead} <span className="text-gradient-brand">{ctaTail}</span>
             </h2>
             <p className="mb-8 text-muted-dark">
-              Create your account free — no platform fees, no pressure.
+              {t('Create your account free — no platform fees, no pressure.')}
             </p>
             <Button to="/get-started" size="lg" className="group">
-              Start Free — No Platform Fee
+              {t('Start Free — No Platform Fee')}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
           </Reveal>
