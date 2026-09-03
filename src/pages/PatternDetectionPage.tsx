@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import {
   ArrowRight,
   CandlestickChart,
@@ -9,6 +8,8 @@ import {
   ShieldCheck,
   Triangle,
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
 import { SectionHeader } from '../components/ui/SectionHeader'
@@ -78,9 +79,10 @@ const ALERTS = [
 ]
 
 export function PatternDetectionPage() {
-  useEffect(() => {
-    document.title = 'AI Pattern Detection | SnapTrader AI'
-  }, [])
+  const { t } = useTranslation()
+
+  // Gradient covers the tail of the heading in every language.
+  const [head, tail] = splitStyledTail(t('AI Pattern Detection'), 1)
 
   return (
     <div className="bg-deep pt-[72px]">
@@ -95,22 +97,17 @@ export function PatternDetectionPage() {
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal>
               <h1 className="mb-5 max-w-[620px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-                AI Pattern <span className="text-gradient-brand">Detection</span>
+                {head} <span className="text-gradient-brand">{tail}</span>
               </h1>
               <p className="mb-3 text-lg font-semibold leading-relaxed text-ink">
-                Every chart tells a story before it moves. The problem is timing
-                — by the time a breakout looks obvious on screen, the best entry
-                has usually gone.
+                {t('Every chart tells a story before it moves. The problem is timing — by the time a breakout looks obvious on screen, the best entry has usually gone.')}
               </p>
               <p className="mb-8 max-w-[540px] text-lg leading-relaxed text-muted-dark">
-                Our pattern detection engine watches the charts so you don&apos;t
-                have to. It scans price and volume across every market and
-                timeframe you follow, flags formations the moment they qualify,
-                and shows how that setup has resolved historically.
+                {t("Our pattern detection engine watches the charts so you don't have to. It scans price and volume across every market and timeframe you follow, flags formations the moment they qualify, and shows how that setup has resolved historically.")}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button to="/get-started" size="lg" className="group">
-                  Open Your Free Account
+                  {t('Open Your Free Account')}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
               </div>
@@ -125,14 +122,14 @@ export function PatternDetectionPage() {
                   style={{ background: 'radial-gradient(ellipse, rgb(0 180 230 / 0.14) 0%, transparent 70%)' }}
                 />
                 <TerminalFrame
-                  title="Snap Trader AI · Pattern Engine"
+                  title={t('Snap Trader AI · Pattern Engine')}
                   titleExtra={
                     <span className="flex items-center gap-1.5 rounded-full bg-success/10 px-2.5 py-1 font-mono text-[9px] font-bold text-success">
                       <span className="relative flex h-1.5 w-1.5">
                         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
                         <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
                       </span>
-                      LIVE SCAN
+                      {t('LIVE SCAN')}
                     </span>
                   }
                 >
@@ -140,9 +137,9 @@ export function PatternDetectionPage() {
                     <div className="mb-3 flex items-center justify-between">
                       <p className="flex items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-wider text-ink-soft">
                         <Radar className="h-3.5 w-3.5 text-accent" />
-                        Scanning tick by tick
+                        {t('Scanning tick by tick')}
                       </p>
-                      <p className="font-mono text-[9px] text-ink-soft/60">4 ALERTS</p>
+                      <p className="font-mono text-[9px] text-ink-soft/60">{t('4 ALERTS')}</p>
                     </div>
 
                     <div className="space-y-2">
@@ -163,7 +160,7 @@ export function PatternDetectionPage() {
                                   {a.ticker}
                                 </p>
                                 <p className="truncate font-mono text-[10px] font-bold text-accent">
-                                  {a.pattern}
+                                  {t(a.pattern)}
                                 </p>
                                 <span
                                   className={`shrink-0 rounded-full px-2 py-0.5 font-mono text-[8px] font-bold ${
@@ -172,7 +169,7 @@ export function PatternDetectionPage() {
                                       : 'bg-success/10 text-success'
                                   }`}
                                 >
-                                  {a.state}
+                                  {t(a.state)}
                                 </span>
                               </div>
                               <p className="shrink-0 font-mono text-[10px] font-black text-success">
@@ -181,10 +178,10 @@ export function PatternDetectionPage() {
                             </div>
                             <div className="mt-2 flex items-center gap-4 font-mono text-[9px]">
                               <span className="text-ink-soft">
-                                BREAKOUT <span className="font-bold text-ink">{a.level}</span>
+                                {t('BREAKOUT')} <span className="font-bold text-ink">{a.level}</span>
                               </span>
                               <span className="text-ink-soft">
-                                INVALIDATION{' '}
+                                {t('INVALIDATION')}{' '}
                                 <span className="font-bold text-danger">{a.invalid}</span>
                               </span>
                             </div>
@@ -194,7 +191,7 @@ export function PatternDetectionPage() {
                     </div>
 
                     <p className="mt-3 text-center font-mono text-[9px] text-ink-soft/60">
-                      TICK BY TICK · EVERY MARKET · EVERY TIMEFRAME
+                      {t('TICK BY TICK · EVERY MARKET · EVERY TIMEFRAME')}
                     </p>
                   </div>
                 </TerminalFrame>
@@ -208,7 +205,7 @@ export function PatternDetectionPage() {
       <section className="border-y border-border bg-navy py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="Patterns We Track" />
+            <SectionHeader title={t('Patterns We Track')} />
           </Reveal>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {PATTERNS.map((p, i) => (
@@ -221,8 +218,8 @@ export function PatternDetectionPage() {
                   <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent transition-transform duration-300 group-hover:scale-110">
                     <p.icon className="h-5 w-5" />
                   </div>
-                  <h2 className="mb-1.5 text-sm font-bold text-ink">{p.name}</h2>
-                  <p className="text-xs leading-relaxed text-muted-dark">{p.description}</p>
+                  <h2 className="mb-1.5 text-sm font-bold text-ink">{t(p.name)}</h2>
+                  <p className="text-xs leading-relaxed text-muted-dark">{t(p.description)}</p>
                 </div>
               </Reveal>
             ))}
@@ -251,8 +248,8 @@ export function PatternDetectionPage() {
                       />
                     )}
                   </div>
-                  <h2 className="mb-1.5 text-base font-bold text-ink">{step.title}</h2>
-                  <p className="text-sm leading-relaxed text-muted-dark">{step.description}</p>
+                  <h2 className="mb-1.5 text-base font-bold text-ink">{t(step.title)}</h2>
+                  <p className="text-sm leading-relaxed text-muted-dark">{t(step.description)}</p>
                 </div>
               </Reveal>
             ))}
@@ -268,8 +265,8 @@ export function PatternDetectionPage() {
               <SectionHeader
                 align="left"
                 className="mb-0"
-                title="Built to Filter Out False Breakouts"
-                description="Whipsaws drain more accounts than missed trades ever do. Nothing is called until it clears confirmation:"
+                title={t('Built to Filter Out False Breakouts')}
+                description={t('Whipsaws drain more accounts than missed trades ever do. Nothing is called until it clears confirmation:')}
               />
             </Reveal>
 
@@ -286,13 +283,13 @@ export function PatternDetectionPage() {
                       <ShieldCheck className="h-4 w-4 text-success" />
                     </span>
                     <p className="text-sm leading-relaxed text-muted-dark md:text-base">
-                      {point}
+                      {t(point)}
                     </p>
                   </div>
                 ))}
                 <div className="flex items-center justify-between border-t border-border bg-medium-navy/30 px-6 py-3.5">
                   <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-success">
-                    4/4 confirmations required
+                    {t('4/4 confirmations required')}
                   </p>
                   <p className="font-mono text-[9px] text-ink-soft/60">SNAP-CONFIRM</p>
                 </div>
@@ -307,15 +304,14 @@ export function PatternDetectionPage() {
         <div className="mx-auto max-w-3xl px-4 text-center md:px-6">
           <Reveal>
             <SectionHeader
-              title="Trade the Setup, Not the Guesswork"
-              description="Pattern detection doesn’t remove risk — it removes the hours spent hunting for setups and the bias that creeps in when you want a trade to work. You control position size and risk. The engine decides what’s worth your attention."
+              title={t('Trade the Setup, Not the Guesswork')}
+              description={t('Pattern detection doesn’t remove risk — it removes the hours spent hunting for setups and the bias that creeps in when you want a trade to work. You control position size and risk. The engine decides what’s worth your attention.')}
             />
             <p className="mb-8 text-lg font-semibold text-ink md:text-xl">
-              Open your free account and see what today’s charts are shaping
-              up to do.
+              {t('Open your free account and see what today’s charts are shaping up to do.')}
             </p>
             <Button to="/get-started" size="lg" className="group">
-              Open Your Free Account
+              {t('Open Your Free Account')}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
           </Reveal>

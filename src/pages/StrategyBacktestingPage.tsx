@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import {
   ArrowRight,
   BarChart3,
@@ -8,6 +7,8 @@ import {
   Percent,
   ShieldCheck,
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
 import { SectionHeader } from '../components/ui/SectionHeader'
@@ -79,9 +80,13 @@ const MONTHS = [
 ]
 
 export function StrategyBacktestingPage() {
-  useEffect(() => {
-    document.title = 'Strategy Backtesting | SnapTrader AI'
-  }, [])
+  const { t } = useTranslation()
+
+  // Gradient covers the tail of the heading in every language.
+  const [head, tail] = splitStyledTail(
+    t('Strategy Backtesting: Test Before You Risk Capital'),
+    2,
+  )
 
   return (
     <div className="bg-deep pt-[72px]">
@@ -96,23 +101,17 @@ export function StrategyBacktestingPage() {
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal>
               <h1 className="mb-5 max-w-[620px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-                Strategy Backtesting: Test Before You{' '}
-                <span className="text-gradient-brand">Risk Capital</span>
+                {head} <span className="text-gradient-brand">{tail}</span>
               </h1>
               <p className="mb-3 text-lg font-semibold leading-relaxed text-ink">
-                Test your rules against real market history — before your
-                capital is on the line.
+                {t('Test your rules against real market history — before your capital is on the line.')}
               </p>
               <p className="mb-8 max-w-[540px] text-lg leading-relaxed text-muted-dark">
-                A strategy is only an opinion until the data agrees with it.
-                Strategy backtesting replays your exact entry, exit and risk
-                rules across years of historical price action, so you can see
-                how the system would have behaved through rallies, chop and
-                crashes — without paying for the lesson in real money.
+                {t('A strategy is only an opinion until the data agrees with it. Strategy backtesting replays your exact entry, exit and risk rules across years of historical price action, so you can see how the system would have behaved through rallies, chop and crashes — without paying for the lesson in real money.')}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button to="/get-started" size="lg" className="group">
-                  Test Your Strategy
+                  {t('Test Your Strategy')}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
               </div>
@@ -127,10 +126,10 @@ export function StrategyBacktestingPage() {
                   style={{ background: 'radial-gradient(ellipse, rgb(0 180 230 / 0.14) 0%, transparent 70%)' }}
                 />
                 <TerminalFrame
-                  title="Snap Trader AI · Backtest Report"
+                  title={t('Snap Trader AI · Backtest Report')}
                   titleExtra={
                     <span className="rounded-full bg-success/10 px-2.5 py-1 font-mono text-[9px] font-bold text-success">
-                      PASSED · 212 TRADES
+                      {t('PASSED · 212 TRADES')}
                     </span>
                   }
                 >
@@ -139,7 +138,7 @@ export function StrategyBacktestingPage() {
                     <div className="mb-4 rounded-md border border-border bg-[#F8FAFD] p-3">
                       <div className="mb-2 flex items-center justify-between">
                         <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-ink-soft">
-                          Equity Curve · 24 Months
+                          {t('Equity Curve · 24 Months')}
                         </p>
                         <p className="font-mono text-[10px] font-bold text-success">
                           +38.6%
@@ -174,10 +173,10 @@ export function StrategyBacktestingPage() {
                     {/* KPI grid */}
                     <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
                       {[
-                        { k: 'WIN RATE', v: '46.2%', c: 'text-ink' },
-                        { k: 'PROFIT FACTOR', v: '1.84', c: 'text-success' },
-                        { k: 'MAX DRAWDOWN', v: '-9.8%', c: 'text-danger' },
-                        { k: 'EXPECTANCY', v: '+0.31R', c: 'text-success' },
+                        { k: t('WIN RATE'), v: '46.2%', c: 'text-ink' },
+                        { k: t('PROFIT FACTOR'), v: '1.84', c: 'text-success' },
+                        { k: t('MAX DRAWDOWN'), v: '-9.8%', c: 'text-danger' },
+                        { k: t('EXPECTANCY'), v: '+0.31R', c: 'text-success' },
                       ].map((r) => (
                         <div key={r.k} className="rounded-md border border-border bg-[#F8FAFD] p-2.5">
                           <p className="text-[7px] font-bold uppercase tracking-wider text-ink-soft/70">
@@ -191,12 +190,12 @@ export function StrategyBacktestingPage() {
                     {/* Monthly returns */}
                     <div className="mb-4 rounded-md border border-border bg-[#F8FAFD] p-3">
                       <p className="mb-2 font-mono text-[9px] font-bold uppercase tracking-wider text-ink-soft">
-                        Month-by-month
+                        {t('Month-by-month')}
                       </p>
                       <div className="grid grid-cols-6 gap-1.5">
                         {MONTHS.map((m) => (
                           <div key={m.m} className="rounded border border-border bg-navy p-1.5 text-center">
-                            <p className="font-mono text-[7px] text-ink-soft/70">{m.m}</p>
+                            <p className="font-mono text-[7px] text-ink-soft/70">{t(m.m)}</p>
                             <p className={`font-mono text-[9px] font-bold ${m.up ? 'text-success' : 'text-danger'}`}>
                               {m.v}
                             </p>
@@ -207,7 +206,7 @@ export function StrategyBacktestingPage() {
 
                     <div className="flex items-center justify-between rounded-md border border-success/30 bg-success/5 p-3">
                       <p className="font-mono text-[10px] font-bold text-success">
-                        EDGE CONFIRMED · DEPLOY AT REDUCED SIZE
+                        {t('EDGE CONFIRMED · DEPLOY AT REDUCED SIZE')}
                       </p>
                       <p className="font-mono text-[9px] text-ink-soft/60">SNAP-BT-212</p>
                     </div>
@@ -223,7 +222,7 @@ export function StrategyBacktestingPage() {
       <section className="border-y border-border bg-navy py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="What the engine does" />
+            <SectionHeader title={t('What the engine does')} />
           </Reveal>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {ENGINE_DOES.map((point, i) => (
@@ -234,10 +233,10 @@ export function StrategyBacktestingPage() {
                   </span>
                   <div>
                     <p className="text-sm font-bold leading-relaxed text-ink">
-                      {point.title}
+                      {t(point.title)}
                     </p>
                     <p className="mt-0.5 text-sm leading-relaxed text-muted-dark">
-                      {point.description}
+                      {t(point.description)}
                     </p>
                   </div>
                 </div>
@@ -251,7 +250,7 @@ export function StrategyBacktestingPage() {
       <section className="bg-deep py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="The numbers you get back" />
+            <SectionHeader title={t('The numbers you get back')} />
           </Reveal>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {NUMBERS.map((n, i) => (
@@ -261,9 +260,9 @@ export function StrategyBacktestingPage() {
                     aria-hidden="true"
                     className="absolute inset-x-0 top-0 h-[3px] gradient-brand opacity-70"
                   />
-                  <p className="text-base font-bold leading-snug text-ink">{n.title}</p>
+                  <p className="text-base font-bold leading-snug text-ink">{t(n.title)}</p>
                   {n.sub && (
-                    <p className="mt-1 text-sm leading-relaxed text-muted-dark">{n.sub}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-muted-dark">{t(n.sub)}</p>
                   )}
                 </div>
               </Reveal>
@@ -280,8 +279,8 @@ export function StrategyBacktestingPage() {
               <SectionHeader
                 align="left"
                 className="mb-0"
-                title="Built to be honest, not flattering"
-                description="Most backtests fail live because they were too kind in testing. Ours are designed to expose weakness early."
+                title={t('Built to be honest, not flattering')}
+                description={t('Most backtests fail live because they were too kind in testing. Ours are designed to expose weakness early.')}
               />
               <div className="mt-6 flex flex-wrap gap-2">
                 {['Out-of-sample', 'Walk-forward', 'Monte Carlo', 'No look-ahead'].map((chip) => (
@@ -289,7 +288,7 @@ export function StrategyBacktestingPage() {
                     key={chip}
                     className="rounded-full border border-accent/20 bg-accent/5 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-accent"
                   >
-                    {chip}
+                    {t(chip)}
                   </span>
                 ))}
               </div>
@@ -308,13 +307,13 @@ export function StrategyBacktestingPage() {
                       <FlaskConical className="h-4 w-4 text-accent" />
                     </span>
                     <p className="text-sm leading-relaxed text-muted-dark md:text-base">
-                      {point}
+                      {t(point)}
                     </p>
                   </div>
                 ))}
                 <div className="flex items-center justify-between border-t border-border bg-medium-navy/30 px-6 py-3.5">
                   <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-success">
-                    4/4 honesty checks active
+                    {t('4/4 honesty checks active')}
                   </p>
                   <p className="font-mono text-[9px] text-ink-soft/60">SNAP-HONEST</p>
                 </div>
@@ -328,7 +327,7 @@ export function StrategyBacktestingPage() {
       <section className="border-t border-border bg-deep py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="From backtest to live in three steps" />
+            <SectionHeader title={t('From backtest to live in three steps')} />
           </Reveal>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {STEPS.map((s, i) => (
@@ -337,8 +336,8 @@ export function StrategyBacktestingPage() {
                   <span className="pointer-events-none absolute right-4 top-2 font-mono text-5xl font-black text-ink/5">
                     {s.step}
                   </span>
-                  <h2 className="mb-2 text-base font-bold text-ink">{s.title}</h2>
-                  <p className="text-sm leading-relaxed text-muted-dark">{s.description}</p>
+                  <h2 className="mb-2 text-base font-bold text-ink">{t(s.title)}</h2>
+                  <p className="text-sm leading-relaxed text-muted-dark">{t(s.description)}</p>
                 </div>
               </Reveal>
             ))}
@@ -351,16 +350,14 @@ export function StrategyBacktestingPage() {
         <div className="mx-auto max-w-3xl px-4 text-center md:px-6">
           <Reveal>
             <SectionHeader
-              title="A reality check worth keeping"
-              description="Backtesting does not predict the future. What it does is remove the strategies that never worked in the first place, and hand you a benchmark to measure live performance against."
+              title={t('A reality check worth keeping')}
+              description={t('Backtesting does not predict the future. What it does is remove the strategies that never worked in the first place, and hand you a benchmark to measure live performance against.')}
             />
             <p className="mb-8 text-lg font-semibold leading-relaxed text-ink md:text-xl">
-              Expect a little slippage between test and live results — a system
-              that stays close to its backtested numbers is one you can scale
-              with confidence.
+              {t('Expect a little slippage between test and live results — a system that stays close to its backtested numbers is one you can scale with confidence.')}
             </p>
             <Button to="/get-started" size="lg" className="group">
-              Test Your Strategy Free
+              {t('Test Your Strategy Free')}
               <ShieldCheck className="h-4 w-4" />
             </Button>
           </Reveal>

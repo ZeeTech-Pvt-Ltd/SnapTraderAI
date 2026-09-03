@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight,
@@ -10,8 +9,9 @@ import {
   TriangleAlert,
   UserRound,
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { marketBadge } from '../content/traders'
-import { localizedPath } from '../i18n'
+import { localizedPath, splitStyledTail } from '../i18n'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
 import { SectionHeader } from '../components/ui/SectionHeader'
@@ -79,9 +79,13 @@ const GENERATED_RULES = [
 ]
 
 export function StrategyBuilderPage() {
-  useEffect(() => {
-    document.title = 'AI Strategy Builder | SnapTrader AI'
-  }, [])
+  const { t } = useTranslation()
+
+  // Gradient covers the tail of the heading in every language.
+  const [head, tail] = splitStyledTail(
+    t('AI Strategy Builder — Say the Rule, Get the System'),
+    1,
+  )
 
   return (
     <div className="bg-deep pt-[72px]">
@@ -96,17 +100,14 @@ export function StrategyBuilderPage() {
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal>
               <h1 className="mb-5 max-w-[600px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-                AI Strategy Builder — Say the Rule, Get the{' '}
-                <span className="text-gradient-brand">System</span>
+                {head} <span className="text-gradient-brand">{tail}</span>
               </h1>
               <p className="mb-8 max-w-[540px] text-lg leading-relaxed text-muted-dark">
-                Every trader has an idea. The problem is that the idea never
-                turns into written rules. That&apos;s exactly what this AI
-                strategy builder does — no code, no spreadsheets.
+                {t("Every trader has an idea. The problem is that the idea never turns into written rules. That's exactly what this AI strategy builder does — no code, no spreadsheets.")}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button to="/get-started" size="lg" className="group">
-                  Write Your First Rule
+                  {t('Write Your First Rule')}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
               </div>
@@ -121,10 +122,10 @@ export function StrategyBuilderPage() {
                   style={{ background: 'radial-gradient(ellipse, rgb(0 180 230 / 0.14) 0%, transparent 70%)' }}
                 />
                 <TerminalFrame
-                  title="Snap Trader AI · Strategy Builder"
+                  title={t('Snap Trader AI · Strategy Builder')}
                   titleExtra={
                     <span className="rounded-full bg-accent/10 px-2.5 py-1 font-mono text-[9px] font-bold text-accent">
-                      GENERATED IN 8s
+                      {t('GENERATED IN 8s')}
                     </span>
                   }
                 >
@@ -132,11 +133,10 @@ export function StrategyBuilderPage() {
                     {/* Input */}
                     <div className="mb-4 rounded-md border border-accent/25 bg-accent/5 p-3.5">
                       <p className="mb-1 font-mono text-[9px] font-bold uppercase tracking-wider text-accent">
-                        You said
+                        {t('You said')}
                       </p>
                       <p className="text-sm font-medium leading-relaxed text-ink">
-                        “Buy gold when price breaks the 20-day high and volume
-                        is above average.”
+                        {t('“Buy gold when price breaks the 20-day high and volume is above average.”')}
                       </p>
                     </div>
 
@@ -144,7 +144,7 @@ export function StrategyBuilderPage() {
                     <div className="mb-4 overflow-hidden rounded-md border border-border">
                       <div className="border-b border-border bg-[#F4F8FC] px-3.5 py-2">
                         <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-ink-soft">
-                          Strategy v1 · readable rules
+                          {t('Strategy v1 · readable rules')}
                         </p>
                       </div>
                       {GENERATED_RULES.map((r, i) => (
@@ -155,13 +155,13 @@ export function StrategyBuilderPage() {
                           }`}
                         >
                           <span className="font-mono text-[9px] font-bold uppercase tracking-wider text-ink-soft">
-                            {r.k}
+                            {t(r.k)}
                           </span>
                           <span className="font-mono text-[11px] font-bold text-ink">
-                            {r.v}
+                            {t(r.v)}
                           </span>
                           <span className="rounded-full bg-success/10 px-1.5 py-0.5 font-mono text-[8px] font-bold text-success">
-                            MEASURED ✓
+                            {t('MEASURED ✓')}
                           </span>
                         </div>
                       ))}
@@ -170,10 +170,10 @@ export function StrategyBuilderPage() {
                     {/* Approve / fork */}
                     <div className="flex items-center justify-between gap-3">
                       <span className="rounded-md border border-success/30 bg-success/5 px-3 py-2 font-mono text-[9px] font-bold uppercase tracking-wider text-success">
-                        ✓ Approve &amp; Paper Test
+                        {t('✓ Approve & Paper Test')}
                       </span>
                       <span className="rounded-md border border-border bg-[#F4F8FC] px-3 py-2 font-mono text-[9px] font-bold uppercase tracking-wider text-ink-soft">
-                        ⟲ Fork
+                        {t('⟲ Fork')}
                       </span>
                     </div>
                   </div>
@@ -192,11 +192,11 @@ export function StrategyBuilderPage() {
               <SectionHeader
                 align="left"
                 className="mb-0"
-                title="Say It Like You’d Say It to a Friend"
-                description="Describe the whole setup in one line: “Buy gold when price breaks the 20-day high and volume is above average.”"
+                title={t('Say It Like You’d Say It to a Friend')}
+                description={t('Describe the whole setup in one line: “Buy gold when price breaks the 20-day high and volume is above average.”')}
               />
               <p className="mt-4 text-sm font-semibold text-ink">
-                The builder turns that into a clean structure:
+                {t('The builder turns that into a clean structure:')}
               </p>
             </Reveal>
 
@@ -213,13 +213,13 @@ export function StrategyBuilderPage() {
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <p className="text-sm leading-relaxed text-muted-dark md:text-base">
-                      {point}
+                      {t(point)}
                     </p>
                   </div>
                 ))}
                 <div className="flex items-center justify-between border-t border-border bg-medium-navy/30 px-6 py-3.5">
                   <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-success">
-                    4/4 structure checks
+                    {t('4/4 structure checks')}
                   </p>
                   <p className="font-mono text-[9px] text-ink-soft/60">SNAP-STRUCT</p>
                 </div>
@@ -234,8 +234,8 @@ export function StrategyBuilderPage() {
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
             <SectionHeader
-              title="The Parts Traders Usually Forget"
-              description="The real value of an AI strategy builder isn't the entry signal. It's everything built around it."
+              title={t('The Parts Traders Usually Forget')}
+              description={t("The real value of an AI strategy builder isn't the entry signal. It's everything built around it.")}
             />
           </Reveal>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -246,7 +246,7 @@ export function StrategyBuilderPage() {
                     <point.icon className="h-5 w-5" />
                   </span>
                   <p className="text-sm font-semibold leading-relaxed text-muted-dark">
-                    {point.title}
+                    {t(point.title)}
                   </p>
                 </div>
               </Reveal>
@@ -259,7 +259,7 @@ export function StrategyBuilderPage() {
       <section className="border-t border-border bg-navy py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="Nothing Runs Until You Approve It" />
+            <SectionHeader title={t('Nothing Runs Until You Approve It')} />
           </Reveal>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {APPROVAL_STEPS.map((step, i) => (
@@ -275,18 +275,17 @@ export function StrategyBuilderPage() {
                   <p className="text-sm font-semibold leading-relaxed text-muted-dark">
                     {i === APPROVAL_STEPS.length - 1 ? (
                       <>
-                        Check historical results before going live (full detail
-                        on the{' '}
+                        {t('Check historical results before going live (full detail on the')}{' '}
                         <Link
                           to={localizedPath('/strategy-backtesting')}
                           className="font-semibold text-accent hover:underline"
                         >
-                          Strategy Backtester page
+                          {t('Strategy Backtester page')}
                         </Link>
-                        )
+                        {')'}
                       </>
                     ) : (
-                      step
+                      t(step)
                     )}
                   </p>
                 </div>
@@ -300,12 +299,9 @@ export function StrategyBuilderPage() {
       <section className="border-t border-border bg-deep py-20 lg:py-28">
         <div className="mx-auto max-w-3xl px-4 text-center md:px-6">
           <Reveal>
-            <SectionHeader title="One Builder, Every Market" />
+            <SectionHeader title={t('One Builder, Every Market')} />
             <p className="text-lg leading-relaxed text-muted-dark">
-              Forex, crypto, indices, stocks or commodities — the logic stays
-              the same, only the instrument changes. One AI strategy builder
-              lets you spin up market-specific versions without starting from
-              scratch each time.
+              {t('Forex, crypto, indices, stocks or commodities — the logic stays the same, only the instrument changes. One AI strategy builder lets you spin up market-specific versions without starting from scratch each time.')}
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
               {MARKETS.map((m) => (
@@ -313,7 +309,7 @@ export function StrategyBuilderPage() {
                   key={m}
                   className={`rounded-full border px-3.5 py-1.5 text-xs font-bold ${marketBadge[m]}`}
                 >
-                  {m}
+                  {t(m)}
                 </span>
               ))}
             </div>
@@ -325,7 +321,7 @@ export function StrategyBuilderPage() {
       <section className="border-t border-border bg-navy py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="Who It's For" />
+            <SectionHeader title={t("Who It's For")} />
           </Reveal>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {WHO_ITS_FOR.map((person, i) => (
@@ -335,9 +331,9 @@ export function StrategyBuilderPage() {
                     <person.icon className="h-6 w-6" />
                   </span>
                   <div>
-                    <h2 className="text-base font-bold text-ink">{person.title}</h2>
+                    <h2 className="text-base font-bold text-ink">{t(person.title)}</h2>
                     <p className="mt-0.5 text-sm leading-relaxed text-muted-dark">
-                      {person.description}
+                      {t(person.description)}
                     </p>
                   </div>
                 </div>
@@ -348,11 +344,10 @@ export function StrategyBuilderPage() {
           <Reveal>
             <div className="mt-14 text-center">
               <p className="mb-6 text-lg font-semibold text-ink md:text-xl">
-                Write your first rule — get a working strategy in under 60
-                seconds.
+                {t('Write your first rule — get a working strategy in under 60 seconds.')}
               </p>
               <Button to="/get-started" size="lg" className="group">
-                Start Free Access
+                {t('Start Free Access')}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
             </div>

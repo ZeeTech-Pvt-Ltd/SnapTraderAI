@@ -1,5 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { ArrowRight, Calculator, ChevronDown, TriangleAlert, X } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
 import { SectionHeader } from '../components/ui/SectionHeader'
@@ -69,13 +71,20 @@ function riskGuide(pct: number) {
 }
 
 export function RiskCalculatorPage() {
+  const { t } = useTranslation()
   const [account, setAccount] = useState(10000)
   const [riskPct, setRiskPct] = useState(4)
   const [openFaq, setOpenFaq] = useState<number | null>(0)
 
-  useEffect(() => {
-    document.title = 'Risk Calculator | SnapTrader AI'
-  }, [])
+  // Gradient covers the tail of each headline in every language.
+  const [heroHead, heroTail] = splitStyledTail(
+    t('Risk Calculator: Position Size, Risk and Reward in One Click'),
+    2,
+  )
+  const [ctaHead, ctaTail] = splitStyledTail(
+    t('Trade with discipline. Protect your capital.'),
+    2,
+  )
 
   const riskDollars = (account * riskPct) / 100
   const lossesToBlow = Math.floor(100 / riskPct)
@@ -107,13 +116,10 @@ export function RiskCalculatorPage() {
         <div className="relative z-10 mx-auto max-w-container px-4 md:px-6">
           <Reveal>
             <h1 className="mb-5 max-w-[720px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-              Risk Calculator: Position Size, Risk and Reward in{' '}
-              <span className="text-gradient-brand">One Click</span>
+              {heroHead} <span className="text-gradient-brand">{heroTail}</span>
             </h1>
             <p className="max-w-[640px] text-lg leading-relaxed text-muted-dark">
-              Markets punish guesswork on size faster than they punish a bad
-              opinion. Use this risk calculator to fix the numbers first, then
-              let the chart do whatever it wants.
+              {t('Markets punish guesswork on size faster than they punish a bad opinion. Use this risk calculator to fix the numbers first, then let the chart do whatever it wants.')}
             </p>
           </Reveal>
         </div>
@@ -124,7 +130,7 @@ export function RiskCalculatorPage() {
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
             <TerminalFrame
-              title="Snap Trader AI · Risk Calculator"
+              title={t('Snap Trader AI · Risk Calculator')}
               titleExtra={
                 <span className="flex items-center gap-1.5 rounded-full bg-accent/10 px-2.5 py-1 font-mono text-[9px] font-bold text-accent">
                   <Calculator className="h-3 w-3" />
@@ -137,7 +143,7 @@ export function RiskCalculatorPage() {
                 <div className="space-y-5">
                   <div>
                     <label htmlFor="rc-account" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-ink-soft">
-                      Account size / max drawdown
+                      {t('Account size / max drawdown')}
                     </label>
                     <div className="relative">
                       <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 font-mono text-sm font-bold text-ink-soft">
@@ -157,7 +163,7 @@ export function RiskCalculatorPage() {
 
                   <div>
                     <label htmlFor="rc-pct" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-ink-soft">
-                      Risk per trade ({riskPct}%)
+                      {t('Risk per trade ({{pct}}%)', { pct: riskPct })}
                     </label>
                     <input
                       id="rc-pct"
@@ -172,7 +178,7 @@ export function RiskCalculatorPage() {
                     <div className="mt-1 flex justify-between font-mono text-[10px] text-ink-soft">
                       <span>0.5%</span>
                       <span className={`rounded-full border px-2 py-0.5 font-bold ${guide.cls}`}>
-                        {riskPct}% — {guide.label.toLowerCase()}
+                        {riskPct}% — {t(guide.label).toLowerCase()}
                       </span>
                       <span>20%</span>
                     </div>
@@ -180,7 +186,7 @@ export function RiskCalculatorPage() {
 
                   <div>
                     <label htmlFor="rc-dollars" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-ink-soft">
-                      Risk per trade ($)
+                      {t('Risk per trade ($)')}
                     </label>
                     <div className="relative">
                       <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 font-mono text-sm font-bold text-ink-soft">
@@ -203,19 +209,19 @@ export function RiskCalculatorPage() {
                       />
                     </div>
                     <p className="mt-1 font-mono text-[10px] text-ink-soft">
-                      Typing here adjusts the risk % above — they stay in sync.
+                      {t('Typing here adjusts the risk % above — they stay in sync.')}
                     </p>
                   </div>
 
                   <div className="rounded-lg border border-border bg-[#F4F8FC] p-4">
                     <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-ink-soft">
-                      Risk-per-trade guide
+                      {t('Risk-per-trade guide')}
                     </p>
                     <div className="space-y-1.5 font-mono text-[11px]">
-                      <p className="text-success">≤4% — conservative</p>
-                      <p className="text-warning">4–8% — moderate</p>
-                      <p className="text-danger">8–12% — aggressive</p>
-                      <p className="font-bold text-danger">&gt;12% — extreme</p>
+                      <p className="text-success">{t('≤4% — conservative')}</p>
+                      <p className="text-warning">{t('4–8% — moderate')}</p>
+                      <p className="text-danger">{t('8–12% — aggressive')}</p>
+                      <p className="font-bold text-danger">{t('>12% — extreme')}</p>
                     </div>
                   </div>
                 </div>
@@ -226,7 +232,7 @@ export function RiskCalculatorPage() {
                     <div className="rounded-xl border border-border bg-[#F4F8FC] p-4 text-center">
                       <p className="font-mono text-2xl font-black text-danger">{lossesToBlow}</p>
                       <p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-ink-soft">
-                        Consecutive losses until blown account
+                        {t('Consecutive losses until blown account')}
                       </p>
                     </div>
                     <div className="rounded-xl border border-border bg-[#F4F8FC] p-4 text-center">
@@ -234,19 +240,19 @@ export function RiskCalculatorPage() {
                         ${riskDollars.toLocaleString('en-US', { maximumFractionDigits: 0 })}
                       </p>
                       <p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-ink-soft">
-                        Recommended risk per trade ({riskPct}%)
+                        {t('Recommended risk per trade ({{pct}}%)', { pct: riskPct })}
                       </p>
                     </div>
                   </div>
 
                   <div className="rounded-xl border border-border bg-[#F4F8FC] p-4">
                     <p className="mb-3 text-[10px] font-bold uppercase tracking-wider text-ink-soft">
-                      Probability of ruin — chance of {lossesToBlow} straight losses within 100 trades
+                      {t('Probability of ruin — chance of {{n}} straight losses within 100 trades', { n: lossesToBlow })}
                     </p>
                     <div className="space-y-2">
                       {ruinProbs.map((r) => (
                         <div key={r.win} className="flex items-center justify-between font-mono text-[11px]">
-                          <span className="text-ink-soft">{r.win}% win rate</span>
+                          <span className="text-ink-soft">{t('{{win}}% win rate', { win: r.win })}</span>
                           <span className="font-bold text-ink">{Math.round(r.prob * 100)}%</span>
                         </div>
                       ))}
@@ -256,10 +262,7 @@ export function RiskCalculatorPage() {
                   <div className="flex items-start gap-2.5 rounded-lg border border-warning/30 bg-warning/5 p-4">
                     <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
                     <p className="text-xs leading-relaxed text-muted-dark">
-                      While risking {riskPct}% of your account per trade, you
-                      need a high enough win rate to survive a {lossesToBlow}{' '}
-                      trade losing streak. Smaller size keeps you in the game
-                      longer.
+                      {t('While risking {{pct}}% of your account per trade, you need a high enough win rate to survive a {{n}} trade losing streak. Smaller size keeps you in the game longer.', { pct: riskPct, n: lossesToBlow })}
                     </p>
                   </div>
                 </div>
@@ -273,7 +276,7 @@ export function RiskCalculatorPage() {
       <section className="bg-deep py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="Three numbers decide the outcome" />
+            <SectionHeader title={t('Three numbers decide the outcome')} />
           </Reveal>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             {THREE_NUMBERS.map((n, i) => (
@@ -283,17 +286,15 @@ export function RiskCalculatorPage() {
                   <span className="pointer-events-none absolute right-4 top-3 font-mono text-4xl font-black text-ink/5">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <h2 className="mb-2 text-base font-bold text-ink">{n.title}</h2>
-                  <p className="text-sm leading-relaxed text-muted-dark">{n.description}</p>
+                  <h2 className="mb-2 text-base font-bold text-ink">{t(n.title)}</h2>
+                  <p className="text-sm leading-relaxed text-muted-dark">{t(n.description)}</p>
                 </div>
               </Reveal>
             ))}
           </div>
           <Reveal>
             <p className="mt-8 text-center text-base leading-relaxed text-muted-dark md:text-lg">
-              Change one and the other two move with it. The calculator handles
-              that trade-off instantly so you are not doing arithmetic while
-              price is running.
+              {t('Change one and the other two move with it. The calculator handles that trade-off instantly so you are not doing arithmetic while price is running.')}
             </p>
           </Reveal>
         </div>
@@ -303,7 +304,7 @@ export function RiskCalculatorPage() {
       <section className="border-t border-border bg-navy py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="Build the trade in four moves" />
+            <SectionHeader title={t('Build the trade in four moves')} />
           </Reveal>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {FOUR_MOVES.map((step, i) => (
@@ -312,7 +313,7 @@ export function RiskCalculatorPage() {
                   <span className="pointer-events-none absolute right-4 top-2 font-mono text-5xl font-black text-ink/5">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <p className="text-sm leading-relaxed text-muted-dark">{step}</p>
+                  <p className="text-sm leading-relaxed text-muted-dark">{t(step)}</p>
                 </div>
               </Reveal>
             ))}
@@ -325,18 +326,18 @@ export function RiskCalculatorPage() {
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
             <SectionHeader
-              title="The recovery problem nobody plans for"
-              description="Losses and gains are not symmetrical. Small, consistent sizing keeps you in the shallow end of that curve, where a normal winning streak is enough to repair the damage."
+              title={t('The recovery problem nobody plans for')}
+              description={t('Losses and gains are not symmetrical. Small, consistent sizing keeps you in the shallow end of that curve, where a normal winning streak is enough to repair the damage.')}
             />
           </Reveal>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             {RECOVERY.map((r, i) => (
               <Reveal key={r.drop} delay={i * 90}>
                 <div className="flex h-full flex-col items-center rounded-2xl border border-border bg-navy p-7 text-center shadow-card">
-                  <p className="font-mono text-2xl font-black text-danger">{r.drop}</p>
+                  <p className="font-mono text-2xl font-black text-danger">{t(r.drop)}</p>
                   <div aria-hidden="true" className="my-3 h-[2px] w-10 gradient-brand" />
                   <p className="text-sm font-semibold leading-relaxed text-muted-dark">
-                    {r.need}
+                    {t(r.need)}
                   </p>
                 </div>
               </Reveal>
@@ -349,7 +350,7 @@ export function RiskCalculatorPage() {
       <section className="border-t border-border bg-navy py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="Sizing habits worth breaking" />
+            <SectionHeader title={t('Sizing habits worth breaking')} />
           </Reveal>
           <div className="mx-auto max-w-3xl space-y-3">
             {BAD_HABITS.map((habit, i) => (
@@ -359,7 +360,7 @@ export function RiskCalculatorPage() {
                     <X className="h-4 w-4 text-danger" />
                   </span>
                   <p className="text-sm font-semibold leading-relaxed text-muted-dark">
-                    {habit}
+                    {t(habit)}
                   </p>
                 </div>
               </Reveal>
@@ -372,7 +373,7 @@ export function RiskCalculatorPage() {
       <section className="border-t border-border bg-deep py-20 lg:py-28">
         <div className="mx-auto max-w-3xl px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="Risk Calculator questions" />
+            <SectionHeader title={t('Risk Calculator questions')} />
           </Reveal>
           <div className="flex flex-col gap-3">
             {FAQS.map((faq, i) => {
@@ -391,7 +392,7 @@ export function RiskCalculatorPage() {
                     aria-expanded={isOpen}
                   >
                     <span className={`text-sm font-semibold ${isOpen ? 'text-accent' : 'text-ink'}`}>
-                      {faq.q}
+                      {t(faq.q)}
                     </span>
                     <ChevronDown
                       className={`h-5 w-5 shrink-0 text-ink-soft transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
@@ -404,7 +405,7 @@ export function RiskCalculatorPage() {
                   >
                     <div className="overflow-hidden">
                       <p className="px-6 pb-4 text-sm leading-relaxed text-muted-dark">
-                        {faq.answer}
+                        {t(faq.answer)}
                       </p>
                     </div>
                   </div>
@@ -420,12 +421,11 @@ export function RiskCalculatorPage() {
         <div className="mx-auto max-w-2xl px-4 text-center md:px-6">
           <Reveal>
             <h2 className="mb-4 text-3xl font-extrabold text-ink md:text-4xl">
-              Trade with discipline.{' '}
-              <span className="text-gradient-brand">Protect your capital.</span>
+              {ctaHead} <span className="text-gradient-brand">{ctaTail}</span>
             </h2>
             <div className="mt-6">
               <Button to="/get-started" size="lg" className="group">
-                Start Free Access
+                {t('Start Free Access')}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
             </div>
