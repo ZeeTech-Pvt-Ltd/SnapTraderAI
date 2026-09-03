@@ -1,6 +1,7 @@
-import { useEffect, useId, useMemo, useState } from 'react'
+import { useId, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import {
   traderMarkets,
   traders,
@@ -8,6 +9,7 @@ import {
   traderStats,
   type Trader,
 } from '../content/traders'
+import { splitStyledTail } from '../i18n'
 import { Reveal } from '../components/ui/Reveal'
 import { Button } from '../components/ui/Button'
 import { FilterSelect } from '../components/ui/FilterSelect'
@@ -64,15 +66,17 @@ function TraderSparkline({
 }
 
 function StatCell({ label, value, valueClass }: { label: string; value: string; valueClass: string }) {
+  const { t } = useTranslation()
   return (
     <div className="bg-navy p-2.5">
-      <p className="text-[9px] text-ink-soft">{label}</p>
+      <p className="text-[9px] text-ink-soft">{t(label)}</p>
       <p className={`mt-0.5 font-mono text-[11px] font-bold ${valueClass}`}>{value}</p>
     </div>
   )
 }
 
 function TraderCard({ trader, index }: { trader: Trader; index: number }) {
+  const { t } = useTranslation()
   const s = traderStats(trader)
   const series = useMemo(() => traderSeries(trader), [trader])
   const positive = s.totalReturn >= 0
@@ -88,7 +92,7 @@ function TraderCard({ trader, index }: { trader: Trader; index: number }) {
         }}
         tabIndex={0}
         role="link"
-        aria-label={`View ${trader.id} details`}
+        aria-label={t('View {{name}} details', { name: trader.id })}
         className="flex h-full cursor-pointer flex-col rounded-[10px] border border-border bg-navy p-4 shadow-card outline-none transition-all duration-200 hover:-translate-y-[3px] hover:border-accent/30 hover:shadow-card-lg focus-visible:border-accent"
       >
         {/* Header: avatar + name + days chip */}
@@ -107,19 +111,19 @@ function TraderCard({ trader, index }: { trader: Trader; index: number }) {
                 </Link>
               </h2>
               <p className="m-0 truncate whitespace-nowrap text-[9px] text-ink-soft">
-                {trader.model} • {trader.market}
+                {trader.model} • {t(trader.market)}
               </p>
             </div>
           </div>
           <span className="shrink-0 rounded-md bg-accent/10 px-2 py-[6px] font-mono text-[9px] font-bold text-accent">
-            {s.daysActive} days
+            {t('{{count}} days', { count: s.daysActive })}
           </span>
         </div>
 
         {/* Total return + graph */}
         <div className="mb-[15px] flex items-center justify-between gap-[14px]">
           <div className="shrink-0">
-            <p className="text-[11px] text-ink-soft">Total Return</p>
+            <p className="text-[11px] text-ink-soft">{t('Total Return')}</p>
             <p
               className={`font-mono text-[15px] font-black ${
                 positive ? 'text-success' : 'text-danger'
@@ -164,7 +168,7 @@ function TraderCard({ trader, index }: { trader: Trader; index: number }) {
           onClick={(e) => e.stopPropagation()}
           className="block w-full rounded-md border-0 py-[10px] text-center font-mono text-[10px] font-bold tracking-wide gradient-brand text-[#04212b] transition-all duration-200 hover:brightness-110 hover:shadow-glow"
         >
-          + FOLLOW
+          {t('+ FOLLOW')}
         </Link>
       </article>
     </Reveal>
@@ -172,14 +176,17 @@ function TraderCard({ trader, index }: { trader: Trader; index: number }) {
 }
 
 export function TradersPage() {
+  const { t } = useTranslation()
   const [tab, setTab] = useState<Tab | null>('Trending')
   const [market, setMarket] = useState('All Markets')
   const [strategy, setStrategy] = useState('All Strategies')
   const [model, setModel] = useState('All Models')
 
-  useEffect(() => {
-    document.title = 'AI Traders | SnapTrader AI'
-  }, [])
+  // Gradient covers the tail of the CTA heading in every language.
+  const [ctaHead, ctaTail] = splitStyledTail(
+    t('See the Agents Analyse Your Charts'),
+    2,
+  )
 
   const strategies = useMemo(
     () => ['All Strategies', ...new Set(traders.map((t) => t.strategy))],
@@ -234,11 +241,10 @@ export function TradersPage() {
         <div className="relative z-10 mx-auto max-w-container px-4 md:px-6">
           <Reveal>
             <h1 className="mb-5 max-w-[600px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-              AI <span className="text-gradient-brand">Traders</span>
+              {t('AI')} <span className="text-gradient-brand">{t('Traders')}</span>
             </h1>
             <p className="max-w-2xl text-base leading-relaxed text-muted-dark md:text-lg">
-              Browse and discover AI trader agents. Compare performance across
-              markets, strategies, and AI models.
+              {t('Browse and discover AI trader agents. Compare performance across markets, strategies, and AI models.')}
             </p>
           </Reveal>
         </div>
@@ -250,18 +256,18 @@ export function TradersPage() {
           <Reveal>
             {/* Segmented tabs */}
             <div className="mb-4 flex max-w-xl flex-wrap gap-0 overflow-hidden rounded-lg border border-border bg-navy p-1 shadow-card">
-              {TABS.map((t) => (
+              {TABS.map((tabItem) => (
                 <button
-                  key={t}
+                  key={tabItem}
                   type="button"
-                  onClick={() => setTab(tab === t ? null : t)}
+                  onClick={() => setTab(tab === tabItem ? null : tabItem)}
                   className={`min-w-[100px] flex-1 cursor-pointer border-0 px-4 py-[10px] font-mono text-xs font-bold transition-all duration-200 sm:min-w-[110px] ${
-                    tab === t
+                    tab === tabItem
                       ? 'gradient-brand rounded-md text-[#04212b] shadow-glow'
                       : 'text-ink-soft hover:text-ink'
                   }`}
                 >
-                  {t}
+                  {t(tabItem)}
                 </button>
               ))}
             </div>
@@ -269,7 +275,7 @@ export function TradersPage() {
             {/* Dropdown filters */}
             <div className="mb-8 flex flex-wrap items-center gap-2">
               <span className="mr-1 text-xs font-bold uppercase tracking-wider text-ink-soft">
-                Filters:
+                {t('Filters:')}
               </span>
               <FilterSelect
                 label="Filter by market"
@@ -295,23 +301,21 @@ export function TradersPage() {
           {/* Card grid */}
           {visible.length > 0 ? (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {visible.map((t, i) => (
-                <TraderCard key={t.id} trader={t} index={i} />
+              {visible.map((trader, i) => (
+                <TraderCard key={trader.id} trader={trader} index={i} />
               ))}
             </div>
           ) : (
             <div className="rounded-xl border border-border bg-navy p-12 text-center shadow-card">
               <p className="font-mono text-sm text-ink-soft">
-                No agents match this combination of filters.
+                {t('No agents match this combination of filters.')}
               </p>
             </div>
           )}
 
           <Reveal>
             <p className="mt-6 text-center font-mono text-[11px] text-ink-soft/70">
-              Performance figures are illustrative demo data — the roster
-              (agents, markets, strategies and models) comes from Agents.xlsx.
-              No agent guarantees trading results.
+              {t('Performance figures are illustrative demo data — the roster (agents, markets, strategies and models) comes from Agents.xlsx. No agent guarantees trading results.')}
             </p>
           </Reveal>
         </div>
@@ -322,20 +326,18 @@ export function TradersPage() {
         <div className="mx-auto max-w-2xl px-4 text-center md:px-6">
           <Reveal>
             <h2 className="mb-4 text-2xl font-extrabold text-ink md:text-3xl">
-              See the Agents{' '}
-              <span className="text-gradient-brand">Analyse Your Charts</span>
+              {ctaHead} <span className="text-gradient-brand">{ctaTail}</span>
             </h2>
             <p className="mb-6 text-muted-dark">
-              Upload a chart and let the right agent for your market do the heavy
-              lifting — signals with confidence scores, always labelled.
+              {t('Upload a chart and let the right agent for your market do the heavy lifting — signals with confidence scores, always labelled.')}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Button to="/leaderboard" size="lg" className="group">
-                View Leaderboard
+                {t('View Leaderboard')}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
               <Button to="/" variant="outline" size="lg">
-                Back to Homepage
+                {t('Back to Homepage')}
               </Button>
             </div>
           </Reveal>
