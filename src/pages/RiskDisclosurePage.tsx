@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { LegalDocument, type LegalSection } from '../components/LegalDocument'
 
 const SECTIONS: LegalSection[] = [
@@ -61,33 +63,38 @@ const SECTIONS: LegalSection[] = [
 ]
 
 export function RiskDisclosurePage() {
+  const { t } = useTranslation()
+
+  // Gradient covers the tail of the heading in every language.
+  const [head, tail] = splitStyledTail(t('Risk Disclosure'), 1)
+
   return (
     <LegalDocument
-      title="Risk Disclosure"
+      title={t('Risk Disclosure')}
       heading={
         <>
-          Risk <span className="text-gradient-brand">Disclosure</span>
+          {head} <span className="text-gradient-brand">{tail}</span>
         </>
       }
-      intro="Trading involves substantial risk. Please read this disclosure carefully before using the Snap Trader AI platform."
+      intro={t('Trading involves substantial risk. Please read this disclosure carefully before using the Snap Trader AI platform.')}
       effectiveDate="August 2026"
       dateLabel="Last updated"
       sections={SECTIONS}
       contactContent={
         <p className="text-sm leading-relaxed text-muted-dark md:text-base">
-          Questions about this risk disclosure? Reach us at{' '}
+          {t('Questions about this risk disclosure? Reach us at')}{' '}
           <a
             href="mailto:support@snap-traderai.com"
             className="font-semibold text-accent transition-colors hover:text-accent-hover"
           >
             support@snap-traderai.com
           </a>{' '}
-          or through our{' '}
+          {t('or through our')}{' '}
           <Link
             to="/contact"
             className="font-semibold text-accent transition-colors hover:text-accent-hover"
           >
-            contact page
+            {t('contact page')}
           </Link>
           .
         </p>

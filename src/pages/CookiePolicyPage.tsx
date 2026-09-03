@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { LegalDocument, type LegalSection } from '../components/LegalDocument'
 
 const SECTIONS: LegalSection[] = [
@@ -57,33 +59,38 @@ const SECTIONS: LegalSection[] = [
 ]
 
 export function CookiePolicyPage() {
+  const { t } = useTranslation()
+
+  // Gradient covers the tail of the heading in every language.
+  const [head, tail] = splitStyledTail(t('Cookie Policy'), 1)
+
   return (
     <LegalDocument
-      title="Cookie Policy"
+      title={t('Cookie Policy')}
       heading={
         <>
-          Cookie <span className="text-gradient-brand">Policy</span>
+          {head} <span className="text-gradient-brand">{tail}</span>
         </>
       }
-      intro="What cookies are, how we use them, and how you can manage your preferences."
+      intro={t('What cookies are, how we use them, and how you can manage your preferences.')}
       effectiveDate="August 2026"
       dateLabel="Last updated"
       sections={SECTIONS}
       contactContent={
         <p className="text-sm leading-relaxed text-muted-dark md:text-base">
-          Questions about cookies or this policy? Reach us at{' '}
+          {t('Questions about cookies or this policy? Reach us at')}{' '}
           <a
             href="mailto:support@snap-traderai.com"
             className="font-semibold text-accent transition-colors hover:text-accent-hover"
           >
             support@snap-traderai.com
           </a>{' '}
-          or through our{' '}
+          {t('or through our')}{' '}
           <Link
             to="/contact"
             className="font-semibold text-accent transition-colors hover:text-accent-hover"
           >
-            contact page
+            {t('contact page')}
           </Link>
           .
         </p>

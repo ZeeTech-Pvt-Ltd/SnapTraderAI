@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { LegalDocument, type LegalSection } from '../components/LegalDocument'
 
 const SECTIONS: LegalSection[] = [
@@ -62,32 +64,37 @@ const SECTIONS: LegalSection[] = [
 ]
 
 export function TermsConditionsPage() {
+  const { t } = useTranslation()
+
+  // Gradient covers the tail of the heading in every language.
+  const [head, tail] = splitStyledTail(t('Terms & Conditions'), 1)
+
   return (
     <LegalDocument
-      title="Terms & Conditions"
+      title={t('Terms & Conditions')}
       heading={
         <>
-          Terms &amp; <span className="text-gradient-brand">Conditions</span>
+          {head} <span className="text-gradient-brand">{tail}</span>
         </>
       }
-      intro="These Terms & Conditions govern your use of the SnapTrader AI website and platform. Please read them carefully before using the site."
+      intro={t('These Terms & Conditions govern your use of the SnapTrader AI website and platform. Please read them carefully before using the site.')}
       effectiveDate="August 2026"
       sections={SECTIONS}
       contactContent={
         <p className="text-sm leading-relaxed text-muted-dark md:text-base">
-          Questions about these terms can be directed to{' '}
+          {t('Questions about these terms can be directed to')}{' '}
           <a
             href="mailto:support@snap-traderai.com"
             className="font-semibold text-accent transition-colors hover:text-accent-hover"
           >
             support@snap-traderai.com
           </a>{' '}
-          or through our{' '}
+          {t('or through our')}{' '}
           <Link
             to="/contact"
             className="font-semibold text-accent transition-colors hover:text-accent-hover"
           >
-            contact page
+            {t('contact page')}
           </Link>
           .
         </p>

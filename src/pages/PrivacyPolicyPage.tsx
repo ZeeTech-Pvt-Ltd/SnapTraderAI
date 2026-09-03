@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { LegalDocument, type LegalSection } from '../components/LegalDocument'
 
 const SECTIONS: LegalSection[] = [
@@ -66,32 +68,37 @@ const SECTIONS: LegalSection[] = [
 ]
 
 export function PrivacyPolicyPage() {
+  const { t } = useTranslation()
+
+  // Gradient covers the tail of the heading in every language.
+  const [head, tail] = splitStyledTail(t('Privacy Policy'), 1)
+
   return (
     <LegalDocument
-      title="Privacy Policy"
+      title={t('Privacy Policy')}
       heading={
         <>
-          Privacy <span className="text-gradient-brand">Policy</span>
+          {head} <span className="text-gradient-brand">{tail}</span>
         </>
       }
-      intro="This policy explains how SnapTrader AI (Snap Trader AI) collects, uses, discloses, and protects your personal information when you visit our website or use our platform. By using the site, you agree to the practices described here."
+      intro={t('This policy explains how SnapTrader AI (Snap Trader AI) collects, uses, discloses, and protects your personal information when you visit our website or use our platform. By using the site, you agree to the practices described here.')}
       effectiveDate="August 2026"
       sections={SECTIONS}
       contactContent={
         <p className="text-sm leading-relaxed text-muted-dark md:text-base">
-          Questions, requests or concerns about this policy can be sent to{' '}
+          {t('Questions, requests or concerns about this policy can be sent to')}{' '}
           <a
             href="mailto:support@snap-traderai.com"
             className="font-semibold text-accent transition-colors hover:text-accent-hover"
           >
             support@snap-traderai.com
           </a>{' '}
-          or through our{' '}
+          {t('or through our')}{' '}
           <Link
             to="/contact"
             className="font-semibold text-accent transition-colors hover:text-accent-hover"
           >
-            contact page
+            {t('contact page')}
           </Link>
           .
         </p>

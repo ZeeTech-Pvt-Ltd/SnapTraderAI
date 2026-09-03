@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { LegalDocument, type LegalSection } from '../components/LegalDocument'
 
 const SECTIONS: LegalSection[] = [
@@ -53,28 +55,37 @@ const SECTIONS: LegalSection[] = [
 ]
 
 export function DisclaimerPage() {
+  const { t } = useTranslation()
+
+  // Gradient covers the tail of the heading in every language.
+  const [head, tail] = splitStyledTail(t('Disclaimer'), 1)
+
   return (
     <LegalDocument
-      title="Disclaimer"
-      heading={<span className="text-gradient-brand">Disclaimer</span>}
-      intro="This disclaimer applies to the SnapTrader AI website and platform. By using the site, you accept the terms of this disclaimer."
+      title={t('Disclaimer')}
+      heading={
+        <>
+          {head} <span className="text-gradient-brand">{tail}</span>
+        </>
+      }
+      intro={t('This disclaimer applies to the SnapTrader AI website and platform. By using the site, you accept the terms of this disclaimer.')}
       effectiveDate="August 2026"
       sections={SECTIONS}
       contactContent={
         <p className="text-sm leading-relaxed text-muted-dark md:text-base">
-          Questions about this disclaimer can be directed to{' '}
+          {t('Questions about this disclaimer can be directed to')}{' '}
           <a
             href="mailto:support@snap-traderai.com"
             className="font-semibold text-accent transition-colors hover:text-accent-hover"
           >
             support@snap-traderai.com
           </a>{' '}
-          or through our{' '}
+          {t('or through our')}{' '}
           <Link
             to="/contact"
             className="font-semibold text-accent transition-colors hover:text-accent-hover"
           >
-            contact page
+            {t('contact page')}
           </Link>
           .
         </p>

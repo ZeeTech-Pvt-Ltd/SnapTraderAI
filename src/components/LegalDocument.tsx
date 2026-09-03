@@ -1,6 +1,7 @@
 import { useEffect, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Reveal } from './ui/Reveal'
 
 export interface LegalSection {
@@ -36,6 +37,7 @@ export function LegalDocument({
   contactContent,
   note,
 }: LegalDocumentProps) {
+  const { t } = useTranslation()
   useEffect(() => {
     document.title = `${title} | SnapTrader AI`
     window.scrollTo(0, 0)
@@ -57,7 +59,7 @@ export function LegalDocument({
               className="mb-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-soft transition-colors hover:text-accent"
             >
               <ArrowLeft className="h-4 w-4" />
-              Back to Homepage
+              {t('Back to Homepage')}
             </Link>
             <h1 className="mb-5 max-w-[600px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
               {heading}
@@ -67,7 +69,7 @@ export function LegalDocument({
             </p>
             {effectiveDate && (
               <p className="mt-4 font-mono text-xs text-ink-soft">
-                {dateLabel}: {effectiveDate}
+                {t(dateLabel)}: {t(effectiveDate)}
               </p>
             )}
           </Reveal>
@@ -85,11 +87,11 @@ export function LegalDocument({
                   className={i === 0 ? '' : 'mt-10 border-t border-border pt-10'}
                 >
                   <h2 className="mb-4 text-xl font-extrabold text-ink md:text-2xl">
-                    {i + 1}. {section.title}
+                    {i + 1}. {t(section.title)}
                   </h2>
                   {section.paragraphs?.map((p) => (
                     <p key={p.slice(0, 40)} className="mb-4 text-sm leading-relaxed text-muted-dark md:text-base">
-                      {p}
+                      {t(p)}
                     </p>
                   ))}
                   {section.list && (
@@ -100,7 +102,7 @@ export function LegalDocument({
                           className="flex items-start gap-3 text-sm leading-relaxed text-muted-dark md:text-base"
                         >
                           <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full gradient-brand" />
-                          {item}
+                          {t(item)}
                         </li>
                       ))}
                     </ul>
@@ -111,7 +113,7 @@ export function LegalDocument({
               {contactContent && (
                 <div className="mt-10 border-t border-border pt-10">
                   <h2 className="mb-4 text-xl font-extrabold text-ink md:text-2xl">
-                    {sections.length + 1}. Contact Us
+                    {sections.length + 1}. {t('Contact Us')}
                   </h2>
                   {contactContent}
                 </div>
@@ -119,7 +121,7 @@ export function LegalDocument({
 
               {note && (
                 <p className="mt-10 rounded-lg border border-border bg-deep p-4 text-xs leading-relaxed text-ink-soft">
-                  {note}
+                  {t(note)}
                 </p>
               )}
             </article>
