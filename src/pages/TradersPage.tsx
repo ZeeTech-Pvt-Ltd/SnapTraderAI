@@ -9,7 +9,7 @@ import {
   traderStats,
   type Trader,
 } from '../content/traders'
-import { splitStyledTail } from '../i18n'
+import { localizedPath, splitStyledTail } from '../i18n'
 import { Reveal } from '../components/ui/Reveal'
 import { Button } from '../components/ui/Button'
 import { FilterSelect } from '../components/ui/FilterSelect'
@@ -86,9 +86,9 @@ function TraderCard({ trader, index }: { trader: Trader; index: number }) {
     <Reveal delay={(index % 3) * 80}>
       {/* Whole card opens the trader's page */}
       <article
-        onClick={() => navigate(`/traders/${trader.id}`)}
+        onClick={() => navigate(`${localizedPath('/traders')}/${trader.id}`)}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') navigate(`/traders/${trader.id}`)
+          if (e.key === 'Enter') navigate(`${localizedPath('/traders')}/${trader.id}`)
         }}
         tabIndex={0}
         role="link"
@@ -104,7 +104,7 @@ function TraderCard({ trader, index }: { trader: Trader; index: number }) {
             <div className="min-w-0">
               <h2 className="m-0 truncate whitespace-nowrap font-mono text-[15px] font-bold">
                 <Link
-                  to={`/traders/${trader.id}`}
+                  to={`${localizedPath('/traders')}/${trader.id}`}
                   className="text-ink transition-colors hover:text-accent hover:underline"
                 >
                   {trader.id}
@@ -164,7 +164,7 @@ function TraderCard({ trader, index }: { trader: Trader; index: number }) {
 
         {/* Follow → sign-up funnel (stops card navigation) */}
         <Link
-          to="/get-started"
+          to={localizedPath('/get-started')}
           onClick={(e) => e.stopPropagation()}
           className="block w-full rounded-md border-0 py-[10px] text-center font-mono text-[10px] font-bold tracking-wide gradient-brand text-[#04212b] transition-all duration-200 hover:brightness-110 hover:shadow-glow"
         >

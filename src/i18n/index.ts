@@ -89,4 +89,76 @@ export function resolveLocalizedSlug(englishSlugs: string[], urlSlug: string): s
   })
 }
 
+/** English path segment → i18n key holding its localised URL segment. */
+const SEGMENT_KEYS: Record<string, string> = {
+  traders: 'path:traders',
+  leaderboard: 'path:leaderboard',
+  contact: 'path:contact',
+  'get-started': 'path:get-started',
+  'privacy-policy': 'path:privacy-policy',
+  'terms-conditions': 'path:terms-conditions',
+  disclaimer: 'path:disclaimer',
+  'cookie-policy': 'path:cookie-policy',
+  'risk-disclosure': 'path:risk-disclosure',
+  'ai-trading-platform': 'path:ai-trading-platform',
+  'ai-trade-analyzer': 'path:ai-trade-analyzer',
+  'ai-scalp-analyzer': 'path:ai-scalp-analyzer',
+  'ai-swing-trading': 'path:ai-swing-trading',
+  'ai-strategy-builder': 'path:ai-strategy-builder',
+  'ai-pattern-detection': 'path:ai-pattern-detection',
+  'strategy-backtesting': 'path:strategy-backtesting',
+  'risk-calculator': 'path:risk-calculator',
+  academy: 'path:academy',
+  'performance-verification': 'path:performance-verification',
+  'thank-you': 'path:thank-you',
+  'why-choose-snaptrader-ai': 'path:why-choose-snaptrader-ai',
+  blog: 'path:blog',
+}
+
+/** Translates a single path segment for the given language (English when
+    unknown or untranslated). */
+function localizedSegment(segment: string, lng: string): string {
+  const key = SEGMENT_KEYS[segment]
+  if (!key) return segment
+  return i18n.exists(key, { lng }) ? i18n.t(key, { lng }) : segment
+}
+
+/** Localised path for the current language: '/leaderboard' → '/classifica'
+    in Italian. Hash-only links ('#steps') pass through unchanged. */
+export function localizedPath(path: string): string {
+  return path
+    .split('/')
+    .map((seg) => (seg.startsWith(':') ? seg : localizedSegment(seg, i18n.language)))
+    .join('/')
+}
+
+/** All language variants of a path — used to register routes so every
+    language's URL works regardless of the active language. */
+export function pathVariants(path: string): string[] {
+  return [
+    ...new Set(
+      SUPPORTED_LANGS.map((lang) =>
+        path
+          .split('/')
+          .map((seg) => (seg.startsWith(':') ? seg : localizedSegment(seg, lang.code)))
+          .join('/'),
+      ),
+    ),
+  ]
+}
+
+/** Any-language pathname → English pathname (SEO lookups, analytics). */
+export function toEnglishPath(pathname: string): string {
+  return pathname
+    .split('/')
+    .map((seg) => {
+      if (!seg) return seg
+      const english = Object.keys(SEGMENT_KEYS).find((candidate) =>
+        SUPPORTED_LANGS.some((lang) => localizedSegment(candidate, lang.code) === seg),
+      )
+      return english ?? seg
+    })
+    .join('/')
+}
+
 export default i18n

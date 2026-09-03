@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { pathVariants, toEnglishPath } from './i18n'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
 import { HomePage } from './pages/HomePage'
@@ -158,14 +159,15 @@ function SeoManager() {
   const lang = i18n.language
 
   useEffect(() => {
-    const path = location.pathname.replace(/\/+$/, '') || '/'
+    // Normalise the localised pathname back to English for the SEO lookup.
+    const path = toEnglishPath(location.pathname.replace(/\/+$/, '') || '/')
     const seo = SEO[path]
 
     // Dynamic routes set their own titles; only refresh their description
     if (!seo) {
       if (path.startsWith('/traders/') || path.startsWith('/blog/')) {
-        setMetaDescription(DEFAULT_SEO.description)
-        setSocialMeta(document.title, DEFAULT_SEO.description, path)
+        setMetaDescription(t(DEFAULT_SEO.description))
+        setSocialMeta(document.title, t(DEFAULT_SEO.description), path)
       }
       return
     }
@@ -231,6 +233,18 @@ function CanonicalManager() {
   return null
 }
 
+/** Renders one route per language variant so every language's URL works
+    regardless of the active language. */
+function LocalizedRoute({ base, element }: { base: string; element: ReactNode }) {
+  return (
+    <>
+      {pathVariants(base).map((path) => (
+        <Route key={path} path={path} element={element} />
+      ))}
+    </>
+  )
+}
+
 /** Scrolls to top on route change, or to the hash target when present. */
 function ScrollManager() {
   const location = useLocation()
@@ -269,31 +283,31 @@ export default function App() {
 
       <main id="main">
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/traders" element={<TradersPage />} />
-          <Route path="/traders/:slug" element={<TraderDetailPage />} />
-          <Route path="/leaderboard" element={<LeaderboardPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/get-started" element={<GetStartedPage />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-          <Route path="/terms-conditions" element={<TermsConditionsPage />} />
-          <Route path="/disclaimer" element={<DisclaimerPage />} />
-          <Route path="/cookie-policy" element={<CookiePolicyPage />} />
-          <Route path="/risk-disclosure" element={<RiskDisclosurePage />} />
-          <Route path="/ai-trade-analyzer" element={<TradeAnalyzerPage />} />
-          <Route path="/ai-scalp-analyzer" element={<ScalpAnalyzerPage />} />
-          <Route path="/ai-swing-trading" element={<SwingTradingPage />} />
-          <Route path="/ai-strategy-builder" element={<StrategyBuilderPage />} />
-          <Route path="/ai-pattern-detection" element={<PatternDetectionPage />} />
-          <Route path="/strategy-backtesting" element={<StrategyBacktestingPage />} />
-          <Route path="/ai-trading-platform" element={<TradingPlatformPage />} />
-          <Route path="/risk-calculator" element={<RiskCalculatorPage />} />
-          <Route path="/academy" element={<AcademyPage />} />
-          <Route path="/performance-verification" element={<PerformanceVerificationPage />} />
-          <Route path="/thank-you" element={<ThankYouPage />} />
-          <Route path="/why-choose-snaptrader-ai" element={<WhyChoosePage />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <LocalizedRoute base="/" element={<HomePage />} />
+          <LocalizedRoute base="/traders" element={<TradersPage />} />
+          <LocalizedRoute base="/traders/:slug" element={<TraderDetailPage />} />
+          <LocalizedRoute base="/leaderboard" element={<LeaderboardPage />} />
+          <LocalizedRoute base="/contact" element={<ContactPage />} />
+          <LocalizedRoute base="/get-started" element={<GetStartedPage />} />
+          <LocalizedRoute base="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <LocalizedRoute base="/terms-conditions" element={<TermsConditionsPage />} />
+          <LocalizedRoute base="/disclaimer" element={<DisclaimerPage />} />
+          <LocalizedRoute base="/cookie-policy" element={<CookiePolicyPage />} />
+          <LocalizedRoute base="/risk-disclosure" element={<RiskDisclosurePage />} />
+          <LocalizedRoute base="/ai-trade-analyzer" element={<TradeAnalyzerPage />} />
+          <LocalizedRoute base="/ai-scalp-analyzer" element={<ScalpAnalyzerPage />} />
+          <LocalizedRoute base="/ai-swing-trading" element={<SwingTradingPage />} />
+          <LocalizedRoute base="/ai-strategy-builder" element={<StrategyBuilderPage />} />
+          <LocalizedRoute base="/ai-pattern-detection" element={<PatternDetectionPage />} />
+          <LocalizedRoute base="/strategy-backtesting" element={<StrategyBacktestingPage />} />
+          <LocalizedRoute base="/ai-trading-platform" element={<TradingPlatformPage />} />
+          <LocalizedRoute base="/risk-calculator" element={<RiskCalculatorPage />} />
+          <LocalizedRoute base="/academy" element={<AcademyPage />} />
+          <LocalizedRoute base="/performance-verification" element={<PerformanceVerificationPage />} />
+          <LocalizedRoute base="/thank-you" element={<ThankYouPage />} />
+          <LocalizedRoute base="/why-choose-snaptrader-ai" element={<WhyChoosePage />} />
+          <LocalizedRoute base="/blog" element={<BlogPage />} />
+          <LocalizedRoute base="/blog/:slug" element={<BlogPostPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

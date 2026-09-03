@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'rea
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { localizedPath } from '../i18n'
 import intlTelInput from 'intl-tel-input'
 import 'intl-tel-input/build/css/intlTelInput.css'
 
@@ -150,7 +151,7 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
 
     // Honeypot filled → bot. Pretend success without posting.
     if (website.trim() !== '') {
-      navigate('/thank-you', { state: { firstName, email } })
+      navigate(localizedPath('/thank-you'), { state: { firstName, email } })
       return
     }
 
@@ -216,7 +217,7 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
         return
       }
 
-      navigate('/thank-you', { state: { firstName, email } })
+      navigate(localizedPath('/thank-you'), { state: { firstName, email } })
     } catch {
       setBackendError('')
       setStatus('error')
@@ -338,14 +339,14 @@ export function LeadForm({ submitLabel, formHeading, formName }: LeadFormProps) 
           <span className="text-xs leading-relaxed text-muted-dark">
             {t('I have read and agree to the')}{' '}
             <Link
-              to="/privacy-policy"
+              to={localizedPath('/privacy-policy')}
               className="font-semibold text-accent hover:underline"
             >
               {t('Privacy Policy')}
             </Link>{' '}
             {t('and')}{' '}
             <Link
-              to="/terms-conditions"
+              to={localizedPath('/terms-conditions')}
               className="font-semibold text-accent hover:underline"
             >
               {t('Terms & Conditions')}

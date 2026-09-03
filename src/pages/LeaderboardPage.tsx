@@ -13,7 +13,7 @@ import {
   type RiskLevel,
   type Trader,
 } from '../content/traders'
-import { splitStyledTail } from '../i18n'
+import { localizedPath, splitStyledTail } from '../i18n'
 import { Reveal } from '../components/ui/Reveal'
 import { Button } from '../components/ui/Button'
 import { FilterSelect } from '../components/ui/FilterSelect'
@@ -39,7 +39,7 @@ function FollowButton() {
   const { t } = useTranslation()
   return (
     <Link
-      to="/get-started"
+      to={localizedPath('/get-started')}
       className="inline-flex items-center gap-1 rounded-md px-3 py-1.5 font-mono text-[10px] font-bold gradient-brand text-[#04212b] transition-all duration-200 hover:brightness-110"
     >
       {t('Follow')}

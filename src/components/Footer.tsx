@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import { localizedPath } from '../i18n'
 import { footerLinks, toolsDropdown } from '../content/nav'
 import { Logo } from './ui/Logo'
 
-const linkTo = (href: string) => (href.startsWith('#') ? `/${href}` : href)
+const linkTo = (href: string) => (href.startsWith('#') ? `/${href}` : localizedPath(href))
 
 const FOOTER_COLUMNS = [
   {

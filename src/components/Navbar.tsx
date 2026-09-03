@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react'
+import { localizedPath } from '../i18n'
 import { navLinks, resourcesDropdown, toolsDropdown } from '../content/nav'
 import { Logo } from './ui/Logo'
 import { Button } from './ui/Button'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
-/** Hash links resolve to the homepage section; paths stay as-is. */
-const linkTo = (href: string) => (href.startsWith('#') ? `/${href}` : href)
+/** Hash links resolve to the homepage section; paths are localised. */
+const linkTo = (href: string) => (href.startsWith('#') ? `/${href}` : localizedPath(href))
 
 const DROPDOWNS = [toolsDropdown, resourcesDropdown]
 

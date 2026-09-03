@@ -11,6 +11,7 @@ import {
   UserRound,
 } from 'lucide-react'
 import { marketBadge } from '../content/traders'
+import { localizedPath } from '../i18n'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
 import { SectionHeader } from '../components/ui/SectionHeader'
@@ -277,7 +278,7 @@ export function StrategyBuilderPage() {
                         Check historical results before going live (full detail
                         on the{' '}
                         <Link
-                          to="/strategy-backtesting"
+                          to={localizedPath('/strategy-backtesting')}
                           className="font-semibold text-accent hover:underline"
                         >
                           Strategy Backtester page

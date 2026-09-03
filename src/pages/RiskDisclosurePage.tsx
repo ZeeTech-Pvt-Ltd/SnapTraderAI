@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { splitStyledTail } from '../i18n'
+import { localizedPath, splitStyledTail } from '../i18n'
 import { LegalDocument, type LegalSection } from '../components/LegalDocument'
 
 const SECTIONS: LegalSection[] = [
@@ -91,7 +91,7 @@ export function RiskDisclosurePage() {
           </a>{' '}
           {t('or through our')}{' '}
           <Link
-            to="/contact"
+            to={localizedPath('/contact')}
             className="font-semibold text-accent transition-colors hover:text-accent-hover"
           >
             {t('contact page')}

@@ -9,6 +9,7 @@ import {
   Radio,
   X,
 } from 'lucide-react'
+import { localizedPath } from '../i18n'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
 import { SectionHeader } from '../components/ui/SectionHeader'
@@ -367,7 +368,7 @@ export function PerformanceVerificationPage() {
                     {i === 0 ? (
                       <>
                         Open the{' '}
-                        <Link to="/leaderboard" className="text-accent hover:underline">
+                        <Link to={localizedPath('/leaderboard')} className="text-accent hover:underline">
                           Live Leaderboard
                         </Link>
                       </>

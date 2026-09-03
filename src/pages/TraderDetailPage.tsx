@@ -11,6 +11,7 @@ import {
   traderStats,
   traders,
 } from '../content/traders'
+import { localizedPath } from '../i18n'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
 
@@ -65,7 +66,7 @@ export function TraderDetailPage() {
         <div className="relative z-10 mx-auto max-w-container px-4 md:px-6">
           <Reveal>
             <Link
-              to="/traders"
+              to={localizedPath('/traders')}
               className="mb-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-soft transition-colors hover:text-accent"
             >
               <ArrowLeft className="h-4 w-4" />

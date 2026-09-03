@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import type { AnchorHTMLAttributes, ReactNode } from 'react'
+import { localizedPath } from '../../i18n'
 
 interface ButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   variant?: 'primary' | 'outline' | 'ghost'
@@ -28,7 +29,7 @@ export function Button({
   if (to) {
     const { href: _ignored, ...linkRest } = rest
     return (
-      <Link to={to} className={classes} {...linkRest}>
+      <Link to={localizedPath(to)} className={classes} {...linkRest}>
         {children}
       </Link>
     )

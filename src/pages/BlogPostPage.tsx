@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, BookOpen } from 'lucide-react'
 import { posts } from '../content/blog'
-import { resolveLocalizedSlug } from '../i18n'
+import { localizedPath, resolveLocalizedSlug } from '../i18n'
 import { BlogCover } from '../components/BlogCover'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
@@ -42,7 +42,7 @@ export function BlogPostPage() {
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
             <Link
-              to="/blog"
+              to={localizedPath('/blog')}
               className="mb-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-soft transition-colors hover:text-accent"
             >
               <ArrowLeft className="h-4 w-4" />

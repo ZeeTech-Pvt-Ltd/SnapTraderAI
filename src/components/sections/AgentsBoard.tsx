@@ -10,6 +10,7 @@ import {
   traders,
 } from '../../content/traders'
 import { useTranslation } from 'react-i18next'
+import { localizedPath } from '../../i18n'
 import { Button } from '../ui/Button'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeader } from '../ui/SectionHeader'
@@ -24,7 +25,7 @@ function FollowButton() {
   const { t } = useTranslation()
   return (
     <Link
-      to="/get-started"
+      to={localizedPath('/get-started')}
       className="inline-flex items-center gap-1 rounded-md px-3 py-1.5 font-mono text-[10px] font-bold gradient-brand text-[#04212b] transition-all duration-200 hover:brightness-110"
     >
       {t('Follow')}
