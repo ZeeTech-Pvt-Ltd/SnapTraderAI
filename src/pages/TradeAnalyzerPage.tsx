@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
 import { ArrowRight, ClipboardCheck, Cpu, Upload } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
 import { SectionHeader } from '../components/ui/SectionHeader'
@@ -60,9 +61,14 @@ const WHY_TRADERS = [
 ]
 
 export function TradeAnalyzerPage() {
-  useEffect(() => {
-    document.title = 'AI Trade Analyzer | SnapTrader AI'
-  }, [])
+  const { t } = useTranslation()
+
+  // Gradient covers the tail of each headline in every language.
+  const [riskHead, riskTail] = splitStyledTail(t('Before You Risk a Rupee'), 1)
+  const [ctaHead, ctaTail] = splitStyledTail(
+    t('Grade Your Next Setup Before You Risk It'),
+    3,
+  )
 
   return (
     <div className="bg-deep pt-[72px]">
@@ -77,22 +83,19 @@ export function TradeAnalyzerPage() {
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal>
               <h1 className="mb-5 max-w-[600px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-                AI Trade Analyzer — Grade Your Setup
+                {t('AI Trade Analyzer — Grade Your Setup')}
                 <br />
-                Before You Risk a <span className="text-gradient-brand">Rupee</span>
+                {riskHead} <span className="text-gradient-brand">{riskTail}</span>
               </h1>
               <p className="mb-3 text-lg font-semibold leading-relaxed text-ink">
-                Most losing trades don&apos;t fail at the exit. They fail at the
-                entry.
+                {t("Most losing trades don't fail at the exit. They fail at the entry.")}
               </p>
               <p className="mb-8 max-w-[540px] text-lg leading-relaxed text-muted-dark">
-                Our AI trade analyzer reads your chart in seconds and tells you
-                whether the setup actually earned your money — or whether you
-                just talked yourself into it.
+                {t('Our AI trade analyzer reads your chart in seconds and tells you whether the setup actually earned your money — or whether you just talked yourself into it.')}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button to="/get-started" size="lg" className="group">
-                  Try the Analyzer Free
+                  {t('Try the Analyzer Free')}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
               </div>
@@ -107,10 +110,10 @@ export function TradeAnalyzerPage() {
                   style={{ background: 'radial-gradient(ellipse, rgb(0 180 230 / 0.14) 0%, transparent 70%)' }}
                 />
                 <TerminalFrame
-                  title="Snap Trader AI · Trade Analyzer"
+                  title={t('Snap Trader AI · Trade Analyzer')}
                   titleExtra={
                     <span className="rounded-full bg-accent/10 px-2.5 py-1 font-mono text-[9px] font-bold text-accent">
-                      ~7s ANALYSIS
+                      {t('~7s ANALYSIS')}
                     </span>
                   }
                 >
@@ -120,7 +123,7 @@ export function TradeAnalyzerPage() {
                       <div>
                         <p className="font-mono text-sm font-extrabold text-ink">EUR/USD · 1H</p>
                         <p className="font-mono text-[9px] text-ink-soft">
-                          CHART RECEIVED · TREND + VOLUME + STRUCTURE
+                          {t('CHART RECEIVED · TREND + VOLUME + STRUCTURE')}
                         </p>
                       </div>
                       <div className="flex items-center gap-3">
@@ -129,10 +132,10 @@ export function TradeAnalyzerPage() {
                         </span>
                         <div className="text-right">
                           <p className="text-[9px] font-bold uppercase tracking-wider text-ink-soft">
-                            Grade
+                            {t('Grade')}
                           </p>
                           <p className="font-mono text-[10px] font-bold text-success">
-                            WORTH TAKING
+                            {t('WORTH TAKING')}
                           </p>
                         </div>
                       </div>
@@ -141,10 +144,10 @@ export function TradeAnalyzerPage() {
                     {/* Plan grid */}
                     <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
                       {[
-                        { k: 'ENTRY ZONE', v: '1.0842–1.0860', c: 'text-accent' },
-                        { k: 'STOP', v: '1.0804', c: 'text-danger' },
-                        { k: 'TARGETS', v: '1.0918 · 1.0964', c: 'text-success' },
-                        { k: 'R : R', v: '1 : 2.1', c: 'text-success' },
+                        { k: t('ENTRY ZONE'), v: '1.0842–1.0860', c: 'text-accent' },
+                        { k: t('STOP'), v: '1.0804', c: 'text-danger' },
+                        { k: t('TARGETS'), v: '1.0918 · 1.0964', c: 'text-success' },
+                        { k: t('R : R'), v: '1 : 2.1', c: 'text-success' },
                       ].map((r) => (
                         <div
                           key={r.k}
@@ -161,18 +164,16 @@ export function TradeAnalyzerPage() {
                     {/* Bear case */}
                     <div className="mb-4 rounded-md border border-warning/30 bg-warning/5 p-3.5">
                       <p className="mb-1 font-mono text-[9px] font-bold uppercase tracking-wider text-warning">
-                        The Bear Case
+                        {t('The Bear Case')}
                       </p>
                       <p className="text-[11px] leading-relaxed text-muted-dark">
-                        Momentum divergence on RSI (30m) suggests the breakout
-                        may fade. If price closes below 1.0804, the setup is
-                        invalid — walk away.
+                        {t('Momentum divergence on RSI (30m) suggests the breakout may fade. If price closes below 1.0804, the setup is invalid — walk away.')}
                       </p>
                     </div>
 
                     <div className="flex items-center justify-between rounded-md border border-success/30 bg-success/5 p-3">
                       <p className="font-mono text-[10px] font-bold text-success">
-                        VERDICT · TAKE IT — RISK CAPPED AT 1%
+                        {t('VERDICT · TAKE IT — RISK CAPPED AT 1%')}
                       </p>
                       <p className="font-mono text-[9px] text-ink-soft/60">SNAP-7741</p>
                     </div>
@@ -193,8 +194,8 @@ export function TradeAnalyzerPage() {
               <SectionHeader
                 align="left"
                 className="mb-0"
-                title="What Every Analysis Gives You"
-                description="Every chart gets the same full report — four checks, every single time. No partial reports, no vague hunches."
+                title={t('What Every Analysis Gives You')}
+                description={t('Every chart gets the same full report — four checks, every single time. No partial reports, no vague hunches.')}
               />
               <div className="mt-6 flex flex-wrap gap-2">
                 {['Same rubric', 'Same structure', 'No vibes'].map((chip) => (
@@ -202,7 +203,7 @@ export function TradeAnalyzerPage() {
                     key={chip}
                     className="rounded-full border border-accent/20 bg-accent/5 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-accent"
                   >
-                    {chip}
+                    {t(chip)}
                   </span>
                 ))}
               </div>
@@ -222,16 +223,16 @@ export function TradeAnalyzerPage() {
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <div>
-                      <h2 className="text-base font-bold text-ink">{f.title}</h2>
+                      <h2 className="text-base font-bold text-ink">{t(f.title)}</h2>
                       <p className="mt-1 text-sm leading-relaxed text-muted-dark">
-                        {f.description}
+                        {t(f.description)}
                       </p>
                     </div>
                   </div>
                 ))}
                 <div className="flex items-center justify-between border-t border-border bg-medium-navy/30 px-6 py-3.5">
                   <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-success">
-                    4/4 checks delivered with every analysis
+                    {t('4/4 checks delivered with every analysis')}
                   </p>
                   <p className="font-mono text-[9px] text-ink-soft/60">SNAP-CHECK</p>
                 </div>
@@ -245,7 +246,7 @@ export function TradeAnalyzerPage() {
       <section className="bg-deep py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="How It Works" />
+            <SectionHeader title={t('How It Works')} />
           </Reveal>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {STEPS.map((s, i) => (
@@ -254,15 +255,15 @@ export function TradeAnalyzerPage() {
                   <span className="pointer-events-none absolute right-4 top-2 font-mono text-5xl font-black text-ink/5">
                     {s.step}
                   </span>
-                  <h3 className="mb-2 text-base font-bold text-ink">{s.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-dark">{s.description}</p>
+                  <h3 className="mb-2 text-base font-bold text-ink">{t(s.title)}</h3>
+                  <p className="text-sm leading-relaxed text-muted-dark">{t(s.description)}</p>
                 </div>
               </Reveal>
             ))}
           </div>
           <Reveal>
             <p className="mt-6 text-center font-mono text-sm font-bold text-accent">
-              Average time: under 10 seconds.
+              {t('Average time: under 10 seconds.')}
             </p>
           </Reveal>
         </div>
@@ -273,8 +274,8 @@ export function TradeAnalyzerPage() {
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
             <SectionHeader
-              title="Not a Scanner. A Second Opinion."
-              description="Scanners hand you a list of tickers. That's a different job. This AI trade analyzer looks at the one chart already open in front of you and answers the only question that matters at that moment: is this worth the risk?"
+              title={t('Not a Scanner. A Second Opinion.')}
+              description={t("Scanners hand you a list of tickers. That's a different job. This AI trade analyzer looks at the one chart already open in front of you and answers the only question that matters at that moment: is this worth the risk?")}
             />
           </Reveal>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -282,7 +283,7 @@ export function TradeAnalyzerPage() {
               <Reveal key={point} delay={i * 80}>
                 <div className="flex h-full items-start gap-3 rounded-xl border border-border bg-deep p-5 shadow-card">
                   <span className="mt-2 h-2 w-2 shrink-0 rounded-full gradient-brand" />
-                  <p className="text-sm leading-relaxed text-muted-dark">{point}</p>
+                  <p className="text-sm leading-relaxed text-muted-dark">{t(point)}</p>
                 </div>
               </Reveal>
             ))}
@@ -294,7 +295,7 @@ export function TradeAnalyzerPage() {
       <section className="border-t border-border bg-deep py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="Why Traders Keep Coming Back" />
+            <SectionHeader title={t('Why Traders Keep Coming Back')} />
           </Reveal>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {WHY_TRADERS.map((point, i) => (
@@ -311,7 +312,7 @@ export function TradeAnalyzerPage() {
                       <Upload className="h-6 w-6" />
                     )}
                   </div>
-                  <p className="text-sm leading-relaxed text-muted-dark">{point}</p>
+                  <p className="text-sm leading-relaxed text-muted-dark">{t(point)}</p>
                 </div>
               </Reveal>
             ))}
@@ -320,15 +321,13 @@ export function TradeAnalyzerPage() {
           <Reveal>
             <div className="mt-14 text-center">
               <h2 className="mb-4 text-2xl font-extrabold text-ink md:text-3xl">
-                Grade Your Next Setup{' '}
-                <span className="text-gradient-brand">Before You Risk It</span>
+                {ctaHead} <span className="text-gradient-brand">{ctaTail}</span>
               </h2>
               <p className="mx-auto mb-6 max-w-xl text-muted-dark">
-                Free to start. Drop in a chart and get your first grade in under
-                ten seconds.
+                {t('Free to start. Drop in a chart and get your first grade in under ten seconds.')}
               </p>
               <Button to="/get-started" size="lg" className="group">
-                Start Free Access
+                {t('Start Free Access')}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
             </div>

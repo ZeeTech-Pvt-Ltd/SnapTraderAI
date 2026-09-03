@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import {
   ArrowRight,
   Clock,
@@ -7,6 +6,8 @@ import {
   RefreshCw,
   Timer,
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
 import { SectionHeader } from '../components/ui/SectionHeader'
@@ -64,9 +65,14 @@ const WHY_TRADERS = [
 ]
 
 export function ScalpAnalyzerPage() {
-  useEffect(() => {
-    document.title = 'AI Scalp Analyzer | SnapTrader AI'
-  }, [])
+  const { t } = useTranslation()
+
+  // Gradient covers the tail of each headline in every language.
+  const [heroHead, heroTail] = splitStyledTail(
+    t('AI Scalp Analyzer — Read 1M & 5M Setups in Seconds'),
+    1,
+  )
+  const [ctaHead, ctaTail] = splitStyledTail(t('Start Analyzing'), 1)
 
   return (
     <div className="bg-deep pt-[72px]">
@@ -81,23 +87,17 @@ export function ScalpAnalyzerPage() {
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal>
               <h1 className="mb-5 max-w-[600px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-                AI Scalp Analyzer — Read 1M &amp; 5M Setups in{' '}
-                <span className="text-gradient-brand">Seconds</span>
+                {heroHead} <span className="text-gradient-brand">{heroTail}</span>
               </h1>
               <p className="mb-3 text-lg font-semibold leading-relaxed text-ink">
-                Scalping punishes hesitation. By the time you finish drawing
-                levels on a 1-minute chart, the candle you wanted is already
-                closed.
+                {t('Scalping punishes hesitation. By the time you finish drawing levels on a 1-minute chart, the candle you wanted is already closed.')}
               </p>
               <p className="mb-8 max-w-[540px] text-lg leading-relaxed text-muted-dark">
-                The AI Scalp Analyzer compresses that work into seconds. It
-                reads the structure on your fast timeframes, checks whether
-                momentum and volume actually agree, and hands you a plan you can
-                act on — or skip.
+                {t('The AI Scalp Analyzer compresses that work into seconds. It reads the structure on your fast timeframes, checks whether momentum and volume actually agree, and hands you a plan you can act on — or skip.')}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button to="/get-started" size="lg" className="group">
-                  Try the Scalp Analyzer Free
+                  {t('Try the Scalp Analyzer Free')}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
               </div>
@@ -112,7 +112,7 @@ export function ScalpAnalyzerPage() {
                   style={{ background: 'radial-gradient(ellipse, rgb(0 200 172 / 0.14) 0%, transparent 70%)' }}
                 />
                 <TerminalFrame
-                  title="Snap Trader AI · Scalp Analyzer"
+                  title={t('Snap Trader AI · Scalp Analyzer')}
                   titleExtra={
                     <span className="flex items-center gap-1.5 rounded-full bg-success/10 px-2.5 py-1 font-mono text-[9px] font-bold text-success">
                       <span className="relative flex h-1.5 w-1.5">
@@ -147,7 +147,7 @@ export function ScalpAnalyzerPage() {
                     <div className="mb-4 rounded-md border border-border bg-[#F4F8FC] p-3.5">
                       <div className="mb-2 flex items-center justify-between">
                         <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-ink-soft">
-                          Setup Score
+                          {t('Setup Score')}
                         </p>
                         <p className="font-mono text-sm font-black text-accent">8.4 / 10</p>
                       </div>
@@ -159,11 +159,11 @@ export function ScalpAnalyzerPage() {
                     {/* Plan grid */}
                     <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
                       {[
-                        { k: 'ENTRY', v: '1.0851–59', c: 'text-accent' },
-                        { k: 'STOP', v: '1.0838', c: 'text-danger' },
-                        { k: 'TARGET 1', v: '1.0878', c: 'text-success' },
-                        { k: 'TARGET 2', v: '1.0896', c: 'text-success' },
-                        { k: 'R : R', v: '1 : 2.2', c: 'text-success' },
+                        { k: t('ENTRY'), v: '1.0851–59', c: 'text-accent' },
+                        { k: t('STOP'), v: '1.0838', c: 'text-danger' },
+                        { k: t('TARGET 1'), v: '1.0878', c: 'text-success' },
+                        { k: t('TARGET 2'), v: '1.0896', c: 'text-success' },
+                        { k: t('R : R'), v: '1 : 2.2', c: 'text-success' },
                       ].map((r) => (
                         <div
                           key={r.k}
@@ -192,22 +192,21 @@ export function ScalpAnalyzerPage() {
                               : 'border-danger/25 bg-danger/10 text-danger'
                           }`}
                         >
-                          {m.ok ? '✓' : '✗'} {m.t}
+                          {m.ok ? '✓' : '✗'} {t(m.t)}
                         </span>
                       ))}
                       <span className="rounded-full border border-warning/25 bg-warning/10 px-2.5 py-1 font-mono text-[9px] font-bold text-warning">
-                        ⚠ CHASE WARNING · +0.4 ATR FROM VWAP
+                        {t('⚠ CHASE WARNING · +0.4 ATR FROM VWAP')}
                       </span>
                     </div>
 
                     {/* Verdict stamp */}
                     <div className="flex items-center justify-between">
                       <p className="font-mono text-[10px] text-ink-soft">
-                        The easy money may already be gone — consider waiting
-                        for the pullback.
+                        {t('The easy money may already be gone — consider waiting for the pullback.')}
                       </p>
                       <span className="shrink-0 -rotate-3 rounded-md border-2 border-success/50 px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-widest text-success">
-                        Act or Skip
+                        {t('Act or Skip')}
                       </span>
                     </div>
                   </div>
@@ -226,8 +225,8 @@ export function ScalpAnalyzerPage() {
               <SectionHeader
                 align="left"
                 className="mb-0"
-                title="What You Get Back"
-                description="Every read returns the same fields, so setups stay comparable across the session:"
+                title={t('What You Get Back')}
+                description={t('Every read returns the same fields, so setups stay comparable across the session:')}
               />
               <div className="mt-6 flex flex-wrap gap-2">
                 {['Same fields', 'Every read', 'Comparable'].map((chip) => (
@@ -235,7 +234,7 @@ export function ScalpAnalyzerPage() {
                     key={chip}
                     className="rounded-full border border-accent/20 bg-accent/5 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-accent"
                   >
-                    {chip}
+                    {t(chip)}
                   </span>
                 ))}
               </div>
@@ -246,7 +245,7 @@ export function ScalpAnalyzerPage() {
                 {/* Receipt header */}
                 <div className="flex items-center justify-between border-b border-dashed border-border bg-medium-navy/40 px-6 py-4">
                   <p className="font-mono text-xs font-bold text-ink">SNAP SCALP REPORT</p>
-                  <p className="font-mono text-[10px] text-ink-soft">FIELD LIST · 5 ITEMS</p>
+                  <p className="font-mono text-[10px] text-ink-soft">{t('FIELD LIST · 5 ITEMS')}</p>
                 </div>
                 {/* Receipt rows */}
                 {WHAT_YOU_GET.map((f, i) => (
@@ -259,10 +258,10 @@ export function ScalpAnalyzerPage() {
                     </span>
                     <div>
                       <h2 className="font-mono text-sm font-bold uppercase tracking-wide text-ink">
-                        {f.title}
+                        {t(f.title)}
                       </h2>
                       <p className="mt-1 text-sm leading-relaxed text-muted-dark">
-                        {f.description}
+                        {t(f.description)}
                       </p>
                     </div>
                   </div>
@@ -279,7 +278,7 @@ export function ScalpAnalyzerPage() {
                     ))}
                   </div>
                   <p className="shrink-0 font-mono text-[9px] font-bold uppercase tracking-wider text-success">
-                    5/5 fields delivered
+                    {t('5/5 fields delivered')}
                   </p>
                 </div>
               </div>
@@ -296,30 +295,30 @@ export function ScalpAnalyzerPage() {
             <Reveal>
               <div className="rounded-2xl border border-border bg-navy p-8 shadow-card">
                 <p className="mb-5 font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-ink-soft">
-                  Default Workspace
+                  {t('Default Workspace')}
                 </p>
                 <div className="flex items-end gap-3">
                   {[
                     { tf: '1M', active: true, h: 'h-28' },
                     { tf: '3M', active: false, h: 'h-20' },
                     { tf: '5M', active: false, h: 'h-14' },
-                  ].map((t) => (
-                    <div key={t.tf} className="flex flex-1 flex-col items-center gap-3">
+                  ].map((tfItem) => (
+                    <div key={tfItem.tf} className="flex flex-1 flex-col items-center gap-3">
                       <span
                         className={`flex w-full items-center justify-center rounded-xl border font-mono text-xl font-black transition-all ${
-                          t.active
+                          tfItem.active
                             ? 'gradient-brand border-transparent text-[#04212b] shadow-glow'
                             : 'border-border bg-deep text-ink-soft'
-                        } ${t.h}`}
+                        } ${tfItem.h}`}
                       >
-                        {t.tf}
+                        {tfItem.tf}
                       </span>
                       <span
                         className={`font-mono text-[9px] font-bold uppercase tracking-wider ${
-                          t.active ? 'text-accent' : 'text-ink-soft/60'
+                          tfItem.active ? 'text-accent' : 'text-ink-soft/60'
                         }`}
                       >
-                        {t.active ? 'ACTIVE' : 'READY'}
+                        {tfItem.active ? t('ACTIVE') : t('READY')}
                       </span>
                     </div>
                   ))}
@@ -330,7 +329,7 @@ export function ScalpAnalyzerPage() {
                       key={s}
                       className="rounded-full border border-border bg-deep px-2.5 py-1 font-mono text-[9px] font-bold text-ink-soft"
                     >
-                      {s}
+                      {t(s)}
                     </span>
                   ))}
                 </div>
@@ -343,8 +342,8 @@ export function ScalpAnalyzerPage() {
                 <SectionHeader
                   align="left"
                   className="mb-8"
-                  title="Built For Fast Timeframes"
-                  description="Most chart tools are tuned for swing setups and then squeezed onto scalping. This one starts from the other end."
+                  title={t('Built For Fast Timeframes')}
+                  description={t('Most chart tools are tuned for swing setups and then squeezed onto scalping. This one starts from the other end.')}
                 />
               </Reveal>
               <div className="space-y-3">
@@ -355,7 +354,7 @@ export function ScalpAnalyzerPage() {
                         <point.icon className="h-5 w-5" />
                       </span>
                       <p className="text-sm leading-relaxed text-muted-dark">
-                        {point.title}
+                        {t(point.title)}
                       </p>
                     </div>
                   </Reveal>
@@ -371,8 +370,8 @@ export function ScalpAnalyzerPage() {
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
             <SectionHeader
-              title="Why Traders Use It"
-              description="Scalping losses rarely come from bad analysis. They come from entering a setup that was never good enough to begin with."
+              title={t('Why Traders Use It')}
+              description={t('Scalping losses rarely come from bad analysis. They come from entering a setup that was never good enough to begin with.')}
             />
           </Reveal>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -387,7 +386,7 @@ export function ScalpAnalyzerPage() {
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <p className="text-sm leading-relaxed text-muted-dark md:text-base">
-                    {point}
+                    {t(point)}
                   </p>
                 </div>
               </Reveal>
@@ -405,12 +404,11 @@ export function ScalpAnalyzerPage() {
               className="mx-auto mb-4 h-10 w-10 text-accent/30"
             />
             <SectionHeader
-              title="Use It As A Filter, Not A Signal"
-              description="The AI Scalp Analyzer is a pre-entry checkpoint. It tells you whether a setup meets your standard — you still decide, size, and manage the trade."
+              title={t('Use It As A Filter, Not A Signal')}
+              description={t('The AI Scalp Analyzer is a pre-entry checkpoint. It tells you whether a setup meets your standard — you still decide, size, and manage the trade.')}
             />
             <p className="border-x-2 border-accent/30 px-6 text-lg font-semibold leading-relaxed text-ink md:text-xl">
-              Traders who improve fastest use it to say no more often, not to
-              click buy more often.
+              {t('Traders who improve fastest use it to say no more often, not to click buy more often.')}
             </p>
           </Reveal>
         </div>
@@ -422,15 +420,13 @@ export function ScalpAnalyzerPage() {
           <Reveal>
             <div className="rounded-2xl border border-dashed border-border bg-deep p-8 text-center md:p-10">
               <h2 className="mb-4 text-2xl font-extrabold text-ink md:text-3xl">
-                Start <span className="text-gradient-brand">Analyzing</span>
+                {ctaHead} <span className="text-gradient-brand">{ctaTail}</span>
               </h2>
               <p className="mx-auto mb-6 max-w-xl text-muted-dark">
-                Upload a clean chart with price axis, time axis, and volume
-                visible. The AI Scalp Analyzer returns a full read before your
-                next candle closes.
+                {t('Upload a clean chart with price axis, time axis, and volume visible. The AI Scalp Analyzer returns a full read before your next candle closes.')}
               </p>
               <Button to="/get-started" size="lg" className="group">
-                Start Free Access
+                {t('Start Free Access')}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
             </div>

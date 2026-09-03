@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import {
   ArrowRight,
   Bitcoin,
@@ -12,6 +11,8 @@ import {
   ShieldCheck,
   Target,
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { splitStyledTail } from '../i18n'
 import { marketBadge } from '../content/traders'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
@@ -51,9 +52,14 @@ const TIMELINE = [
 ]
 
 export function SwingTradingPage() {
-  useEffect(() => {
-    document.title = 'AI Swing Trading | SnapTrader AI'
-  }, [])
+  const { t } = useTranslation()
+
+  // Gradient covers the tail of each headline in every language.
+  const [heroHead, heroTail] = splitStyledTail(
+    t('Multi-Day Setups, Managed by AI'),
+    2,
+  )
+  const [ctaHead, ctaTail] = splitStyledTail(t('Start With the AI on Your Side'), 1)
 
   return (
     <div className="bg-deep pt-[72px]">
@@ -68,17 +74,14 @@ export function SwingTradingPage() {
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal>
               <h1 className="mb-5 max-w-[600px] text-4xl font-black leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
-                Multi-Day Setups,{' '}
-                <span className="text-gradient-brand">Managed by AI</span>
+                {heroHead} <span className="text-gradient-brand">{heroTail}</span>
               </h1>
               <p className="mb-8 max-w-[540px] text-lg leading-relaxed text-muted-dark">
-                Trades that run for days, not seconds. Our AI reads the higher
-                timeframes, builds the plan, and stays with the position until
-                the setup plays out — or breaks.
+                {t('Trades that run for days, not seconds. Our AI reads the higher timeframes, builds the plan, and stays with the position until the setup plays out — or breaks.')}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button to="/get-started" size="lg" className="group">
-                  Start Swing Trading
+                  {t('Start Swing Trading')}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
               </div>
@@ -93,14 +96,14 @@ export function SwingTradingPage() {
                   style={{ background: 'radial-gradient(ellipse, rgb(0 200 172 / 0.14) 0%, transparent 70%)' }}
                 />
                 <TerminalFrame
-                  title="Snap Trader AI · Swing Manager"
+                  title={t('Snap Trader AI · Swing Manager')}
                   titleExtra={
                     <span className="flex items-center gap-1.5 rounded-full bg-success/10 px-2.5 py-1 font-mono text-[9px] font-bold text-success">
                       <span className="relative flex h-1.5 w-1.5">
                         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
                         <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
                       </span>
-                      MANAGING · DAY 6
+                      {t('MANAGING · DAY 6')}
                     </span>
                   }
                 >
@@ -109,7 +112,7 @@ export function SwingTradingPage() {
                       <div>
                         <p className="font-mono text-sm font-extrabold text-ink">GBP/USD · 1D</p>
                         <p className="font-mono text-[9px] text-ink-soft">
-                          SWING LONG · THESIS INTACT
+                          {t('SWING LONG · THESIS INTACT')}
                         </p>
                       </div>
                       <p className="font-mono text-sm font-black text-success">+2.1R</p>
@@ -137,7 +140,7 @@ export function SwingTradingPage() {
                                   node.active ? 'text-accent' : node.done ? 'text-success' : 'text-ink-soft'
                                 }`}
                               >
-                                {node.label}
+                                {t(node.label)}
                               </p>
                               <p className="font-mono text-[8px] text-ink-soft/70">{node.day}</p>
                             </div>
@@ -156,9 +159,9 @@ export function SwingTradingPage() {
                     {/* Position stats */}
                     <div className="mb-4 grid grid-cols-3 gap-2">
                       {[
-                        { k: 'ENTRY', v: '1.2410', c: 'text-accent' },
-                        { k: 'INVALIDATION', v: '1.2310', c: 'text-danger' },
-                        { k: 'TARGET', v: '1.2640', c: 'text-success' },
+                        { k: t('ENTRY'), v: '1.2410', c: 'text-accent' },
+                        { k: t('INVALIDATION'), v: '1.2310', c: 'text-danger' },
+                        { k: t('TARGET'), v: '1.2640', c: 'text-success' },
                       ].map((r) => (
                         <div key={r.k} className="rounded-md border border-border bg-[#F4F8FC] p-2.5">
                           <p className="text-[7px] font-bold uppercase tracking-wider text-ink-soft/70">
@@ -171,7 +174,7 @@ export function SwingTradingPage() {
 
                     <div className="flex items-center justify-between rounded-md border border-success/30 bg-success/5 p-3">
                       <p className="font-mono text-[10px] font-bold text-success">
-                        STOP TRAILED TO 1.2580 · TARGET IN VIEW
+                        {t('STOP TRAILED TO 1.2580 · TARGET IN VIEW')}
                       </p>
                       <p className="font-mono text-[9px] text-ink-soft/60">R:R 1 : 2.8</p>
                     </div>
@@ -188,11 +191,11 @@ export function SwingTradingPage() {
         <div className="mx-auto max-w-3xl px-4 text-center md:px-6">
           <Reveal>
             <SectionHeader
-              title="What Is AI Swing Trading?"
-              description="AI swing trading means using machine learning to scan 4-hour and daily charts, rank multi-day setups, and manage risk while the trade is still open."
+              title={t('What Is AI Swing Trading?')}
+              description={t('AI swing trading means using machine learning to scan 4-hour and daily charts, rank multi-day setups, and manage risk while the trade is still open.')}
             />
             <p className="text-lg font-semibold leading-relaxed text-ink md:text-xl">
-              The goal is not more trades. It is fewer, cleaner ones.
+              {t('The goal is not more trades. It is fewer, cleaner ones.')}
             </p>
           </Reveal>
         </div>
@@ -202,7 +205,7 @@ export function SwingTradingPage() {
       <section className="bg-deep py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="What the AI Actually Does" />
+            <SectionHeader title={t('What the AI Actually Does')} />
           </Reveal>
           <div className="mx-auto max-w-3xl">
             {WHAT_AI_DOES.map((step, i) => (
@@ -219,7 +222,7 @@ export function SwingTradingPage() {
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <p className="pt-2.5 text-sm leading-relaxed text-muted-dark md:text-base">
-                    {step}
+                    {t(step)}
                   </p>
                 </div>
               </Reveal>
@@ -236,11 +239,10 @@ export function SwingTradingPage() {
               <SectionHeader
                 align="left"
                 className="mb-0"
-                title="Why Swing Traders Switch to AI"
+                title={t('Why Swing Traders Switch to AI')}
               />
               <p className="mt-6 text-base leading-relaxed text-muted-dark md:text-lg">
-                Most swing trades are not lost on the chart. They are lost in
-                the wait.
+                {t('Most swing trades are not lost on the chart. They are lost in the wait.')}
               </p>
             </Reveal>
 
@@ -252,7 +254,7 @@ export function SwingTradingPage() {
                       <point.icon className="h-5 w-5" />
                     </span>
                     <p className="text-sm font-semibold leading-relaxed text-muted-dark">
-                      {point.title}
+                      {t(point.title)}
                     </p>
                   </div>
                 </Reveal>
@@ -266,11 +268,9 @@ export function SwingTradingPage() {
       <section className="border-t border-border bg-deep py-20 lg:py-28">
         <div className="mx-auto max-w-3xl px-4 text-center md:px-6">
           <Reveal>
-            <SectionHeader title="Built for a Slower Clock" />
+            <SectionHeader title={t('Built for a Slower Clock')} />
             <p className="text-lg leading-relaxed text-muted-dark">
-              Day-trading models are tuned for minutes. Swing setups develop
-              over days, so the AI weights daily structure, higher-timeframe
-              momentum, and volatility cycles instead of tick noise.
+              {t('Day-trading models are tuned for minutes. Swing setups develop over days, so the AI weights daily structure, higher-timeframe momentum, and volatility cycles instead of tick noise.')}
             </p>
             <div className="mt-6 inline-flex items-center gap-3">
               {['4H', '1D', '1W'].map((tf, i) => (
@@ -286,7 +286,7 @@ export function SwingTradingPage() {
                 </span>
               ))}
               <p className="ml-2 text-sm font-semibold text-ink-soft">
-                Different problem, different model.
+                {t('Different problem, different model.')}
               </p>
             </div>
           </Reveal>
@@ -297,7 +297,7 @@ export function SwingTradingPage() {
       <section className="border-t border-border bg-navy py-20 lg:py-28">
         <div className="mx-auto max-w-container px-4 md:px-6">
           <Reveal>
-            <SectionHeader title="Markets Covered" />
+            <SectionHeader title={t('Markets Covered')} />
           </Reveal>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {MARKETS.map((m, i) => (
@@ -314,10 +314,10 @@ export function SwingTradingPage() {
                   <span
                     className={`mb-4 w-fit rounded-full border px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider ${marketBadge[m.market]}`}
                   >
-                    {m.market}
+                    {t(m.market)}
                   </span>
                   <p className="relative text-sm font-bold leading-snug text-ink">
-                    {m.label}
+                    {t(m.label)}
                   </p>
                 </div>
               </Reveal>
@@ -331,21 +331,18 @@ export function SwingTradingPage() {
         <div className="mx-auto max-w-3xl px-4 text-center md:px-6">
           <Reveal>
             <h2 className="mb-4 text-2xl font-extrabold text-ink md:text-3xl">
-              Start With the AI on Your{' '}
-              <span className="text-gradient-brand">Side</span>
+              {ctaHead} <span className="text-gradient-brand">{ctaTail}</span>
             </h2>
             <p className="mx-auto mb-6 max-w-xl text-muted-dark">
-              Create an account, pick your risk level, and let the AI handle the
-              swing setups while you keep your day job. Track every position
-              live from your dashboard.
+              {t('Create an account, pick your risk level, and let the AI handle the swing setups while you keep your day job. Track every position live from your dashboard.')}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Button to="/get-started" size="lg" className="group">
-                Start Swing Trading
+                {t('Start Swing Trading')}
                 <Target className="h-4 w-4" />
               </Button>
               <Button to="/ai-scalp-analyzer" variant="outline" size="lg">
-                Try the Scalp Analyzer
+                {t('Try the Scalp Analyzer')}
               </Button>
             </div>
           </Reveal>
