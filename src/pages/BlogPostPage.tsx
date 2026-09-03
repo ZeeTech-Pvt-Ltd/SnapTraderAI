@@ -2,13 +2,16 @@ import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, BookOpen } from 'lucide-react'
 import { posts } from '../content/blog'
+import { resolveLocalizedSlug } from '../i18n'
 import { BlogCover } from '../components/BlogCover'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
 
 export function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>()
-  const post = posts.find((p) => p.slug === slug)
+  // The URL slug may be in any supported language — resolve it to English.
+  const englishSlug = resolveLocalizedSlug(posts.map((p) => p.slug), slug ?? '')
+  const post = posts.find((p) => p.slug === englishSlug)
 
   useEffect(() => {
     document.title = post ? `${post.title} | SnapTrader AI` : 'Blog | SnapTrader AI'

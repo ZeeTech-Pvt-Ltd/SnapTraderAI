@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, BookOpen } from 'lucide-react'
 import { posts } from '../content/blog'
+import { localizedSlug } from '../i18n'
 import { BlogCover } from '../components/BlogCover'
 import { Button } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
@@ -40,7 +41,7 @@ export function BlogPage() {
             {posts.map((post, i) => (
               <Reveal key={post.slug} delay={(i % 3) * 90}>
                 <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-navy shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-card-lg">
-                  <Link to={`/blog/${post.slug}`} aria-label={post.title}>
+                  <Link to={`/blog/${localizedSlug(post.slug)}`} aria-label={post.title}>
                     <BlogCover category={post.category} />
                   </Link>
                   <div className="flex flex-1 flex-col p-7">
@@ -54,7 +55,7 @@ export function BlogPage() {
                     </div>
                     <h2 className="mb-2 text-base font-bold leading-snug text-ink">
                       <Link
-                        to={`/blog/${post.slug}`}
+                        to={`/blog/${localizedSlug(post.slug)}`}
                         className="transition-colors hover:text-accent"
                       >
                         {post.title}
@@ -64,7 +65,7 @@ export function BlogPage() {
                       {post.excerpt}
                     </p>
                     <Link
-                      to={`/blog/${post.slug}`}
+                      to={`/blog/${localizedSlug(post.slug)}`}
                       className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent transition-all duration-200 hover:gap-3"
                     >
                       <BookOpen className="h-4 w-4" />

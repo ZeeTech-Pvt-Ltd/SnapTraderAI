@@ -73,4 +73,20 @@ export function splitStyledTail(sentence: string, tailWords = 1): [string, strin
   return [words.join(' '), tail.join(' ')]
 }
 
+/** Localised URL slug for the given English slug; falls back to the slug
+    itself when no translation exists (e.g. for English). */
+export function localizedSlug(slug: string): string {
+  const key = `slug:${slug}`
+  return i18n.exists(key) ? i18n.t(key) : slug
+}
+
+/** Resolves a URL slug — written in any supported language — back to its
+    English slug, so /blog/<slug> links keep working across languages. */
+export function resolveLocalizedSlug(englishSlugs: string[], urlSlug: string): string | undefined {
+  return englishSlugs.find((candidate) => {
+    if (candidate === urlSlug) return true
+    return SUPPORTED_LANGS.some((lang) => i18n.t(`slug:${candidate}`, { lng: lang.code }) === urlSlug)
+  })
+}
+
 export default i18n
